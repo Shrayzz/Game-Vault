@@ -8,6 +8,10 @@ class User{
         this.lists = lists; //array
     }
 
+    get getFullName(){
+        return this.name + " " + this.firstname;
+    }
+
 }
 
 class List{
@@ -40,3 +44,6 @@ class Category{
         this.name = name; //string
     }
 }
+
+x = new User(1, "name", "firstname", "a", "b", []);
+console.log(x.getFullName);
