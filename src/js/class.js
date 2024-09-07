@@ -1,5 +1,5 @@
-class User{
-    constructor(id, name, firstname, login, password, lists){
+class User {
+    constructor(id, name, firstname, login, password, lists) {
         this.id = id; //int
         this.name = name; //string
         this.firstname = firstname; //string
@@ -8,14 +8,14 @@ class User{
         this.lists = lists; //array
     }
 
-    get getFullName(){
+    get getFullName() {
         return this.name + " " + this.firstname;
     }
 
 }
 
-class List{
-    constructor(id, name, favorite, games){
+class List {
+    constructor(id, name, favorite, games) {
         this.id = id; //int
         this.name = name; //string
         this.favorite = favorite; //boolean
@@ -23,8 +23,8 @@ class List{
     }
 }
 
-class Game{
-    constructor(id, name, release, editor, price, description, pcRequirement, plateform, image, categories){
+class Game {
+    constructor(id, name, release, editor, price, description, pcRequirement, plateform, image, categories) {
         this.id = id; //int
         this.name = name; //string
         this.release = release; //date
@@ -38,8 +38,8 @@ class Game{
     }
 }
 
-class Category{
-    constructor(id, name){
+class Category {
+    constructor(id, name) {
         this.id = id; //int
         this.name = name; //string
     }
