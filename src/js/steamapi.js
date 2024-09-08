@@ -4,24 +4,20 @@ const fs = require('fs');
 /**
  * Function to get all apps from the steam api 
  * @param {boolean} debug if you want to output the response to a json file
- * @return {Promise<object>} the apps list in JSON format
+ * @return {Promise<JSON>} the apps list
  */
-async function GetAllApps(debug = false) {
+async function GetApps(debug = false) {
 
     const response = await axios.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/');
 
     const data = response.data;
 
     // remove all apps that have an empty name
-    for (let i = data.applist.apps.length - 1; i >= 0; i--) { // .filter instead ?
-        const elt = data.applist.apps[i];
-        if (elt.name === "") {
-            data.applist.apps.splice(i, 1);
-        }
-    }
+    const result = data.applist.apps.filter((elt) => elt.name != "");
+
     if (debug) {
         // debug - writing it to a json file
-        fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+        fs.writeFile('data.json', JSON.stringify(result, null, 2), err => {
             if (err) {
                 console.error(err);
             } else {
@@ -29,40 +25,24 @@ async function GetAllApps(debug = false) {
             }
         });
     }
-    return data;
+    return result;
 }
 
 /**
- * Function to keep only apps that are games
- * @param {boolean} debug
- * @return {Promise<object>} the apps list in JSON format
+ * Function to get the details of an app from the steam api
+ * @param {int} appid the appid of the app
+ * @param {boolean} debug if you want to output the response to a json file
+ * @returns {Promise<JSON>} the app details
  */
-async function SortApps(debug = false) {
-    const data = await GetAllApps();
+async function GetAppDetails(appid, debug = false) {
 
-    for (let i = data.applist.apps.length - 1; i >= 0; i--) {
-        const elt = data.applist.apps[i];
-        const appId = elt.appid;
+    const response = await axios.get(`https://store.steampowered.com/api/appdetails?appids=${appid}`);
 
-        const response = await axios.get(`http://store.steampowered.com/api/appdetails?appids=${appId}`);
-
-        const appData = response.data;
-
-        console.log(`${i}`);
-
-        if (appData[appId].success) {
-            if (!(appData[appId].data.type === "game")) {
-                data.applist.apps.splice(i, 1);
-            }
-        }
-        else {
-            console.log("game");
-        }
-    }
+    const d = response.data;
 
     if (debug) {
         // debug - writing it to a json file
-        fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+        fs.writeFile('data.json', JSON.stringify(d, null, 2), err => {
             if (err) {
                 console.error(err);
             } else {
@@ -71,18 +51,21 @@ async function SortApps(debug = false) {
         });
     }
 
-    console.log("done");
-    return data;
+    // TODO: add an arg to choose the type like dlc / software ?
+    // TODO: return only the usefull data
+    if (d[appid].data.type === "game") {
+        return data;
+    }
+
+    return null;
 }
 
-(async () => {
-    // await GetAllApps(true);
-    const data = require('../../data.json')
-    console.log(data.applist.apps.length);
-})();
+// (async () => {
+//     const a = await GetApps(true);
+//     console.log(a);
 
+//     const b = await GetAppDetails("10", true);
+//     console.log(b);
+// })();
 
-
-// TODO: sort only apps that are games
-// TODO: from sorted apps extract essentials info for each apps
-
+module.exports = { GetApps, GetAppDetails }
