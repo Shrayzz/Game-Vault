@@ -5,7 +5,9 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "login": "node ./src/js/login.js"
+    "login": "bun ./src/js/login.js",
+    "steamapi": "bun ./src/js/steamapi.js",
+    "db": "bun ./src/js/db.js"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +16,8 @@
     "axios": "^1.7.7",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "package.json": "^2.0.1"
   },
   "devDependencies": {
     "@types/bun": "latest"
