@@ -45,5 +45,12 @@ class Category {
     }
 }
 
-x = new User(1, "name", "firstname", "a", "b", []);
-console.log(x.getFullName);
+// Test getFullName
+/*
+let user = new User(1, "Name", "Firstname", "login", "pwd", []);
+if (user.getFullName === "Name Firstname"){
+    console.log("Test User.getFullName OK");
+} else {
+    console.log("Test User.getFullName ERROR")
+}
+*/
