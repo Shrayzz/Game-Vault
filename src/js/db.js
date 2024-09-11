@@ -53,7 +53,7 @@ function disconnect(con) {
  * (creation, tables)
  * @param {object} con database connection 
  */
-// TODO: Ensure when adding data there can be both or more same entry
+// TODO: Ensure when adding data there can't be both or more of the same entry
 function init(con) {
     const createDB = 'CREATE DATABASE IF NOT EXISTS SimpleGameLibrary';
     const loginTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, password varchar(255) NOT NULL, email varchar(100) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;';
