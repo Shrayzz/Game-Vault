@@ -56,14 +56,15 @@ function disconnect(con) {
 // TODO: Ensure when adding data there can't be both or more of the same entry
 function init(con) {
     const createDB = 'CREATE DATABASE IF NOT EXISTS SimpleGameLibrary';
-    const loginTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, password varchar(255) NOT NULL, email varchar(100) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;';
+    const loginTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, password varchar(255) NOT NULL, email varchar(100) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+    const listTable = 'CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     // const gameTable = 'CREATE TABLE IF NOT EXISTS game (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, )';
 
     query(con, createDB, 'DB created');
     query(con, 'USE simplegamelibrary', 'using simplegamelibrary DB');
     query(con, loginTable, 'created account table');
+    query(con, listTable, 'created list table');
 
-    // con.query('ALTER TABLE accounts AUTO_INCREMENT = 0;'); // with this it start at 1 and not 2, i dont know why it start at 2 when not (innoDB ?)
 }
 
 // TESTS
