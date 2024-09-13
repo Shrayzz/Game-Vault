@@ -74,11 +74,13 @@ function init(con) {
 
 }
 
-// Tests DB init + test values
+// Tests DB init + test DB insert
 /*
+// Initalise connection
 const con = connect('localhost', 'root', 'root');
 init(con);
 
+// insertion tests
 con.query('INSERT INTO accounts (username, password, email) VALUES(?, ?, ?);', ['test', 'test', 'test@email.com']);
 con.query('INSERT INTO list (name, favorite, accountId) VALUES(?, ?, ?);', ['testList1', 0, 1]);
 con.query('INSERT INTO list (name, favorite, accountId) VALUES(?, ?, ?);', ['testList2', 1, 1]);
@@ -99,6 +101,7 @@ con.query('INSERT INTO gameHasCategory (idGame, idCategory) VALUES(?, ?);', [3, 
 con.query('INSERT INTO gameHasCategory (idGame, idCategory) VALUES(?, ?);', [3, 2]);
 con.query('INSERT INTO gameHasCategory (idGame, idCategory) VALUES(?, ?);', [3, 3]);
 
+// Ending connection
 disconnect(con);
 */
 
