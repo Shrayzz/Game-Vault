@@ -1,53 +1,72 @@
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/styles/index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/styles/index.css" />
     <title>Game Vault</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="video-container">
-        <video id="bg" autoplay muted loop>
-            <source src="./src/resources/blue_star.mp4" type="video/mp4">
-        </video>
+      <video id="bg" autoplay muted loop>
+        <source src="/static/resources/blue_star.mp4" type="video/mp4" />
+      </video>
     </div>
     <header>
-        <div class="h_left">
-            <button class="header_btn1" onclick="window.location.href='./src/html/space.html';">My Space</button>
-            <button class="header_btn2" onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');">GitHub</button>
-        </div>
-        <div class="h_right">
-            <button class="loginPage" onclick="window.location.href='./src/html/login.html';">
-                <img src="" alt="" class="loginImg">
-                <label for="">Login</label> <!-- ! -->
-            </button>
-        </div>
+      <div class="h_left">
+        <button
+          class="header_btn1"
+          onclick="window.location.href='/static/html/space.html';"
+        >
+          My Space
+        </button>
+        <button
+          class="header_btn2"
+          onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');"
+        >
+          GitHub
+        </button>
+      </div>
+      <div class="h_right">
+        <button class="loginPage" onclick="window.location.href='/';">
+          <img src="" alt="" class="loginImg" />
+          <label for="">Login</label>
+          <!-- ! -->
+        </button>
+      </div>
     </header>
     <main>
-        <hr>
-        <h1 class="mainTitle">Game Vault</h1>
-        <hr>
-        <div class="void0">
-            <h3 class="pjtOverview">Project Overview</h3>
-            <p class="descOverview">This project aims to develop a Personal Library Management Application tailored
-                specifically for video game collections. <br>The application will allow users to catalog and organize their
-                video games efficiently, with advanced search and filtering options. <br>Users will be able to track not
-                only
-                what games they own but also where they are stored (e.g., shelf, box, storage unit).</p>
-        </div>
-        <div class="void1">
-            <h3 class="pjtFeatures">Storage Features</h3>
-            <p class="descFeatures">PLACEHOLDER</p>
-        </div>
+      <hr />
+      <h1 class="mainTitle">Game Vault</h1>
+      <hr />
+      <div class="void0">
+        <h3 class="pjtOverview">Project Overview</h3>
+        <p class="descOverview">
+          This project aims to develop a Personal Library Management Application
+          tailored specifically for video game collections. <br />The
+          application will allow users to catalog and organize their video games
+          efficiently, with advanced search and filtering options. <br />Users
+          will be able to track not only what games they own but also where they
+          are stored (e.g., shelf, box, storage unit).
+        </p>
+      </div>
+      <div class="void1">
+        <h3 class="pjtFeatures">Storage Features</h3>
+        <p class="descFeatures">PLACEHOLDER</p>
+      </div>
     </main>
     <footer>
-        <p class="license">This project is under <a
-                href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE">MIT License</a></p>
-        <p class="authors">Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa</p>
+      <p class="license">
+        This project is under
+        <a
+          href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE"
+          >MIT License</a
+        >
+      </p>
+      <p class="authors">
+        Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa
+      </p>
     </footer>
-</body>
-
+  </body>
 </html>
