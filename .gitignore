@@ -1,5 +1,5 @@
-.json
 .vscode
+.env
 node_modules/
 package-lock.json
 bun.lockb

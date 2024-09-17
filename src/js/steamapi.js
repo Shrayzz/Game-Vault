@@ -1,4 +1,5 @@
 const fs = require('fs');
+require('dotenv').config()
 
 /**
  * Function to get all apps from the steam api 
@@ -30,7 +31,7 @@ async function GetApps(debug = false) {
 
         return result;
 
-    } catch (error) {
+    } catch (err) {
         console.error(err.message)
     }
 }
@@ -88,10 +89,140 @@ async function GetAppDetails(appid, debug = false) {
     }
 }
 
+/**
+ * Function to get games owned by the specified account steamid
+ * @param {string} steamId steamid of the account to get owned games
+ * @param {boolean} debug if you want to output the response to a json file
+ * @returns {Promise<Object>} the owned games list of the account
+ */
+async function GetOwnedGames(steamid, debug = false) {
+    try {
+        const response = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&format=json`);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (debug) {
+            // debug - writing it to a json file
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+/**
+ * Function to get friends of the specified account steamid
+ * @param {string} steamid steamid of the account to get friends
+ * @param {boolean} debug if you want to output the response to a json file
+ * @returns {Promise<Object>} the friends list of the account
+ */
+async function GetFriends(steamid, debug = false) {
+    try {
+        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&relationship=friend`);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (debug) {
+            // debug - writing it to a json file
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+/**
+ * 
+ * @param {string} steamid steamid of the account to get the summary of it 
+ * @param {boolean} debug if you want to output the response to a json file
+ * @returns {Promise<Object>} the account steamid summary
+ */
+async function GetPlayerSummary(steamid, debug = false) {
+    try {
+        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.TOKEN}&steamids=${steamid}`);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (debug) {
+            // debug - writing it to a json file
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        // TODO: select what to return
+        return data;
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+/**
+ * 
+ * @param {string} steamid steamid of the account to get the achivements of it
+ * @param {string} appid appid to get the achivements earned by the specified steamid account
+ * @param {boolean} debug if you want to output the response to a json file
+ * @returns {Promise<Object>} the achhivements list for the specified appid of the steamid account
+ */
+async function GetPlayerAchivements(steamid, appid, debug = false) {
+    try {
+        const response = await fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.TOKEN}&steamid=${steamid}`);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (debug) {
+            // debug - writing it to a json file
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
 (async () => {
-    // const a = await GetApps(true);
+    const a = await GetPlayerAchivements('76561198441781682', '553850', true);
     // console.log(a);
-    const b = await GetAppDetails("1222140", true);
+    // const b = await GetAppDetails("1222140", true);
     // console.log(b);
 })();
 
