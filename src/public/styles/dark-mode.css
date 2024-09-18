@@ -1,0 +1,134 @@
+/* Dark Mode */
+@font-face {
+    font-family: 'arcade';
+    src: url('../resources/fonts/ARCADECLASSIC.ttf');
+}
+@font-face {
+    font-family: 'eb';
+    src: url('../resources/fonts/Inter-ExtraBold.ttf');
+}
+@font-face {
+    font-family: 'm';
+    src: url('../resources/fonts/Inter-Medium.ttf');
+}
+@font-face {
+    font-family: 'sb';
+    src: url('../resources/fonts/Inter-SemiBold.ttf');
+}
+
+* { margin: 0; padding: 0}
+
+body {
+    /* background-color: black; */
+    background-image: linear-gradient(45deg, #241F37, #040207);
+}
+
+hr {
+    opacity: 0.25;
+    background-color: #3B4244;
+}
+
+header {
+    background-color: #72727240;
+    height: 15vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.A button, .A button:not(hover) {
+    width: 7vw;
+    height: 5vh;
+    border-radius: 3px;
+    margin: 1vh;
+
+    border: none;
+    background-color: #DDDDDDF0;
+
+    font-family: 'sb';
+    font-size: 1.5vh;
+
+    transition: all 0.3s;
+}
+.A button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+
+    border: aliceblue solid 2px;
+    border-radius: 10px;
+    color: aliceblue;
+    background-color: #72727240;
+
+    transition: all 0.3s;
+}
+
+.B button, .B button:not(hover) {
+    font-family: 'eb';
+    filter: invert(100%);
+    background-color: transparent;
+    border: none;
+    border-radius: 30px;
+
+    width: 7vw;
+    height: 8vh;
+    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+.B button:hover {
+    filter: invert(75%);
+    transform: scale(1.2);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.B img {
+    height: 6vh;
+    width: auto;
+}
+
+
+.headerTitle {
+    font-family: 'arcade';
+    color: aliceblue;
+    text-shadow: 2px 2px 40px #7a7a7a;
+    user-select: none;
+}
+
+.void-main { 
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainTitle, .gvTitle {
+    color: aliceblue;
+    text-shadow: 2px 2px 40px #7a7a7a;
+    user-select: none;
+}
+.mainTitle {font-family: 'eb';font-size: 7vw;}
+.gvTitle {font-family: 'arcade';font-size: 10vw; letter-spacing: 10px;}
+
+.headerTitle {font-size: 4vw;}
+
+.h_left {
+    padding-left: 5vw;
+}
+.h_right {
+    /* border: solid blue 1px; */
+    padding: 2vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
