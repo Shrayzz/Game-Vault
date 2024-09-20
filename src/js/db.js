@@ -11,6 +11,10 @@ const con = await mysql.createConnection({
     database: 'simplegamelibrary',
 });
 
+// TODO: Make a disconect function
+
+// TODO: Make an init Database function
+
 //----------------------------------CLASSES----------------------------------\\
 
 class User {
@@ -136,5 +140,31 @@ try {
 
 //----------------------------------TESTS----------------------------------\\
 
-// Test Users créations
+//Test users creations
+
+//TODO
 console.log(User.getAllUsers());
+
+//Test lists creation
+
+//TODO
+
+//Test games creation
+
+//TODO
+
+//Test category creation
+
+//TODO
+
+//Test users-lists link creation
+
+//TODO
+
+//Test lists-games link creation
+
+//TODO
+
+//Test games-category link creation
+
+//TODO
