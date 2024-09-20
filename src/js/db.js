@@ -17,53 +17,85 @@ class User {
 
     static users = []
 
+    /**
+     * Constructor of User class
+     * @param {int} id The ID of the user
+     * @param {string} username The username of the user
+     * @param {string} password The password of the user
+     * @param {string} email The email of the user
+     */
     constructor(id, username, password, email) {
-        this.id = id; //int
-        this.username = username; //string
-        this.password = password; //string
-        this.email = email; //string
-        this.lists = []; //array
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.lists = [];
         User.users.push(this);
     }
 
+    /**
+     * Function to get all created users
+     * @returns all created users with the class User
+     */
     static getAllUsers() {
         return User.users;
     }
-
-    get getFullName() {
-        return this.name + " " + this.firstname;
-    }
-
 }
 
 class List {
-    constructor(id, name, favorite, games) {
-        this.id = id; //int
-        this.name = name; //string
-        this.favorite = favorite; //boolean
-        this.games = games; //array
+    /**
+     * Constructor of List class
+     * @param {int} id the ID of the list 
+     * @param {string} name 
+     * @param {boolean} favorite  
+     */
+    constructor(id, name, favorite) {
+        this.id = id;
+        this.name = name;
+        this.favorite = favorite;
+        this.games = [];
     }
 }
 
 class Game {
-    constructor(id, name, release, publishers, developers, price, rating, description, languages, plateforms, pcRequirement, image, categories) {
-        this.id = id; //int
-        this.name = name; //string
-        this.release = release; //date
-        this.publishers = publishers; //string
-        this.developers = developers; //string
-        this.price = price; //float
-        this.rating = rating; //int
-        this.description = description; //string
-        this.languages = languages; // string
-        this.plateforms = plateforms; //array
-        this.pcRequirement = pcRequirement; //array
-        this.image = image; //string
-        this.categories = categories; //array
+    /**
+     * Constructor of Game class
+     * @param {int} id The ID of the game
+     * @param {string} name The name of the game
+     * @param {Date} release The date of the game
+     * @param {string} publishers The publishers of the game
+     * @param {string} developers The developers of the game
+     * @param {float} price The price of the game 
+     * @param {int} rating The rate of the game
+     * @param {string} description The description of the game
+     * @param {string} languages The languages of the game 
+     * @param {array} plateforms The plateforms of the game
+     * @param {array} pcRequirement The PC Requirements of the game 
+     * @param {string} image The image of the game
+     */
+    constructor(id, name, release, publishers, developers, price, rating, description, languages, plateforms, pcRequirement, image) {
+        this.id = id;
+        this.name = name;
+        this.release = release;
+        this.publishers = publishers;
+        this.developers = developers;
+        this.price = price;
+        this.rating = rating;
+        this.description = description;
+        this.languages = languages;
+        this.plateforms = plateforms;
+        this.pcRequirement = pcRequirement;
+        this.image = image;
+        this.categories = [];
     }
 }
 
 class Category {
+    /**
+     * Constructor of Category class
+     * @param {int} id The ID of the category
+     * @param {string} name The name of the category 
+     */
     constructor(id, name) {
         this.id = id; //int
         this.name = name; //string
@@ -104,12 +136,5 @@ try {
 
 //----------------------------------TESTS----------------------------------\\
 
-// Test getFullName
-/*
-let user = new User(1, "Name", "Firstname", "login", "pwd", []);
-if (user.getFullName === "Name Firstname"){
-    console.log("Test User.getFullName OK");
-} else {
-    console.log("Test User.getFullName ERROR")
-}
-*/
+// Test Users créations
+console.log(User.getAllUsers());
