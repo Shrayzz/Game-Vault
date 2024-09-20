@@ -11,7 +11,15 @@ const con = await mysql.createConnection({
     database: 'simplegamelibrary',
 });
 
-// TODO: Make a disconect function
+/**
+ * Disconnect the Database
+ */
+function dbDisconnect() {
+    con.end(function (err) {
+        if (err) throw err;
+        console.log('connection to DB successfully closed');
+    });
+}
 
 // TODO: Make an init Database function
 
