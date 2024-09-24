@@ -1,4 +1,7 @@
 /* Dark Mode */
+
+/*---- Requirements ----*/
+
 @font-face {
     font-family: 'arcade';
     src: url('./../resources/fonts/ARCADECLASSIC.ttf');
@@ -16,11 +19,14 @@
     src: url('./../resources/fonts/Inter-SemiBold.ttf');
 }
 
+/*---- Global ----*/
+
 * { margin: 0; padding: 0}
 
 body {
     /* background-color: black; */
-    background-image: linear-gradient(45deg, #111111, #1a1a1a, rgb(0, 25, 61));
+    background-image: linear-gradient(45deg, #111111, #141820, rgb(0, 25, 61));
+    background-attachment: fixed;
 }
 
 hr {
@@ -37,6 +43,42 @@ header {
     justify-content: space-between;
     align-items: center;
 
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    bottom: 0;
+
+    background-color: black;
+    width: 100%;
+    height: 12vh;
+    line-height: 2;
+    font-family: 'm';
+    color: aliceblue;
+}
+
+footer a, footer a:not(hover) {
+    text-decoration: none;
+    color: rgb(0, 102, 255);
+    transition: all 0.3s;
+}
+footer a:hover {
+    text-decoration: underline;
+    color:rgb(8, 0, 237);
+    transition: all 0.3s
+}
+
+/*---- Index ----*/
+
+@keyframes backgroundPositionAnimation {
+    0%{background-position:0% 97%}
+    50%{background-position:100% 4%}
+    100%{background-position:0% 97%}
 }
 
 .A button, .A button:not(hover) {
@@ -117,7 +159,7 @@ header {
 }
 
 .h_left {
-    padding-left: 5vw;
+    padding-left: 3vw;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -173,27 +215,24 @@ header {
     line-height: 1.8;
 }
 
-footer {
+/*---- Register ----*/
+
+.rBox {
+    background-color: rgba(0,0,0,0.48);
+    z-index: 6;
+    height: 100vh;
+    width: 45vw;
+    position: relative;
+    overflow: hidden;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
-    background-color: black;
-    width: 100%;
-    height: 12vh;
-    line-height: 2;
-    font-family: 'm';
+    align-items: flex-start;
     color: aliceblue;
 }
 
-footer a, footer a:not(hover) {
-    text-decoration: none;
-    color: rgb(0, 102, 255);
-    transition: all 0.3s;
-}
-footer a:hover {
-    text-decoration: underline;
-    color:rgb(8, 0, 237);
-    transition: all 0.3s
+.rForm {
+    width: 200%;
+    position: absolute;
 }
