@@ -5,9 +5,7 @@
   "main": "test.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "app": "bun ./app.js",
-    "steamapi": "bun ./src/js/steamapi.js",
-    "db": "bun ./src/js/db.js"
+    "dev": "bun --watch server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +16,7 @@
     "express-session": "^1.18.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
-    "package.json": "^0.0.0"
+    "package.json": "^2.0.1"
   },
   "devDependencies": {
     "@types/bun": "latest"
