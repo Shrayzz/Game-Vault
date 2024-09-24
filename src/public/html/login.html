@@ -1,28 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1" />
+    <link rel="stylesheet" href="login.css" />
+
     <title>Login</title>
 </head>
 
 <body>
-    <button onclick="window.location.href='../../../index.html';">Back</button>        <!-- ! -->
-    <div class="login">
-        <h1>Login</h1>
-        <form action="/auth" method="post">
-            <label for="username">
-                <i class="fas fa-user"></i>
-            </label>
-            <input type="text" name="username" placeholder="Username" id="username" required /> <br><br>
-            <label for="password">
-                <i class="fas fa-lock"></i>
-            </label>
-            <input type="password" name="password" placeholder="Password" id="password" required /> <br><br>
-            <input type="submit" value="Login" />
-        </form>
-    </div>
+    <header id="header">
+        <div class="header-content">
+            
+            
+            <a href="../../../index.html" class="headerTitle">Game Vault</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <div class="login-box">
+                <h1>Login</h1>
+                <form action="/auth" method="post">
+                    <div class="input-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                        </label>
+                        <input type="text" name="username" placeholder="Username" id="username" required />
+                    </div>
+                    <div class="input-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                        </label>
+                        <input type="password" name="password" placeholder="Password" id="password" required />
+                    </div>
+                    <div class="options">
+                        <label><input type="checkbox" name="remember-me" /> Remember me</label>
+                        <a href="#">Forgot password?</a>
+                    </div>
+                    <input type="submit" value="Login" class="login-btn" />
+                    <p class="register">Don't have an account? <a href="#">Register</a></p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="license">
+            This project is under
+            <a href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE">MIT License</a>
+        </p>
+        <p class="authors">
+            Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa
+        </p>
+    </footer>
 </body>
 
 </html>
