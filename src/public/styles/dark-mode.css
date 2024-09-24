@@ -20,7 +20,7 @@
 
 body {
     /* background-color: black; */
-    background-image: linear-gradient(45deg, #241F37, #040207);
+    background-image: linear-gradient(45deg, #111111, #1a1a1a, rgb(0, 25, 61));
 }
 
 hr {
@@ -57,10 +57,10 @@ header {
     transform: scale(1.1);
     cursor: pointer;
 
-    border: aliceblue solid 2px;
+    border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
     color: aliceblue;
-    background-color: #72727240;
+    background-color: rgba(0, 102, 255, 0.251);
 
     transition: all 0.3s;
 }
@@ -83,7 +83,13 @@ header {
     transition: all 0.3s;
 }
 .B button:hover {
-    filter: invert(75%);
+    filter: invert(36%) 
+            sepia(100%) 
+            saturate(514%) 
+            hue-rotate(159deg) 
+            brightness(95%) 
+            contrast(97%);
+
     transform: scale(1.2);
     cursor: pointer;
     transition: all 0.3s;
@@ -102,6 +108,30 @@ header {
     user-select: none;
 }
 
+.headerTitle {font-size: 4vw;}
+
+.logo {
+    height: 13vh;
+    top: 
+    margin-right: 2vw;
+}
+
+.h_left {
+    padding-left: 5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.h_right {
+    padding: 2vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .void-main { 
     padding: 5vh;
     display: flex;
@@ -112,23 +142,58 @@ header {
 
 .mainTitle, .gvTitle {
     color: aliceblue;
-    text-shadow: 2px 2px 40px #7a7a7a;
     user-select: none;
 }
 .mainTitle {font-family: 'eb';font-size: 7vw;}
-.gvTitle {font-family: 'arcade';font-size: 10vw; letter-spacing: 10px;}
+.gvTitle {font-family: 'arcade'; font-size: 10vw; letter-spacing: 10px; text-shadow: 2px 2px 30px #afafaf;}
 
-.headerTitle {font-size: 4vw;}
-
-.h_left {
-    padding-left: 5vw;
-}
-.h_right {
-    /* border: solid blue 1px; */
-    padding: 2vw;
-
+.void0 {
+    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    width: 55vw;
+    height: auto;
+    padding: 4vh;
+    padding-left: 3.5vw;
+}
+
+.pjtOverview {
+    font-family: 'eb';
+    font-size: 5vw;
+    color: aliceblue;
+}
+
+.descOverview {
+    font-family: 'm';
+    font-size: 1.4vw;
+    color: aliceblue;
+    margin-top: 2vh;
+    text-align: justify;
+    width: 50vw;
+    line-height: 1.8;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+
+    background-color: black;
+    width: 100%;
+    height: 12vh;
+    line-height: 2;
+    font-family: 'm';
+    color: aliceblue;
+}
+
+footer a, footer a:not(hover) {
+    text-decoration: none;
+    color: rgb(0, 102, 255);
+    transition: all 0.3s;
+}
+footer a:hover {
+    text-decoration: underline;
+    color:rgb(8, 0, 237);
+    transition: all 0.3s
 }
