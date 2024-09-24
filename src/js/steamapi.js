@@ -220,7 +220,7 @@ async function GetPlayerAchivements(steamid, appid, debug = false) {
 }
 
 (async () => {
-    const a = await GetPlayerAchivements('76561198441781682', '553850', true);
+    const a = await GetPlayerSummary('76561199168266214', true);
     // console.log(a);
     // const b = await GetAppDetails("1222140", true);
     // console.log(b);
