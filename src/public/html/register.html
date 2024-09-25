@@ -9,22 +9,33 @@
 </head>
 
 <body id="register">
-    <div class="rBox">
-        <div class="login">
-            <h1>Login</h1>
-            <form class="rForm" action="/auth" method="post">
-                <input class="rUsername" type="text" name="username" placeholder="Username" id="username" required />
-                <br><br>
-                <input class="rEmail" type="text" name="email" placeholder="Email" id="username" required /> <br><br>
-                <input class="rCemail" type="text" name="cemail" placeholder="Confirm Email" id="username" required />
-                <br><br>
-                <input class="rPass" type="password" name="password" placeholder="Password" id="password" required />
-                <br><br>
-                <input class="rCpass" type="password" name="cpassword" placeholder="Confirm Password" id="password"
-                    required /> <br><br>
-                <input class="rSubm" type="submit" value="Login" />
-            </form>
+    <div class="rContainer">
+        <div class="rBox">
+            <div class="login">
+                <h1>Register</h1>
+                <form action="/auth" method="post">
+                    <input class="register" type="text" name="username" placeholder="Username" id="username" required />
+
+                    <input class="register" type="text" name="email" placeholder="Email" id="username" required />
+
+                    <input class="register" type="text" name="cemail" placeholder="Confirm Email" id="username"
+                        required />
+
+                    <input class="register" type="password" name="password" placeholder="Password" id="password"
+                        required />
+
+                    <input class="register" type="password" name="cpassword" placeholder="Confirm Password"
+                        id="password" required />
+                    <input class="rSubmit" type="submit" value="Register" />
+                </form>
+                <p>Already have an account ? <a href="/html/login.html">Login</a></p>
+            </div>
         </div>
+        <hr>
+    </div>
+    <div class="rTitle">
+        <img src="/resources/images/logo.png" alt="" class="logo" />
+        <h1>Game<br>Vault</h1>
     </div>
 </body>
 
