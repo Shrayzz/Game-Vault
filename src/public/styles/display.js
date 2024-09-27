@@ -15,3 +15,26 @@ function toggleTheme() {
         localStorage.setItem('theme', 'light');
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.page');
+        sections.forEach(s => {
+            if (s.id === sectionId) {
+                s.classList.remove('hidden');
+                s.classList.add('visible');
+            } else {
+                s.classList.remove('visible');
+                s.classList.add('hidden');
+            }
+        });
+    }
+
+    document.querySelector('.login').addEventListener('click', () => {
+        showSection('lParts');
+    });
+
+    document.querySelector('.fp').addEventListener('click', () => {
+        showSection('pParts');
+    });
+});

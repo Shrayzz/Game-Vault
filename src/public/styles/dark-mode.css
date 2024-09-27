@@ -21,7 +21,18 @@
 
 /*---- Global ----*/
 
-* { margin: 0; padding: 0}
+* {margin: 0; padding: 0}
+
+.active {
+    opacity: 1;
+    width: auto;
+    height: auto;
+    transition: all 0.5s;
+}
+.hidden {
+    display: none;
+    transition: all 0.5s;
+}
 
 body {
     /* background-color: black; */
@@ -32,6 +43,7 @@ body {
 hr {
     opacity: 0.25;
     background-color: #3B4244;
+    user-select: none;
 }
 
 header {
@@ -42,7 +54,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    user-select: none;
 }
 
 footer {
@@ -60,6 +72,7 @@ footer {
     line-height: 2;
     font-family: 'm';
     color: aliceblue;
+    user-select: none;
 }
 
 footer a, footer a:not(hover) {
@@ -203,6 +216,7 @@ footer a:hover {
     font-family: 'eb';
     font-size: 5vw;
     color: aliceblue;
+    user-select: none;
 }
 
 .descOverview {
@@ -212,16 +226,18 @@ footer a:hover {
     margin-top: 2vh;
     text-align: justify;
     width: 50vw;
+    user-select: none;
     line-height: 1.8;
 }
 
-/*---- Register ----*/
-#register {
+/*---- Login & Register ----*/
+
+#login, #register {
     display: flex;
     flex-direction: row;
 }
 
-.rContainer {
+.lContainer, .rContainer {
     background-color: rgba(0,0,0,0.48);
     z-index: 6;
     height: 100vh;
@@ -233,11 +249,11 @@ footer a:hover {
     color: aliceblue;
 }
 
-.rContainer > hr {
+.lContainer > hr, .rContainer > hr {
     opacity: 0.15;
 }
 
-.rBox {
+.lBox, .rBox {
     width: 45vw;
     height: auto;
     /* border: red 1px solid; */
@@ -246,7 +262,7 @@ footer a:hover {
     justify-content: center;
 }
 
-.login > h1 {
+#lParts h1, #pParts h1, .rParts > h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -254,11 +270,11 @@ footer a:hover {
     font-family: 'arcade';
     text-shadow: 2px 2px 30px #afafaf80;
     font-size: 75px;
-    margin-bottom: 50px;
-
+    margin-bottom: 30px;
+    user-select: none;
 }
 
-.login form {
+#lParts form, #pParts form, .rParts form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,9 +290,10 @@ footer a:hover {
     border: solid 0.5px #f0f8ff90;
     background-image: linear-gradient(45deg, #212121, #232323);
     color: aliceblue;
+    user-select: none;
 }
 
-.rSubmit, .rSubmit:not(hover) {
+.submitBtn, .submitBtn:not(hover) {
     font-family: 'eb';
     font-size: 15px;
     width: 10vw;
@@ -285,7 +302,7 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-.rSubmit:hover {
+.submitBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
@@ -293,7 +310,7 @@ footer a:hover {
     background-color: rgba(0, 102, 255, 0.251);
 }
 
-.login p {
+#lParts p, #pParts p, .rParts p {
     font-family: 'm';
     font-size: 15px;
     display: flex;
@@ -302,15 +319,17 @@ footer a:hover {
     justify-content: center;
     align-items: center;
     margin-top: 30px;
+    user-select: none;
 }
 
-.login a, .login a:not(hover) {
+#lParts a, #pParts a, .rParts a {
     text-decoration: none;
     color: rgb(0, 102, 255);
     transition: all 0.3s;
 }
-.login a:hover {
+#lParts a:hover, #pParts a:hover, .rParts a:hover {
     text-decoration: underline;
+    cursor: pointer;
     color:rgb(8, 0, 237);
     transition: all 0.3s
 }
@@ -336,4 +355,6 @@ footer a:hover {
     text-align: center;
     color: aliceblue;
     text-shadow: 2px 2px 30px #afafafAA;
+    user-select: none;
+
 }

@@ -1,60 +1,51 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1" />
-    <link rel="stylesheet" href="login.css" />
-
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1" />
+    <link rel="stylesheet" href="/styles/dark-mode.css">
+    <title>Login - Game Vault</title>
 </head>
 
-<body>
-    <header id="header">
-        <div class="header-content">
-            
-            
-            <a href="../../../index.html" class="headerTitle">Game Vault</a>
-        </div>
-    </header>
-
-    <main>
-        <div class="login-container">
-            <div class="login-box">
+<body id="login">
+    <div class="lContainer">
+        <div class="lBox translation">
+            <div id="lParts" class="page active">
                 <h1>Login</h1>
                 <form action="/auth" method="post">
-                    <div class="input-group">
-                        <label for="username">
-                            <i class="fas fa-user"></i>
-                        </label>
-                        <input type="text" name="username" placeholder="Username" id="username" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password">
-                            <i class="fas fa-lock"></i>
-                        </label>
-                        <input type="password" name="password" placeholder="Password" id="password" required />
-                    </div>
-                    <div class="options">
-                        <label><input type="checkbox" name="remember-me" /> Remember me</label>
-                        <a href="#">Forgot password?</a>
-                    </div>
-                    <input type="submit" value="Login" class="login-btn" />
-                    <p class="register">Don't have an account? <a href="#">Register</a></p>
+                    <input class="register" type="email" name="username" placeholder="Username" id="username" required />
+
+                    <input class="register" type="password" name="password" placeholder="Password" id="password"
+                        required />
+
+                    <input class="submitBtn" type="submit" value="Login" />
                 </form>
+                <p>Don't have an account ? <a href="/html/register.html">Register</a></p>
+                <p>Forgot password ? <a class="fp">Click here</a></p>
+            </div>
+
+            <div id="pParts" class="page hidden">
+                <h1>Login</h1>
+                <form action="/auth" method="post">
+                    <input class="register" pattern="^(?=.{3,16}$)([a-zA-Z0-9_-]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$"
+                     type="text" name="username" placeholder="Username" id="username" required />
+
+                    <input class="register" type="password" name="password" placeholder="Password" id="password"
+                        required />
+
+                    <input class="submitBtn" type="submit" value="Login" />
+                </form>
+                <p>Aready got your password ? <a class="login">Login</a></p>
             </div>
         </div>
-    </main>
-
-    <footer>
-        <p class="license">
-            This project is under
-            <a href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE">MIT License</a>
-        </p>
-        <p class="authors">
-            Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa
-        </p>
-    </footer>
+        <hr>
+    </div>    
+    <script src="../styles/display.js" defer></script>
+    <div class="rTitle">
+        <img src="/resources/images/logo.png" alt="" class="logo" />
+        <h1>Game<br>Vault</h1>
+    </div>
 </body>
 
 </html>
