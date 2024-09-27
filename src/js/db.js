@@ -86,19 +86,34 @@ async function dbDisconnect(con) {
     });
 }
 
-//----------------------------------SELECT----------------------------------\\
+//----------------------------------Boolean Method----------------------------------\\
 
 /**
- * Get the games of the database
- * @param {object} con your database
- * @returns {array[object]} return all games from the database
+ * Return is an user exist with his username or email
+ * @param {object} con your connetion
+ * @param {string} id the username or email of the user
+ * @returns {boolean} true if the user exist and false if the user does not exist
  */
-async function getGames(con) {
-    const [rows] = await con.query('SELECT * FROM game');
-    return rows;
+async function existUser(con, id) {
+    try {
+        const sql = 'SELECT id, username, email FROM accounts WHERE username = ? OR email = ?;';
+        const values = [id, id];
+
+        const [rows] = await con.query(sql, values);
+
+        if (rows.length === 1) {
+            return true;
+        }
+        return false;
+
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-//TODO: exist user return bool param()
+//----------------------------------SELECT----------------------------------\\
+
+//TODO: get pwd avec username
 
 //----------------------------------INSERT----------------------------------\\
 
@@ -110,3 +125,12 @@ async function getGames(con) {
 
 //----------------------------------TESTS----------------------------------\\
 
+async function testExistUser() {
+    await dbInit();
+    const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+    let data = await existUser(con, 'jesuisuntest@email.com');
+    console.log(data);
+    data = await existUser(con, 'badNameOrEmail');
+    console.log(data);
+    await dbDisconnect(con);
+}
