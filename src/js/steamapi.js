@@ -154,7 +154,7 @@ async function GetFriends(steamid, debug = false) {
 }
 
 /**
- * 
+ * Function to get play account details based on steamid
  * @param {string} steamid steamid of the account to get the summary of it 
  * @param {boolean} debug if you want to output the response to a json file
  * @returns {Promise<Object>} the account steamid summary
@@ -187,7 +187,7 @@ async function GetPlayerSummary(steamid, debug = false) {
 }
 
 /**
- * 
+ * Function to get player achievements on a definied game for a defined account
  * @param {string} steamid steamid of the account to get the achivements of it
  * @param {string} appid appid to get the achivements earned by the specified steamid account
  * @param {boolean} debug if you want to output the response to a json file
@@ -226,4 +226,4 @@ async function GetPlayerAchivements(steamid, appid, debug = false) {
     // console.log(b);
 })();
 
-module.exports = { GetApps, GetAppDetails }
+module.exports = { GetApps, GetAppDetails, GetOwnedGames, GetFriends, GetPlayerSummary, GetPlayerAchivements }

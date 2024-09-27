@@ -4,19 +4,19 @@
 
 @font-face {
     font-family: 'arcade';
-    src: url('./../resources/fonts/ARCADECLASSIC.ttf');
+    src: url('/resources/fonts/ARCADECLASSIC.ttf');
 }
 @font-face {
     font-family: 'eb';
-    src: url('./../resources/fonts/Inter-ExtraBold.ttf');
+    src: url('/resources/fonts/Inter-ExtraBold.ttf');
 }
 @font-face {
     font-family: 'm';
-    src: url('./../resources/fonts/Inter-Medium.ttf');
+    src: url('/resources/fonts/Inter-Medium.ttf');
 }
 @font-face {
     font-family: 'sb';
-    src: url('./../resources/fonts/Inter-SemiBold.ttf');
+    src: url('  /resources/fonts/Inter-SemiBold.ttf');
 }
 
 /*---- Global ----*/
