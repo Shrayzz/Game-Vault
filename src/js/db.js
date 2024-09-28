@@ -113,11 +113,50 @@ async function existUser(con, id) {
 
 //----------------------------------SELECT----------------------------------\\
 
-//TODO: get pwd avec username
+/**
+ * Get the password of an user from his username or email
+ * @param {object} con your connection
+ * @param {string} id the username or email of the user
+ * @returns {string} the password of the user or undefined
+ */
+async function getUserPassword(con, id) {
+    try {
+        const sql = 'SELECT password FROM accounts WHERE username = ? OR email = ?;';
+        const values = [id, id];
+
+        const [rows] = await con.query(sql, values);
+
+        return rows[0]?.password;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 //----------------------------------INSERT----------------------------------\\
 
-//TODO: insert user
+/**
+ * Insert a new user into the database
+ * @param {object} con your connection
+ * @param {string} username the username of your user
+ * @param {string} email the email of your user
+ * @param {string} password the password of your user
+ */
+async function createUser(con, username, email, password) {
+    try {
+        const sql = 'INSERT INTO accounts(username, password, email) VALUES(?, ?, ?)';
+        const values = [username, password, email];
+
+        await con.query(sql, values);
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+//----------------------------------UPDATE----------------------------------\\
+
+
 
 //----------------------------------DELETE----------------------------------\\
 
@@ -125,12 +164,36 @@ async function existUser(con, id) {
 
 //----------------------------------TESTS----------------------------------\\
 
+/**
+ * Test existUser function
+ */
 async function testExistUser() {
     await dbInit();
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
-    let data = await existUser(con, 'jesuisuntest@email.com');
-    console.log(data);
-    data = await existUser(con, 'badNameOrEmail');
-    console.log(data);
+    console.log(await existUser(con, 'test2'));
+    console.log(await existUser(con, 'jesuisuntest@email.com'));
+    console.log(await existUser(con, 'badNameOrEmail'));
+    await dbDisconnect(con);
+}
+
+/**
+ * Test getUserPassword function
+ */
+async function testGetUserPassword() {
+    await dbInit();
+    const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+    console.log(await getUserPassword(con, 'test2'));
+    console.log(await getUserPassword(con, 'jesuisuntest@email.com'));
+    console.log(await getUserPassword(con, 'badNameOrEmail'));
+    await dbDisconnect(con);
+}
+
+/**
+ * Test createUser function
+ */
+async function testCreateUser() {
+    await dbInit();
+    const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+    console.log(await createUser(con, 'insertTest', 'insert@test.testing', 'insertTestPWD'));
     await dbDisconnect(con);
 }
