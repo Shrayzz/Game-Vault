@@ -45,7 +45,7 @@ async function GetApps(debug = false) {
 async function GetAppDetails(appid, debug = false) {
 
     try {
-        const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}&l=english`);
+        const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}&l=english&format=json`);
 
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
@@ -97,7 +97,7 @@ async function GetAppDetails(appid, debug = false) {
  */
 async function GetOwnedGames(steamid, debug = false) {
     try {
-        const response = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&format=json`);
+        const response = await fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&format=json&l=english&format=json`);
 
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
@@ -129,7 +129,7 @@ async function GetOwnedGames(steamid, debug = false) {
  */
 async function GetFriends(steamid, debug = false) {
     try {
-        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&relationship=friend`);
+        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.TOKEN}&steamid=${steamid}&relationship=friend&l=english&format=json`);
 
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
@@ -161,7 +161,7 @@ async function GetFriends(steamid, debug = false) {
  */
 async function GetPlayerSummary(steamid, debug = false) {
     try {
-        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.TOKEN}&steamids=${steamid}`);
+        const response = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.TOKEN}&steamids=${steamid}&l=english&format=json`);
 
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
@@ -193,9 +193,40 @@ async function GetPlayerSummary(steamid, debug = false) {
  * @param {boolean} debug if you want to output the response to a json file
  * @returns {Promise<Object>} the achhivements list for the specified appid of the steamid account
  */
-async function GetPlayerAchivements(steamid, appid, debug = false) {
+async function GetPlayerAchievements(steamid, appid, debug = false) {
     try {
-        const response = await fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.TOKEN}&steamid=${steamid}`);
+        const response = await fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.TOKEN}&steamid=${steamid}&l=english&format=json`);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (debug) {
+            // debug - writing it to a json file
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), err => {
+                if (err) {
+                    console.error(err);
+                }
+            });
+        }
+
+        return data;
+
+    } catch (err) {
+        console.error(err.message)
+    }
+}
+
+/**
+ * Function to get achievements data from an app id
+ * @param {*} appid appid of the to get the achievements data
+ * @param {*} debug if you want to output the response to a json file
+ */
+async function GetAchievementsData(appid, debug = false) {
+    try {
+        const response = await fetch(`http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key=${process.env.TOKEN}&appid=${appid}&l=english&format=json`);
 
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`);
@@ -220,10 +251,9 @@ async function GetPlayerAchivements(steamid, appid, debug = false) {
 }
 
 (async () => {
-    const a = await GetPlayerSummary('76561199168266214', true);
-    // console.log(a);
+    const a = await GetAchievementsData('322170', true);
     // const b = await GetAppDetails("1222140", true);
     // console.log(b);
 })();
 
-module.exports = { GetApps, GetAppDetails }
+export default { GetApps, GetAppDetails, GetOwnedGames, GetFriends, GetPlayerSummary, GetPlayerAchievements, GetAchievementsData }
