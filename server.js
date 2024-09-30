@@ -15,8 +15,8 @@ import register from "./src/middleware/register";
 const server = serve({
     async fetch(req) {
 
-        const con = await db.dbConnect('localhost', 'root', 'root');
-        await db.dbInit();
+        // const con = await db.dbConnect('localhost', 'root', 'root');
+        // await db.dbInit();
 
         const url = new URL(req.url);
 
@@ -41,7 +41,7 @@ const server = serve({
 
         }
         // get files in public directory
-        const fpath = path.join(__dirname, "src", "public", url.pathname.substring(1));
+        const fpath = path.join(__dirname, "public", url.pathname.substring(1));
         const file = Bun.file(fpath);
 
         // return public file if it exist
