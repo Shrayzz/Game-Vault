@@ -3,34 +3,118 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1" />
-    <link rel="stylesheet" href="/styles/dark-mode.css">
+    <link rel="stylesheet" href="/styles/dark-mode.css" />
     <title>Register - Game Vault</title>
-</head>
+  </head>
 
   <body id="register">
     <div class="rContainer">
-        <div class="rBox">
-            <div class="rParts">
-                <h1>Register</h1>
-                <form action="/auth" method="post">
-                    <input class="register" type="text" name="username" placeholder="Username" id="username" required />
+      <div class="rBox">
+        <div class="rParts">
+          <h1>Register</h1>
+          <form>
+            <input
+              class="register"
+              type="text"
+              name="username"
+              placeholder="Username"
+              id="username"
+              required
+            />
 
-                    <input class="register" type="text" name="email" placeholder="Email" id="username" required />
+            <input
+              class="register"
+              type="email"
+              name="email"
+              placeholder="Email"
+              id="email"
+              required
+            />
 
-                    <input class="register" type="text" name="cemail" placeholder="Confirm Email" id="username"
-                        required />
+            <input
+              class="register"
+              type="email"
+              name="cemail"
+              placeholder="Confirm Email"
+              id="cemail"
+              required
+            />
 
-                    <input class="register" type="password" name="password" placeholder="Password" id="password"
-                        required />
+            <input
+              class="register"
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="password"
+              required
+            />
 
-                    <input class="register" type="password" name="cpassword" placeholder="Confirm Password"
-                        id="password" required />
-                    <input class="submitBtn" type="submit" value="Register" />
-                </form>
-                <p>Already have an account ? <a href="/html/login.html">Login</a></p>
-            </div>
+            <input
+              class="register"
+              type="password"
+              name="cpassword"
+              placeholder="Confirm Password"
+              id="cpassword"
+              required
+            />
+            <input id="submitBtn" type="button" value="Register" />
+          </form>
+
+          <script>
+            const btn = document.getElementById("submitBtn");
+            btn.addEventListener("click", async () => {
+              try {
+                const username = document
+                  .getElementById("username")
+                  .value.trim();
+                const email = document.getElementById("email").value.trim();
+                const cemail = document.getElementById("cemail").value.trim();
+                const password = document
+                  .getElementById("password")
+                  .value.trim();
+                const cpassword = document
+                  .getElementById("cpassword")
+                  .value.trim();
+
+                if (!username || !email || !cemail || !password || !cpassword) {
+                  // pop up to say that all filled are not filled
+                  return;
+                } else if (email !== cemail || password !== cpassword) {
+                  // pop up to say that emails or passwords are not matching
+                  return;
+                }
+
+                const response = await fetch(
+                  "http://localhost:3000/api/register",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      username: username,
+                      email: email,
+                      password: password,
+                    }),
+                  }
+                );
+
+                if (response.ok) {
+                  // pop up to say account registered
+                } else {
+                  // pop up to say that something has gone wrong
+                }
+              } catch (err) {
+                // pop up to display err.message
+                console.log(err.message);
+              }
+            });
+          </script>
+
+          <p>Already have an account ? <a href="/login">Login</a></p>
         </div>
-        <hr>
+      </div>
+      <hr />
     </div>
     <div class="rTitle">
       <img src="/resources/images/logo.png" alt="" class="logo" />

@@ -21,7 +21,7 @@ async function register(req, con) {
         return new Response("Succes, please login now", { status: 200 });
     }
     else {
-        return new Response("Email or Username already used !", { status: 500 }); //TODO: edit based on db functions
+        return new Response("Error", { status: 500 }); //TODO: edit based on db functions
     }
 }
 
