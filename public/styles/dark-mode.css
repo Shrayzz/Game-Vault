@@ -310,6 +310,35 @@ footer a:hover {
     background-color: rgba(0, 102, 255, 0.251);
 }
 
+#success, #error {
+    font-family: 'm';
+    font-size: 20px;
+    color: aliceblue;
+    z-index: 6;
+
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 15px;
+}
+
+#success {
+    border: rgb(0, 124, 8) 2px solid;
+    border-radius: 20px;
+    background-color: rgba(0, 124, 8, 0.415);
+}
+#error {
+    bottom: 50px;
+    left: 30vw;
+    border: rgb(124, 0, 0) 2px solid;
+    border-radius: 20px;
+    background-color: rgba(124, 0, 0, 0.415);
+}
+
+
 #lParts p, #pParts p, .rParts p {
     font-family: 'm';
     font-size: 15px;
