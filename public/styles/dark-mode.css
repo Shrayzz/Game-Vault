@@ -331,6 +331,7 @@ footer a:hover {
     background-color: rgba(0, 124, 8, 0.415);
 }
 #error {
+    display: none;
     bottom: 50px;
     left: 30vw;
     border: rgb(124, 0, 0) 2px solid;
