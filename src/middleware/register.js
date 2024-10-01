@@ -3,15 +3,15 @@ import db from "../js/db.js";
 /**
  * Function to register based on data from the request
  * @param {Request} req the request 
- * @param  {Object} con the databse connection
+ * @param  {Object} con the database connection
  * @returns {Response} the response to the base request
  */
 async function register(req, con) {
     // get data from the resquest
-    const { email, username, password } = req.body;
+    const { username, email, password } = await req.json();
 
     // hash password
-    const hashedpassword = Bun.password.hash(password);
+    const hashedpassword = await Bun.password.hash(password);
 
     // try to create the user in db with given data
     const userCreated = await db.createUser(con, username, email, hashedpassword);
