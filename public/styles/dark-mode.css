@@ -6,14 +6,17 @@
     font-family: 'arcade';
     src: url('./../resources/fonts/ARCADECLASSIC.ttf');
 }
+
 @font-face {
     font-family: 'eb';
     src: url('./../resources/fonts/Inter-ExtraBold.ttf');
 }
+
 @font-face {
     font-family: 'm';
     src: url('./../resources/fonts/Inter-Medium.ttf');
 }
+
 @font-face {
     font-family: 'sb';
     src: url('./../resources/fonts/Inter-SemiBold.ttf');
@@ -21,7 +24,10 @@
 
 /*---- Global ----*/
 
-* {margin: 0; padding: 0}
+* {
+    margin: 0;
+    padding: 0
+}
 
 .active {
     opacity: 1;
@@ -29,6 +35,7 @@
     height: auto;
     transition: all 0.5s;
 }
+
 .hidden {
     display: none;
     transition: all 0.5s;
@@ -75,26 +82,37 @@ footer {
     user-select: none;
 }
 
-footer a, footer a:not(hover) {
+footer a,
+footer a:not(hover) {
     text-decoration: none;
     color: rgb(0, 102, 255);
     transition: all 0.3s;
 }
+
 footer a:hover {
     text-decoration: underline;
-    color:rgb(8, 0, 237);
+    color: rgb(8, 0, 237);
     transition: all 0.3s
 }
 
 /*---- Index ----*/
 
 @keyframes backgroundPositionAnimation {
-    0%{background-position:0% 97%}
-    50%{background-position:100% 4%}
-    100%{background-position:0% 97%}
+    0% {
+        background-position: 0% 97%
+    }
+
+    50% {
+        background-position: 100% 4%
+    }
+
+    100% {
+        background-position: 0% 97%
+    }
 }
 
-.A button, .A button:not(hover) {
+.A button,
+.A button:not(hover) {
     width: 7vw;
     height: 5vh;
     border-radius: 3px;
@@ -108,6 +126,7 @@ footer a:hover {
 
     transition: all 0.3s;
 }
+
 .A button:hover {
     transform: scale(1.1);
     cursor: pointer;
@@ -120,7 +139,8 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-.B button, .B button:not(hover) {
+.B button,
+.B button:not(hover) {
     font-family: 'eb';
     filter: invert(100%);
     background-color: transparent;
@@ -129,7 +149,7 @@ footer a:hover {
 
     width: 7vw;
     height: 8vh;
-    
+
     position: relative;
     display: flex;
     flex-direction: column;
@@ -137,13 +157,9 @@ footer a:hover {
     justify-content: center;
     transition: all 0.3s;
 }
+
 .B button:hover {
-    filter: invert(36%) 
-            sepia(100%) 
-            saturate(514%) 
-            hue-rotate(159deg) 
-            brightness(95%) 
-            contrast(97%);
+    filter: invert(36%) sepia(100%) saturate(514%) hue-rotate(159deg) brightness(95%) contrast(97%);
 
     transform: scale(1.2);
     cursor: pointer;
@@ -163,7 +179,9 @@ footer a:hover {
     user-select: none;
 }
 
-.headerTitle {font-size: 4vw;}
+.headerTitle {
+    font-size: 4vw;
+}
 
 .logo {
     height: 13vh;
@@ -178,6 +196,7 @@ footer a:hover {
     justify-content: space-between;
     align-items: center;
 }
+
 .h_right {
     padding: 2vw;
 
@@ -187,7 +206,7 @@ footer a:hover {
     align-items: center;
 }
 
-.void-main { 
+.void-main {
     padding: 5vh;
     display: flex;
     flex-direction: column;
@@ -195,12 +214,23 @@ footer a:hover {
     align-items: center;
 }
 
-.mainTitle, .gvTitle {
+.mainTitle,
+.gvTitle {
     color: aliceblue;
     user-select: none;
 }
-.mainTitle {font-family: 'eb';font-size: 7vw;}
-.gvTitle {font-family: 'arcade'; font-size: 10vw; letter-spacing: 10px; text-shadow: 2px 2px 30px #afafaf;}
+
+.mainTitle {
+    font-family: 'eb';
+    font-size: 7vw;
+}
+
+.gvTitle {
+    font-family: 'arcade';
+    font-size: 10vw;
+    letter-spacing: 10px;
+    text-shadow: 2px 2px 30px #afafaf;
+}
 
 .void0 {
     position: relative;
@@ -232,28 +262,32 @@ footer a:hover {
 
 /*---- Login & Register ----*/
 
-#login, #register {
+#login,
+#register {
     display: flex;
     flex-direction: row;
 }
 
-.lContainer, .rContainer {
-    background-color: rgba(0,0,0,0.48);
+.lContainer,
+.rContainer {
+    background-color: rgba(0, 0, 0, 0.48);
     z-index: 6;
     height: 100vh;
     width: 45vw;
     position: relative;
     overflow: hidden;
-    
+
     display: flex;
     color: aliceblue;
 }
 
-.lContainer > hr, .rContainer > hr {
+.lContainer>hr,
+.rContainer>hr {
     opacity: 0.15;
 }
 
-.lBox, .rBox {
+.lBox,
+.rBox {
     width: 45vw;
     height: auto;
     /* border: red 1px solid; */
@@ -262,7 +296,9 @@ footer a:hover {
     justify-content: center;
 }
 
-#lParts h1, #pParts h1, .rParts > h1 {
+#lParts h1,
+#pParts h1,
+.rParts>h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,11 +310,13 @@ footer a:hover {
     user-select: none;
 }
 
-#lParts form, #pParts form, .rParts form {
+#lParts form,
+#pParts form,
+.rParts form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 24px; 
+    gap: 24px;
 }
 
 .register {
@@ -293,7 +331,8 @@ footer a:hover {
     user-select: none;
 }
 
-#submitBtn, #submitBtn:not(hover) {
+#submitBtn,
+#submitBtn:not(hover) {
     font-family: 'eb';
     font-size: 15px;
     width: 10vw;
@@ -310,14 +349,15 @@ footer a:hover {
     background-color: rgba(0, 102, 255, 0.251);
 }
 
-#success, #error {
+#success,
+#error {
     font-family: 'm';
     font-size: 20px;
     color: aliceblue;
     z-index: 6;
 
     position: absolute;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -330,8 +370,8 @@ footer a:hover {
     border-radius: 20px;
     background-color: rgba(0, 124, 8, 0.415);
 }
+
 #error {
-    display: none;
     bottom: 50px;
     left: 30vw;
     border: rgb(124, 0, 0) 2px solid;
@@ -340,7 +380,9 @@ footer a:hover {
 }
 
 
-#lParts p, #pParts p, .rParts p {
+#lParts p,
+#pParts p,
+.rParts p {
     font-family: 'm';
     font-size: 15px;
     display: flex;
@@ -352,15 +394,20 @@ footer a:hover {
     user-select: none;
 }
 
-#lParts a, #pParts a, .rParts a {
+#lParts a,
+#pParts a,
+.rParts a {
     text-decoration: none;
     color: rgb(0, 102, 255);
     transition: all 0.3s;
 }
-#lParts a:hover, #pParts a:hover, .rParts a:hover {
+
+#lParts a:hover,
+#pParts a:hover,
+.rParts a:hover {
     text-decoration: underline;
     cursor: pointer;
-    color:rgb(8, 0, 237);
+    color: rgb(8, 0, 237);
     transition: all 0.3s
 }
 
@@ -374,12 +421,12 @@ footer a:hover {
     /* border: red 1px solid; */
 }
 
-.rTitle > img {
+.rTitle>img {
     width: 260px;
     height: 260px;
 }
 
-.rTitle > h1 {
+.rTitle>h1 {
     font-family: 'arcade';
     font-size: 100px;
     text-align: center;

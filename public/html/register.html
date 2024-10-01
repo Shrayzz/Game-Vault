@@ -64,25 +64,24 @@
             const btn = document.getElementById("submitBtn");
             btn.addEventListener("click", async () => {
               try {
-                const username = document
-                  .getElementById("username")
-                  .value.trim();
+                const username = document.getElementById("username").value.trim();
                 const email = document.getElementById("email").value.trim();
                 const cemail = document.getElementById("cemail").value.trim();
-                const password = document
-                  .getElementById("password")
-                  .value.trim();
-                const cpassword = document
-                  .getElementById("cpassword")
-                  .value.trim();
+                const password = document.getElementById("password").value.trim();
+                const cpassword = document.getElementById("cpassword").value.trim();
+
+                const errorDiv = document.getElementById("error");
+                const errorP = document.getElementById("error-text");
 
                 if (!username || !email || !cemail || !password || !cpassword) {
                   // pop up to say that all filled are not filled
-                  document.getElementById("error").style.display = "block";
-                  document.getElementById("error-text").innerHTML = "🙏 test";
+                  errorDiv.style.display = "block";
+                  errorP.innerHTML ="❌ Not all input are filled !";
                   return;
                 } else if (email !== cemail || password !== cpassword) {
                   // pop up to say that emails or passwords are not matching
+                  errorDiv.style.display = "block";
+                  errorP.innerHTML = "❌ Emails and/or Passwords <br> are not matching";
                   return;
                 }
 
@@ -108,7 +107,8 @@
                 }
               } catch (err) {
                 // pop up to display err.message
-                console.log(err.message);
+                errorDiv.style.display = "block";
+                errorP.innerHTML = `❌ An Error has occured: <br> ${err.message}`;
                 return;
               }
             });
