@@ -2,6 +2,7 @@
 
 /*---- Requirements ----*/
 
+
 @font-face {
     font-family: 'arcade';
     src: url('./../resources/fonts/ARCADECLASSIC.ttf');
@@ -30,7 +31,7 @@
 }
 
 .active {
-    opacity: 1;
+    display: block;
     width: auto;
     height: auto;
     transition: all 0.5s;
@@ -97,20 +98,6 @@ footer a:hover {
 
 /*---- Index ----*/
 
-@keyframes backgroundPositionAnimation {
-    0% {
-        background-position: 0% 97%
-    }
-
-    50% {
-        background-position: 100% 4%
-    }
-
-    100% {
-        background-position: 0% 97%
-    }
-}
-
 .A button,
 .A button:not(hover) {
     width: 7vw;
@@ -175,6 +162,7 @@ footer a:hover {
 .headerTitle {
     font-family: 'arcade';
     color: aliceblue;
+    letter-spacing: 3px;
     text-shadow: 2px 2px 40px #7a7a7a;
     user-select: none;
 }
@@ -283,7 +271,7 @@ footer a:hover {
 
 .lContainer>hr,
 .rContainer>hr {
-    opacity: 0.15;
+    opacity: 0.2;
 }
 
 .lBox,
@@ -349,20 +337,51 @@ footer a:hover {
     background-color: rgba(0, 102, 255, 0.251);
 }
 
+@keyframes popupAnimation {
+    0% {
+        display: block;
+        opacity: 0;
+        transform: scale(0.9) translateY(-10px);
+    }
+    10% {
+        opacity: 1;
+        transform: scale(1) translateY(0px);
+    }
+    89% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    99% {
+        display: none;
+        opacity: 0;
+        transform: scale(0.9) translateY(-10px);
+    }
+}
+
+
 #success,
 #error {
+    position: absolute;
+    top: 3%; 
+    /* left: 50%; */
+    transform: translateX(-50%); 
     font-family: 'm';
-    font-size: 20px;
+    font-size: 15px;
     color: aliceblue;
     z-index: 6;
-
-    position: absolute;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-
     padding: 15px;
+    max-width: 70%; 
+    word-wrap: break-word; 
+    border: rgb(124, 0, 0) 2px solid;
+    border-radius: 20px;
+    background-color: rgba(124, 0, 0, 0.415);
+    display: none;
+    opacity: 0;
+    animation: popupAnimation 5s ease forwards;
 }
 
 #success {
@@ -372,13 +391,10 @@ footer a:hover {
 }
 
 #error {
-    bottom: 50px;
-    left: 30vw;
     border: rgb(124, 0, 0) 2px solid;
     border-radius: 20px;
     background-color: rgba(124, 0, 0, 0.415);
 }
-
 
 #lParts p,
 #pParts p,
@@ -429,6 +445,7 @@ footer a:hover {
 .rTitle>h1 {
     font-family: 'arcade';
     font-size: 100px;
+    letter-spacing: 5px;
     text-align: center;
     color: aliceblue;
     text-shadow: 2px 2px 30px #afafafAA;
