@@ -49,7 +49,7 @@ btn.addEventListener("click", async () => {
             errorDiv.style.display = "block";
             errorP.innerHTML = "❌ㆍPlease enter a valid email address.";
             setTimeout(() => {
-                errorDiv.style.display = "none"; 
+                errorDiv.style.display = "none";
             }, 5000);
             return;
         }
@@ -58,33 +58,30 @@ btn.addEventListener("click", async () => {
         const response = await fetch(
             "http://localhost:3000/api/register",
             {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                username: username,
-                email: email,
-                password: password,
-              }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    password: password,
+                }),
             }
-          );
+        );
 
         if (response.ok) {
             window.location.href = "/login";
-        } else {
-            const data = await response.json();
+        } else if (response.status === 502) {
             errorDiv.style.display = "block";
-            errorP.innerHTML = `❌ㆍError: ${data.message}`;
-            setTimeout(() => {
-                errorDiv.style.display = "none"; 
-            }, 5000);
+            errorP.innerHTML = '❌ㆍUser already exists!';
+            return;
         }
     } catch (err) {
         errorDiv.style.display = "block";
         errorP.innerHTML = `⛔ㆍAn error occurred: ${err.message}`;
         setTimeout(() => {
-            errorDiv.style.display = "none"; 
+            errorDiv.style.display = "none";
         }, 5000);
     }
 });

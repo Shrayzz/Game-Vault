@@ -6,15 +6,15 @@ import db from "./src/js/db"
 
 // middleware functions
 import register from "./src/middleware/register";
-// import { auth, checkAuth } from "./src/middleware/auth";
+import auth from "./src/middleware/auth";
 
-// token for sessions so when expired user is disconnected ? to generate and store in DB
-// https://bun.sh/guides/util/hash-a-password
 
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
 const con = await db.dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
-console.log(require('crypto').randomBytes(48).toString('hex'));
+await db.addToken(con, 'testt', require('crypto').randomBytes(48).toString('hex'));
+
+
 
 const server = serve({
     async fetch(req) {
@@ -37,7 +37,7 @@ const server = serve({
         if (req.method === 'GET' && url.pathname === "/new-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "new-password.html")));
 
         // POST routes
-        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth(req);
+        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth.auth(req, con);
         if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
 
 
