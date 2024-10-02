@@ -58,7 +58,7 @@ async function dbInit() {
     //Create Tables
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
 
-    const loginTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+    const loginTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, token bit(48) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const listTable = 'CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const gameTable = 'CREATE TABLE IF NOT EXISTS game(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, `release` date NOT NULL, publishers varchar(50) NOT NULL, developers varchar(50) NOT NULL, price float NOT NULL, rating int, description text, languages text, plateforms json, pcRequirement json, image blob, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const categoryTable = 'CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;'
@@ -149,7 +149,6 @@ async function createUser(con, username, email, password) {
         const values = [username, password, email];
 
         await con.query(sql, values);
-
         return true;
 
     } catch (err) {
@@ -158,9 +157,29 @@ async function createUser(con, username, email, password) {
     }
 }
 
+
 //----------------------------------UPDATE----------------------------------\\
 
+/**
+ * Update the account to add a new token
+ * @param {object} con your connection
+ * @param {string} username the user to add a login token 
+ * @param {*} token the token value
+ * @returns {boolean} if the token was successfully added
+ */
+async function addToken(con, username, token) {
+    try {
+        const sql = 'UPDATE accounts SET token = ? WHERE username = ?;';
+        const values = [token, username];
 
+        await con.query(sql, values);
+        return true;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
 
 //----------------------------------DELETE----------------------------------\\
 
@@ -207,4 +226,4 @@ async function testCreateUser() {
 //     await testCreateUser();
 // })();
 
-export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, createUser };
+export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, createUser, existUser, addToken };

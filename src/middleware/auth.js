@@ -1,3 +1,4 @@
+import db from "../js/db"
 import jwt from "jsonwebtoken";
 
 /**
@@ -9,7 +10,7 @@ async function auth(req) {
     const { username, password } = req.body;
 
     // check for credentials if they exists or not
-    const usernameExist = await db.checkUser(username); //TODO: edit based on db functions
+    const usernameExist = await db.checkAuth(username); //TODO: edit based on db functions
     const passwordExist = await Bun.password.verify(password, await db.getPassword(username)); //TODO: edit based on db functions
 
     // return error if credentials are invalid
@@ -18,7 +19,9 @@ async function auth(req) {
     }
 
     // generate a secret key, TO BE CHANGED like store the key associated to the user when connected in DB
-    // const secret = require('crypto').randomBytes(48).toString('hex'); console.log(token); // check if it work
+    const secret = require('crypto').randomBytes(48).toString('hex'); console.log(token); // check if it work
+    const addToken = await db.addToken(con, username, token);
+    console.log(addToken);
 
     // create the payload
     const payload = {

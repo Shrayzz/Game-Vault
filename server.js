@@ -14,6 +14,7 @@ import register from "./src/middleware/register";
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
 const con = await db.dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+console.log(require('crypto').randomBytes(48).toString('hex'));
 
 const server = serve({
     async fetch(req) {
@@ -35,7 +36,7 @@ const server = serve({
         if (req.method === 'GET' && url.pathname === "/forgot-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "forgot-password.html")));
 
         // POST routes
-        // if (req.method === 'POST' && url.pathname === "/api/auth") return await auth(req);
+        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth(req);
         if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
 
 

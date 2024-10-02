@@ -13,10 +13,18 @@ async function register(req, con) {
     // hash password
     const hashedpassword = await Bun.password.hash(password);
 
-    // try to create the user in db with given data
-    const userCreated = await db.createUser(con, username, email, hashedpassword);
+    const checkUsernameExist = await db.existUser(con, username);
+    const checkEmailExist = await db.existUser(con, email);
+    let userCreated;
 
-    // check if succeed
+    // check if user already exist
+    if (!checkUsernameExist && !checkEmailExist) {
+        userCreated = await db.createUser(con, username, email, hashedpassword);
+    } else {
+        return new Response("User already exist", { status: 502 });
+    }
+
+    // check if user creation succeed
     if (userCreated) {
         return new Response("Succes, please login now", { status: 200 });
     }
