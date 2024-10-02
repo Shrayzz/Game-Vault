@@ -11,7 +11,7 @@
 <body id="register">
     <div class="rContainer">
         <div class="rBox">
-            <div id="error">
+            <div id="error" style="display: none;">
                 <p id="error-text"></p>
             </div>
             <div class="rParts">
@@ -26,15 +26,22 @@
                         required />
 
                     <!-- 8 chars minimum, 1 majuscule, 1 minuscule, 1 numéro -->
-                    <input class="register" type="password" name="password" placeholder="Password" id="password"
-                        required />
+                    <div class="show-hide-password">
+                        <input class="register" type="password" name="password" placeholder="Password" id="password"
+                            required />
+                        <img src="/resources/images/show.png" alt="" id="eye" onclick="ShowHidePassword('password', 'eye')">
+                    </div>
 
                     <!-- 8 chars, majuscule, minuscule, numéro -->
-                    <input class="register" type="password" name="cpassword" placeholder="Confirm Password"
-                        id="cpassword" required />
+                    <div class="show-hide-cpassword">
+                        <input class="register" type="password" name="cpassword" placeholder="Confirm Password"
+                            id="cpassword" required />
+                        <img src="/resources/images/show.png" alt="" id="ceye" onclick="ShowHidePassword('cpassword', 'ceye')">
+                    </div>
                     <input id="submitBtn" type="button" value="Register" />
                 </form>
                 <script src="/js/displayPopups.js"></script>
+                <script src="/js/displayPassword.js"></script>
                 <p>Already have an account ? <a href="/login">Login</a></p>
             </div>
         </div>

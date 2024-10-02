@@ -12,9 +12,6 @@ import auth from "./src/middleware/auth";
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
 const con = await db.dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
-await db.addToken(con, 'testt', require('crypto').randomBytes(48).toString('hex'));
-
-
 
 const server = serve({
     async fetch(req) {

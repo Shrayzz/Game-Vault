@@ -10,6 +10,9 @@
   <body id="login">
     <div class="lContainer">
       <div class="lBox">
+        <div id="success" style="display: none;">
+            <p></p>
+          </div>
         <div id="lParts">
           <h1>Login</h1>
           <form>
@@ -31,8 +34,9 @@
               required
             />
 
-            <input id="submitBtn" type="button" value="Login" />
+            <input id="loginBtn" type="button" value="Login" />
           </form>
+          <script src="/js/displayPopups.js"></script>
           <p>Don't have an account ? <a href="/register">Register</a></p>
           <p>
             Forgot password ?
@@ -42,61 +46,13 @@
       </div>
       <hr />
     </div>
-    <script src="/styles/display.js" defer></script>
     <div class="rTitle">
       <img src="/resources/images/logo.png" alt="" class="logo" />
       <h1>Game<br />Vault</h1>
     </div>
 
-    <script>
-      const btn = document.getElementById("submitBtn");
-      btn.addEventListener("click", async () => {
-        try {
-          const username = document.getElementById("username").value.trim();
-          const password = document.getElementById("password").value.trim();
-
-          console.log(username, password);
-
-          if (!username || !password) {
-            // pop up to say that all field are not filled
-            return;
-          }
-
-          const response = await fetch("http://localhost:3000/api/auth", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: username,
-              password: password,
-            }),
-          });
-
-          if (response.ok) {
-            //pop up to says succesfull login
-            return;
-          } else {
-            // pop up to say incorrect login or please register
-            return;
-          }
-        } catch (err) {
-          // pop to display the err.message
-          console.log(err);
-        }
-      });
-    </script>
-
-    <div id="success" class="popup">
-      <p>
-        ✔️ㆍYour account has been <br />
-        successfully registered
-      </p>
-    </div>
     <div id="error">
       <p id="error-text">
-        ❌ㆍSome informations are <br />
-        uncompleted or erroned
       </p>
     </div>
   </body>

@@ -83,8 +83,7 @@ footer {
     user-select: none;
 }
 
-footer a,
-footer a:not(hover) {
+footer a {
     text-decoration: none;
     color: rgb(0, 102, 255);
     transition: all 0.3s;
@@ -98,8 +97,7 @@ footer a:hover {
 
 /*---- Index ----*/
 
-.A button,
-.A button:not(hover) {
+.A button {
     width: 7vw;
     height: 5vh;
     border-radius: 3px;
@@ -126,8 +124,7 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-.B button,
-.B button:not(hover) {
+.B button {
     font-family: 'eb';
     filter: invert(100%);
     background-color: transparent;
@@ -319,8 +316,26 @@ footer a:hover {
     user-select: none;
 }
 
-#submitBtn,
-#submitBtn:not(hover) {
+.show-hide-password, .show-hide-cpassword {position: relative;}
+.show-hide-password input[type=password], .show-hide-cpassword input[type=password] {position: relative;}
+
+.show-hide-password img, .show-hide-cpassword img {
+    position: absolute;
+    width: 20px;
+    height: auto;
+    top: 18px;
+    right: 20px;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+.show-hide-password img:hover, .show-hide-cpassword img:hover {
+    transform: scale(1.2);
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+#submitBtn, #loginBtn {
     font-family: 'eb';
     font-size: 15px;
     width: 10vw;
@@ -329,7 +344,7 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-#submitBtn:hover {
+#submitBtn:hover, #loginBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
@@ -382,6 +397,7 @@ footer a:hover {
     display: none;
     opacity: 0;
     animation: popupAnimation 5s ease forwards;
+    user-select: none;
 }
 
 #success {
@@ -434,12 +450,14 @@ footer a:hover {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    user-select: none;
     /* border: red 1px solid; */
 }
 
 .rTitle>img {
     width: 260px;
     height: 260px;
+    
 }
 
 .rTitle>h1 {
@@ -449,6 +467,4 @@ footer a:hover {
     text-align: center;
     color: aliceblue;
     text-shadow: 2px 2px 30px #afafafAA;
-    user-select: none;
-
 }
