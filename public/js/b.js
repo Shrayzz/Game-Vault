@@ -1,55 +1,10 @@
 const btn = document.getElementById("submitBtn");
+const errorDiv = document.getElementById("error");
+const errorP = document.getElementById("error-text");
+const successDiv = document.getElementById("success");
+const successP = document.getElementById("success-text");
 
-// Constructeur de popup
-
-// Fonction générique pour déclencher un popup (succès ou erreur)
-function triggerPopup(type, message, timeout) {
-    const e = new CustomEvent(`${type}-popup`, {
-        detail: {
-            message: message,
-            timeout: timeout
-        }
-    });
-    document.dispatchEvent(e);
-}
-
-// Ecouteur générique pour les popups de succès et d'erreur
-['success', 'error'].forEach(type => {
-    document.addEventListener(`${type}-popup`, (e) => {
-        const { message, timeout } = e.detail;
-        showPopup(type, message, timeout);
-    });
-});
-
-// Affichage du popup avec un timeout
-function showPopup(type, message, timeout) {
-    let div, p;
-
-    try {
-        if (type === 'success') {
-            div = document.getElementById('success');
-            p = document.getElementById('success-text');
-        } else if (type === 'error') {
-            div = document.getElementById('error');
-            p = document.getElementById('error-text');
-        }
-
-        // Affiche le popup correspondant
-        div.style.display = 'block';
-        p.innerText = message;
-
-        // Cache le popup après le délai
-        setTimeout(() => {
-            div.style.display = 'none';
-        }, timeout);
-    }
-    catch {
-        console.warn("No popup display: Bad type!")
-    }
-}
-
-
-btn.addEventListener("click", async () => {
+btn.addEventListener("click", async() => {
     try {
         const username = document.getElementById("username").value.trim();
         const email = document.getElementById("email").value.trim();
@@ -62,26 +17,42 @@ btn.addEventListener("click", async () => {
 
         // Vérification de base
         if (!username || !email || !cemail || !password || !cpassword) {
-            triggerPopup('error', '❌ㆍNot all inputs are filled !', 5000);
+            errorDiv.style.display = "block";
+            errorP.innerHTML = "❌ㆍNot all inputs are filled !";
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 5000);
             return;
         }
 
         // Vérification que les emails et mots de passe correspondent
         if (email !== cemail || password !== cpassword) {
-            triggerPopup('error', '❌ㆍEmails / Passwords do not match!', 5000);;
+            errorDiv.style.display = "block";
+            errorP.innerHTML = "❌ㆍEmails / Passwords do not match!";
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 5000);
             return;
         }
 
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d._-]{8,}$/
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordPattern.test(password)) {
-            triggerPopup('error', '❌ㆍPassword must contain at least 8 characters, one uppercase, one lowercase, and one number.', 5000);
+            errorDiv.style.display = "block";
+            errorP.innerHTML = "❌ㆍPassword must contain at least 8 characters, one uppercase, one lowercase, and one number.";
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 5000);
             return;
         }
 
         // Vérification du format de l'email
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!emailPattern.test(email)) {
-            triggerPopup('error', '❌ㆍPlease enter a valid email address.', 5000);
+            errorDiv.style.display = "block";
+            errorP.innerHTML = "❌ㆍPlease enter a valid email address.";
+            setTimeout(() => {
+                errorDiv.style.display = "none";
+            }, 5000);
             return;
         }
 
@@ -102,30 +73,29 @@ btn.addEventListener("click", async () => {
         );
 
         if (response.ok) {
-            // Je crée le token ici
             localStorage.setItem('registerSuccess', 'true');
             window.location.href = "/login";
         } else if (response.status === 502) {
-            triggerPopup('error', '❌ㆍUser already exists!', 5000);
+            errorDiv.style.display = "block";
+            errorP.innerHTML = '❌ㆍUser already exists!';
             return;
         }
     } catch (err) {
-        triggerPopup('error', `⛔ㆍAn error occurred: ${err.message}`, 5000);
-        return;
+        errorDiv.style.display = "block";
+        errorP.innerHTML = `⛔ㆍAn error occurred: ${err.message}`;
+        setTimeout(() => {
+            errorDiv.style.display = "none";
+        }, 5000);
     }
 });
-
-// Event pour display le popup lors de l'arrivée sur login
-window.addEventListener('load', () => {
-
-    if (localStorage.getItem('registerSuccess') === 'true') {
-        // Je crée et affiche mon popup ici
-        triggerPopup('success', '✔️ㆍUser successfully registered! Please login now...', 5000);
-        // Je le supprime ici
-        localStorage.removeItem('registerSuccess');
-    }
-});
-
+if (localStorage.getItem('registerSuccess') === 'true') {
+    successDiv.style.display = 'block';
+    successP.innerHTML = '✔️ㆍUser successfully registered! Please login now...';
+    localStorage.removeItem('registerSuccess');
+    setTimeout(() => {
+        successP.style.display = 'none';
+    }, 5000);
+}
 
 const Lbtn = document.getElementById("LoginBtn");
 Lbtn.addEventListener("click", async () => {
