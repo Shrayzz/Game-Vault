@@ -6,3 +6,4 @@ bun.lockb
 data.json
 old/
 *.txt
+*.rest
