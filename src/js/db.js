@@ -37,7 +37,7 @@ async function dbConnectServer(host, user, password) {
     const serv = await mysql.createConnection({
         host: host,
         user: user,
-        password: password,
+        password: password
     });
 
     return serv;
@@ -127,6 +127,26 @@ async function getUserPassword(con, id) {
         const [rows] = await con.query(sql, values);
 
         return rows[0]?.password;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/**
+ * Get the token of an user from his username or email
+ * @param {object} con your connection
+ * @param {string} id the username or email of the user
+ * @returns {string} the token of the user or undefined
+ */
+async function getUserToken(con, id) {
+    try {
+        const sql = 'SELECT token FROM accounts WHERE username = ? OR email = ?;';
+        const values = [id, id];
+
+        const [rows] = await con.query(sql, values);
+
+        return rows[0]?.token;
 
     } catch (err) {
         console.log(err);
@@ -226,4 +246,4 @@ async function testCreateUser() {
 //     await testCreateUser();
 // })();
 
-export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, createUser, addToken };
+export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, createUser, addToken, getUserToken };

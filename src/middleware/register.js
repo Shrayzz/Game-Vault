@@ -24,12 +24,16 @@ async function register(req, con) {
         return new Response("User already exist", { status: 502 });
     }
 
+    // generate and add a token to the user
+    const secret = require('crypto').randomBytes(48).toString('hex');
+    await db.addToken(con, username, secret);
+
     // check if user creation succeed
     if (userCreated) {
         return new Response("Succes, please login now", { status: 200 });
     }
     else {
-        return new Response("Error", { status: 500 }); //TODO: edit based on db functions
+        return new Response("Error", { status: 500 });
     }
 }
 
