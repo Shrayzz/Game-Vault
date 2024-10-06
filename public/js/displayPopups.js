@@ -1,4 +1,8 @@
 const btn = document.getElementById("submitBtn");
+const errorDiv = document.getElementById("error");
+const errorP = document.getElementById("error-text");
+const successDiv = document.getElementById("success");
+const successP = document.getElementById("success-text");
 
 // Constructeur de popup
 
