@@ -19,7 +19,7 @@ const server = serve({
         // GET routes
         if (req.method === 'GET' && url.pathname === "/") {
             // do a function to verify if logged in ?
-            const authResponse = await auth.authToken(req, con);
+            const authResponse = await auth.checkToken(req, con);
             if (authResponse.status !== 200) {
                 return authResponse;
             }
