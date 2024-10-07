@@ -46,10 +46,7 @@ const server = serve({
         if (await file.exists()) {
             return new Response(file);
         }
-
-        if (await auth.authToken(req, con) !== Response.ok) return new Response("Forbidden", { status: 403 });
-
-        return new Response("Not found", { status: 404 });
+        return new Response((Bun.file(path.join(__dirname, "public", "html", "error", "404.html"))), { status: 404 });
     },
     port: 3000
 });

@@ -42,6 +42,39 @@
     transition: all 0.5s;
 }
 
+.forbiddenError, .notFoundError {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    color: aliceblue;
+    gap: 15px;
+}
+
+.forbiddenError h1, .notFoundError h1 {
+    font-family: 'arcade';
+    font-size: 250px;
+}
+.forbiddenError p, .notFoundError p {
+    font-family: 'm';
+    font-size: 20px;
+}
+
+.forbiddenError a, .notFoundError a {
+    text-decoration: none;
+    color: rgb(0, 102, 255);
+    transition: all 0.3s;
+    font-size: 20px;
+    font-family: 'm';
+}
+.forbiddenError a:hover, .notFoundError a:hover {
+    text-decoration: underline;
+    color: rgb(8, 0, 237);
+    transition: all 0.3s
+}
+
 body {
     /* background-color: black; */
     background-image: linear-gradient(45deg, #111111, #141820, rgb(0, 25, 61));
