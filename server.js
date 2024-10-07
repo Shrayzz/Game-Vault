@@ -1,6 +1,5 @@
 import { serve } from "bun";
 import path from "path";
-import jwt from "jsonwebtoken";
 import db from "./src/js/db"
 
 
@@ -19,7 +18,7 @@ const server = serve({
 
         // GET routes
         if (req.method === 'GET' && url.pathname === "/") {
-            // do a function for verify if logged in ?
+            // do a function to verify if logged in ?
             const authResponse = await auth.authToken(req, con);
             if (authResponse.status !== 200) {
                 return authResponse;

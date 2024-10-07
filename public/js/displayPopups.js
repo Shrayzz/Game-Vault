@@ -1,4 +1,4 @@
-const btn = document.getElementById("submitBtn");
+const Rbtn = document.getElementById("submitBtn");
 const errorDiv = document.getElementById("error");
 const errorP = document.getElementById("error-text");
 const successDiv = document.getElementById("success");
@@ -53,7 +53,7 @@ function showPopup(type, message, timeout) {
 }
 
 
-btn.addEventListener("click", async () => {
+Rbtn.addEventListener("click", async () => {
     try {
         const username = document.getElementById("username").value.trim();
         const email = document.getElementById("email").value.trim();
@@ -130,40 +130,3 @@ window.addEventListener('load', () => {
     }
 });
 
-
-const Lbtn = document.getElementById("LoginBtn");
-Lbtn.addEventListener("click", async () => {
-    try {
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
-
-        console.log(username, password);
-
-        if (!username || !password) {
-            // pop up to say that all field are not filled
-            return;
-        }
-
-        const response = await fetch("http://localhost:3000/api/auth", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-        });
-
-        if (response.ok) {
-            //pop up to says succesfull login
-            return;
-        } else {
-            // pop up to say incorrect login or please register
-            return;
-        }
-    } catch (err) {
-        // pop to display the err.message
-        console.log(err);
-    }
-});

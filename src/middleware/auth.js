@@ -27,7 +27,7 @@ async function auth(req, con) {
     const secret = await db.getUserToken(con, username);
 
     // create the token
-    const token = jwt.sign(payload, secret, { expiresIn: '15m' });
+    const token = jwt.sign(payload, secret, { expiresIn: '1m' });
 
     if (token !== null) {
         return new Response(JSON.stringify({ token: token }), { status: 200 });
@@ -49,7 +49,6 @@ async function authToken(req, con) {
         if (!token) return new Response({ status: 401 });
 
         const decoded = jwt.decode(token);
-        console.log(decoded)
 
         if (!decoded || !decoded.username) return new Response("User not found", { status: 401 });
 
@@ -62,7 +61,7 @@ async function authToken(req, con) {
 
     } catch (err) {
         if (err.name === 'TokenExpiredError') {
-            return new Response("Token expired", { status: 401 });
+            return new Response("Connection expired", { status: 401 });
         }
         return new Response(err.message, { status: 500 });
     }
