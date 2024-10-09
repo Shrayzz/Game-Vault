@@ -30,7 +30,7 @@ async function register(req, con) {
 
     // check if user creation succeed
     if (userCreated) {
-        return new Response("Succes, please login now", { status: 200 });
+        return new Response("Success, please login now", { status: 200 });
     }
     else {
         return new Response("Error", { status: 500 });

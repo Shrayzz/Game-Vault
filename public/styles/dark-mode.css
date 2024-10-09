@@ -159,7 +159,6 @@ footer a:hover {
 
 .B button {
     font-family: 'eb';
-    filter: invert(100%);
     background-color: transparent;
     border: none;
     border-radius: 30px;
@@ -176,18 +175,21 @@ footer a:hover {
 }
 
 .B button:hover {
-    filter: invert(36%) sepia(100%) saturate(514%) hue-rotate(159deg) brightness(95%) contrast(97%);
-
     transform: scale(1.2);
     cursor: pointer;
     transition: all 0.3s;
+    filter: invert(52%) sepia(96%) saturate(750%) hue-rotate(185deg) brightness(90%) contrast(90%);
+}
+
+.B label {
+    color: white;
 }
 
 .B img {
     height: 6vh;
     width: auto;
+    transition: all 0.3s;
 }
-
 
 .headerTitle {
     font-family: 'arcade';
@@ -369,7 +371,7 @@ footer a:hover {
     cursor: pointer;
 }
 
-#submitBtn, #loginBtn {
+#submitBtn, #loginBtn, #fpBtn {
     font-family: 'eb';
     font-size: 15px;
     width: 10vw;
@@ -378,7 +380,7 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-#submitBtn:hover, #loginBtn:hover {
+#submitBtn:hover, #loginBtn:hover, #fpBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;

@@ -6,6 +6,7 @@ import db from "./src/js/db"
 // middleware functions
 import register from "./src/middleware/register";
 import auth from "./src/middleware/auth";
+import email from "./src/middleware/email"
 
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
@@ -35,6 +36,7 @@ const server = serve({
         // POST routes
         if (req.method === 'POST' && url.pathname === "/api/auth") return await auth.auth(req, con);
         if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
+        if (req.method === 'POST' && url.pathname === "/api/email") return await email(req, con);
 
 
         // get files in public directory

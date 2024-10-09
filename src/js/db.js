@@ -111,6 +111,22 @@ async function existUser(con, id) {
     }
 }
 
+async function existEmail(con, id) {
+    try {
+        const sql = 'SELECT email FROM accounts WHERE email = ?;';
+
+        const [rows] = await con.query(sql, id);
+
+        if (rows.length === 1) {
+            return true;
+        }
+        return false;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 //----------------------------------SELECT----------------------------------\\
 
 /**
@@ -219,6 +235,13 @@ async function testExistUser() {
     await dbDisconnect(con);
 }
 
+async function testExistEmail() {
+    await dbInit();
+    const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+    console.log(await existEmail(con, 'a@a.com'))
+    await dbDisconnect(con);
+}
+
 /**
  * Test getUserPassword function
  */
@@ -243,7 +266,7 @@ async function testCreateUser() {
 
 // (async () => {
 //     await dbConnectServer('localhost', 'root', 'root');
-//     await testCreateUser();
+//     await testExistEmail();
 // })();
 
-export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, createUser, addToken, getUserToken };
+export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };

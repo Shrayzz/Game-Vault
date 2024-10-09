@@ -29,7 +29,7 @@
                     <div class="show-hide-password">
                         <input class="register" type="password" name="password" placeholder="Password" id="r_password"
                             required />
-                        <img src="/resources/images/show.png" alt="" id="eye" onclick="ShowHidePassword('password', 'eye')">
+                        <img src="/resources/images/show.png" alt="" id="eye" onclick="ShowHidePassword('r_password', 'eye')">
                     </div>
 
                     <!-- 8 chars, majuscule, minuscule, numéro -->
@@ -40,7 +40,7 @@
                     </div>
                     <input id="submitBtn" type="button" value="Register" />
                 </form>
-                <script src="/js/displayPopups.js"></script>
+                <script src="/js/displayPopups.js" type="module"></script>
                 <script src="/js/displayPassword.js"></script>
                 <p>Already have an account ? <a href="/login">Login</a></p>
             </div>
