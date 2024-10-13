@@ -53,25 +53,38 @@ async function checkToken(req, con) {
         const authHeader = req.headers.get('Authorization');
         const token = authHeader && authHeader.split(' ')[1]; // extract the token from auth header
 
-        if (!token) return new Response({ status: 401 });
+        if (!token) {
+            // return false;
+            return new Response({ status: 401 });
+        }
 
         const decoded = decodeJwt(token);
 
         // check expiration timestamp
-        if (Math.floor(Date.now() / 1000) > decoded.exp) return new Response("Connection expired", { status: 401 });
+        if (Math.floor(Date.now() / 1000) > decoded.exp) {
+            // return false;
+            return new Response("Connection expired", { status: 401 });
+        }
 
-        if (!decoded || !decoded.username) return new Response("User not found", { status: 401 });
+        if (!decoded || !decoded.username) {
+            // return false
+            return new Response("User not found", { status: 401 });
+        }
 
         const userKey = new TextEncoder().encode(await db.getUserToken(con, decoded.username)); // needed UTF-8
 
         const verified = await jwtVerify(token, userKey);
 
-        if (!verified) return new Response("Token is invalid", { status: 401 });
+        if (!verified) {
+            // return false;
+            return new Response("Token is invalid", { status: 401 });
+        }
 
+        // return true;
         return new Response('Valid Token', { status: 200 });
 
-
     } catch (err) {
+        console.log(err.message);
         return new Response(err.message, { status: 500 });
     }
 }

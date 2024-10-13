@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1" />
     <link rel="stylesheet" href="/styles/dark-mode.css" />
     <title>Login - Game Vault</title>
-</head>
+  </head>
 
-<body id="login">
+  <body id="login">
     <div class="lContainer">
-        <div class="lBox">
-            <div id="success" style="display: none">
-                <p id="success-text"></p>
-            </div>
-            <div id="error" style="display: none;">
-                <p id="error-text"></p>
-            </div>
-            <div id="lParts">
-                <h1>Login</h1>
-                <form>
-                    <input class="register" type="email" name="email" placeholder="Email" id="l_username" required />
+      <div class="lBox">
+        <div id="success" style="display: none">
+          <p id="success-text"></p>
+        </div>
+        <div id="error" style="display: none">
+          <p id="error-text"></p>
+        </div>
+        <div id="lParts">
+          <h1>Login</h1>
+          <form>
+            <input
+              class="register"
+              type="email"
+              name="email"
+              placeholder="Email"
+              id="l_username"
+              required
+            />
 
-                    <input class="register" type="password" name="password" placeholder="Password" id="l_password"
-                        required />
+            <input
+              class="register"
+              type="password"
+              name="password"
+              placeholder="Password"
+              id="l_password"
+              required
+            />
 
             <input id="loginBtn" type="button" value="Login" />
           </form>
@@ -32,10 +44,10 @@
             Lbtn.addEventListener("click", async () => {
               try {
                 const username = document
-                  .getElementById("username")
+                  .getElementById("l_username")
                   .value.trim();
                 const password = document
-                  .getElementById("password")
+                  .getElementById("l_password")
                   .value.trim();
 
                 if (!username || !password) {
@@ -54,16 +66,15 @@
                   }),
                 });
 
-                const data = await response.json();
+                data = await response.json();
+                localStorage.setItem("token", data.token);
 
                 if (response.ok) {
-                  window.localStorage.setItem("token", data.token);
+                  console.log("ok");
                   window.location.href = "/myspace";
-                  //pop up to says succesfull login
-                  return;
                 } else {
-                  // pop up to say incorrect login or please register
-                  return;
+                  console.log("pas ok");
+                  window.location.href = "/login";
                 }
               } catch (err) {
                 // pop to display the err.message
@@ -81,13 +92,12 @@
       <hr />
     </div>
     <div class="rTitle">
-        <img src="/resources/images/logo.png" alt="" class="logo" />
-        <h1>Game<br />Vault</h1>
+      <img src="/resources/images/logo.png" alt="" class="logo" />
+      <h1>Game<br />Vault</h1>
     </div>
 
     <div id="error">
-        <p id="error-text"></p>
+      <p id="error-text"></p>
     </div>
-</body>
-
+  </body>
 </html>

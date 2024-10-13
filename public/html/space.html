@@ -9,7 +9,31 @@
     <button onclick="window.location.href='/';">Back</button>
     <!-- ! -->
     <input type="text" placeholder="Search" class="searchBar" />
-    <h1>PLACEHOLDER</h1>
+    <h1 id="h">PLACEHOLDER</h1>
     <!-- ! -->
   </body>
+  <script>
+    window.addEventListener("load", async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          window.location.href = "/login";
+        }
+
+        const check = await fetch("http://localhost:3000/api/checkAuth", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!check.ok) {
+          window.location.href = "/login";
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    });
+  </script>
 </html>
