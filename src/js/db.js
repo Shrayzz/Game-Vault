@@ -11,17 +11,16 @@ import mysql from 'mysql2/promise';
  * @param {string} database the database
  * @returns {object} the database connection
  */
-// TODO: create pool connection
 async function dbConnect(host, user, password, database) {
 
-    const con = await mysql.createConnection({
+    const con = await mysql.createPool({
         host: host,
         user: user,
         password: password,
         database: database,
     });
 
-    return con;
+    return await con.getConnection();
 }
 
 /**
@@ -31,16 +30,15 @@ async function dbConnect(host, user, password, database) {
  * @param {string} password the password
  * @returns {object} the server connection
  */
-// TODO: create pool connection
 async function dbConnectServer(host, user, password) {
 
-    const serv = await mysql.createConnection({
+    const serv = await mysql.createPool({
         host: host,
         user: user,
         password: password
     });
 
-    return serv;
+    return await serv.getConnection();
 }
 
 /**
@@ -80,7 +78,7 @@ async function dbInit() {
  * @param {object} con your database to disconnect 
  */
 async function dbDisconnect(con) {
-    con.end(function (err) {
+    con.release(function (err) {
         if (err) throw err;
         console.log('connection to DB successfully closed');
     });
@@ -223,11 +221,12 @@ async function addToken(con, username, token) {
 
 //----------------------------------TESTS----------------------------------\\
 
+//TODO: faire testData et deleteTestData functions
+
 /**
  * Test existUser function
  */
 async function testExistUser() {
-    await dbInit();
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
     console.log(await existUser(con, 'test2'));
     console.log(await existUser(con, 'jesuisuntest@email.com'));
@@ -235,10 +234,12 @@ async function testExistUser() {
     await dbDisconnect(con);
 }
 
+/**
+ * Test existEmail function
+ */
 async function testExistEmail() {
-    await dbInit();
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
-    console.log(await existEmail(con, 'a@a.com'))
+    console.log(await existEmail(con, 'a@a.com'));
     await dbDisconnect(con);
 }
 
@@ -246,27 +247,27 @@ async function testExistEmail() {
  * Test getUserPassword function
  */
 async function testGetUserPassword() {
-    await dbInit();
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
     console.log(await getUserPassword(con, 'test2'));
     console.log(await getUserPassword(con, 'jesuisuntest@email.com'));
     console.log(await getUserPassword(con, 'badNameOrEmail'));
-    await dbDisconnect(con);
 }
 
 /**
  * Test createUser function
  */
 async function testCreateUser() {
-    await dbInit();
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
     console.log(await createUser(con, 'insertTest', 'insert@test.testing', 'insertTestPWD'));
     await dbDisconnect(con);
 }
 
-// (async () => {
-//     await dbConnectServer('localhost', 'root', 'root');
-//     await testExistEmail();
-// })();
+
+(async () => {
+    await dbInit();
+
+    await testGetUserPassword();
+})();
+
 
 export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };
