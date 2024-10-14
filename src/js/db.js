@@ -12,7 +12,6 @@ import mysql from 'mysql2/promise';
  * @returns {object} the database connection
  */
 async function dbConnect(host, user, password, database) {
-
     const con = await mysql.createPool({
         host: host,
         user: user,
@@ -31,7 +30,6 @@ async function dbConnect(host, user, password, database) {
  * @returns {object} the server connection
  */
 async function dbConnectServer(host, user, password) {
-
     const serv = await mysql.createPool({
         host: host,
         user: user,
@@ -262,12 +260,17 @@ async function testCreateUser() {
     await dbDisconnect(con);
 }
 
+//TODO: testUserToken
 
+/*
 (async () => {
     await dbInit();
 
+    await testExistUser();
+    await testExistEmail();
     await testGetUserPassword();
+    await testCreateUser();
 })();
-
+*/
 
 export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };
