@@ -16,6 +16,8 @@ const server = serve({
 
         const url = new URL(req.url);
 
+        //TODO: Enable CORS
+
         // public routes
 
         // POST
