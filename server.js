@@ -16,9 +16,8 @@ const server = serve({
 
         const url = new URL(req.url);
 
-        //TODO: Enable CORS
         // Enable CORS
-        const CORSheaders = new Headers({
+        const headers = new Headers({
             "Access-Control-Allow-Origin": "*", // Change this to your allowed origin(s)
             "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -31,7 +30,7 @@ const server = serve({
             return new Response(null, { status: 204, headers });
         }
 
-        const responseHeaders = new Headers(CORSheaders);
+        const responseHeaders = new Headers(headers);
 
         // POST
         if (req.method === 'POST' && url.pathname === "/api/checkAuth") return new Response(await auth.checkToken(req, con), { headers: responseHeaders });
