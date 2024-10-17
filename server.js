@@ -9,23 +9,22 @@ import email from "./src/middleware/email"
 
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
+
 const con = await db.dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
 
 const server = serve({
+
     async fetch(req) {
 
         const url = new URL(req.url);
 
         // Enable CORS
         const headers = new Headers({
-            "Access-Control-Allow-Origin": "*", // Change this to your allowed origin(s)
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
         });
 
-        // public routes
-
-        // Handle preflight OPTIONS request
         if (req.method === 'OPTIONS') {
             return new Response(null, { status: 204, headers });
         }

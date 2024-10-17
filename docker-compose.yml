@@ -1,0 +1,20 @@
+services:
+  app:
+    container_name: simple-game-library
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    container_name: database
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
