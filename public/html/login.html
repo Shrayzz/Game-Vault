@@ -1,103 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,minimum-scale=1" />
     <link rel="stylesheet" href="/styles/dark-mode.css" />
     <title>Login - Game Vault</title>
-  </head>
+</head>
 
-  <body id="login">
+<body id="login">
     <div class="lContainer">
-      <div class="lBox">
-        <div id="success" style="display: none">
-          <p id="success-text"></p>
+        <div class="lBox">
+            <div id="success" style="display: none">
+                <p id="success-text"></p>
+            </div>
+            <div id="error" style="display: none">
+                <p id="error-text"></p>
+            </div>
+            <div id="lParts">
+                <h1>Login</h1>
+                <form>
+                    <input class="register" type="email" name="email" placeholder="Email" id="l_username" required />
+
+                    <div class="show-hide-password">
+                        <input class="register" type="password" name="password" placeholder="Password" id="l_password"
+                            required />
+                        <img src="/resources/images/show.png" alt="" id="eye"
+                            onclick="ShowHidePassword('l_password', 'eye')">
+                    </div>
+                    <script src="/js/displayPassword.js"></script>
+                    <input id="loginBtn" type="button" value="Login" />
+                </form>
+                <script src="/js/displayPopups.js" type="module"></script>
+                <script>
+                    const login = document.getElementById('loginBtn');
+
+                    window.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            loginBtn.click();
+                        }
+                    })
+                </script>
+                <p>Don't have an account ? <a href="/register">Register</a></p>
+                <p>
+                    Forgot password ?
+                    <a class="fp" href="/forgot-password">Click here</a>
+                </p>
+            </div>
         </div>
-        <div id="error" style="display: none">
-          <p id="error-text"></p>
-        </div>
-        <div id="lParts">
-          <h1>Login</h1>
-          <form>
-            <input
-              class="register"
-              type="email"
-              name="email"
-              placeholder="Email"
-              id="l_username"
-              required
-            />
-
-            <input
-              class="register"
-              type="password"
-              name="password"
-              placeholder="Password"
-              id="l_password"
-              required
-            />
-
-            <input id="loginBtn" type="button" value="Login" />
-          </form>
-          <script>
-            const Lbtn = document.getElementById("loginBtn");
-            Lbtn.addEventListener("click", async () => {
-              try {
-                const username = document
-                  .getElementById("l_username")
-                  .value.trim();
-                const password = document
-                  .getElementById("l_password")
-                  .value.trim();
-
-                if (!username || !password) {
-                  // pop up to say that all field are not filled
-                  return;
-                }
-
-                const response = await fetch("http://localhost:3000/api/auth", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    username: username,
-                    password: password,
-                  }),
-                });
-
-                data = await response.json();
-                localStorage.setItem("token", data.token);
-
-                if (response.ok) {
-                  console.log("ok");
-                  window.location.href = "/myspace";
-                } else {
-                  console.log("pas ok");
-                  window.location.href = "/login";
-                }
-              } catch (err) {
-                // pop to display the err.message
-                console.log(err);
-              }
-            });
-          </script>
-          <p>Don't have an account ? <a href="/register">Register</a></p>
-          <p>
-            Forgot password ?
-            <a class="fp" href="/forgot-password">Click here</a>
-          </p>
-        </div>
-      </div>
-      <hr />
+        <hr />
     </div>
     <div class="rTitle">
-      <img src="/resources/images/logo.png" alt="" class="logo" />
-      <h1>Game<br />Vault</h1>
+        <img src="/resources/images/logo.png" alt="" class="logo" />
+        <h1>Game<br />Vault</h1>
     </div>
 
     <div id="error">
-      <p id="error-text"></p>
+        <p id="error-text"></p>
     </div>
-  </body>
+</body>
+
 </html>

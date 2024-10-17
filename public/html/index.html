@@ -15,9 +15,14 @@
       </div>
       <div class="h_right">
         <div class="A">
-          <button class="header_btn1" onclick="window.location.href='/login';">
+          <button class="header_btn1" onclick="isConnected()">
             My Space
           </button>
+          <script>
+            function isConnected() {
+                // TODO: Soit /login si non connecté, sinon /space
+            }
+          </script>
           <button
             class="header_btn2"
             onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');"
