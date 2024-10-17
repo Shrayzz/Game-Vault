@@ -331,7 +331,7 @@ async function testCreateUser(con) {
 //TODO: testUserToken
 
 // Test executions
-
+//TODO : upgrade tests + add errors
 /*
 (async () => {
     const con = await startTests();

@@ -17,14 +17,27 @@ const server = serve({
         const url = new URL(req.url);
 
         //TODO: Enable CORS
+        // Enable CORS
+        const CORSheaders = new Headers({
+            "Access-Control-Allow-Origin": "*", // Change this to your allowed origin(s)
+            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        });
 
         // public routes
 
+        // Handle preflight OPTIONS request
+        if (req.method === 'OPTIONS') {
+            return new Response(null, { status: 204, headers });
+        }
+
+        const responseHeaders = new Headers(CORSheaders);
+
         // POST
-        if (req.method === 'POST' && url.pathname === "/api/checkAuth") return await auth.checkToken(req, con);
-        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth.auth(req, con);
-        if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
-        if (req.method === 'POST' && url.pathname === "/api/email") return await email(req, con);
+        if (req.method === 'POST' && url.pathname === "/api/checkAuth") return new Response(await auth.checkToken(req, con), { headers: responseHeaders });
+        if (req.method === 'POST' && url.pathname === "/api/auth") return new Response(await auth.auth(req, con), { headers: responseHeaders });
+        if (req.method === 'POST' && url.pathname === "/api/register") return new Response(await register(req, con), { headers: responseHeaders });
+        if (req.method === 'POST' && url.pathname === "/api/email") return new Response(await email(req, con), { headers: responseHeaders });
 
         // GET
         if (req.method === 'GET' && url.pathname === "/") return new Response(Bun.file(path.join(__dirname, "public", "html", "index.html")));
