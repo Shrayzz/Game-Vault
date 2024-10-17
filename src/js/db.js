@@ -330,7 +330,9 @@ async function testCreateUser(con) {
 
 //TODO: testUserToken
 
-/*//Test executions
+// Test executions
+
+/*
 (async () => {
     const con = await startTests();
 
@@ -341,5 +343,6 @@ async function testCreateUser(con) {
 
     await endTests(con);
 })();
+*/
 
 export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };

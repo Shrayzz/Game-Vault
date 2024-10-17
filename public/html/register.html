@@ -42,6 +42,15 @@
                 </form>
                 <script src="/js/displayPopups.js" type="module"></script>
                 <script src="/js/displayPassword.js"></script>
+                <script>
+                    const register = document.getElementById('registerBtn');
+
+                    window.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            submitBtn.click();
+                        }
+                    })
+                </script>
                 <p>Already have an account ? <a href="/login">Login</a></p>
             </div>
         </div>
