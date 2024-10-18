@@ -1,39 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/dark-mode.css">
     <title>PLACEHOLDER</title>
-  </head>
-  <body>
-    <button onclick="window.location.href='/';">Back</button>
-    <!-- ! -->
-    <input type="text" placeholder="Search" class="searchBar" />
-    <h1 id="h">PLACEHOLDER</h1>
-    <!-- ! -->
-  </body>
-  <script>
+</head>
+
+<body>
+    <header id="header">
+        <div class="h_left">
+            <img src="/resources/images/logo.png" alt="" class="logo">
+            <h1 class="headerTitle">Game Vault</h1>
+        </div>
+        <div class="h_right">
+            <div class="A">
+                <button class="header_btn1" onclick="window.location.href='/login';">
+                    My Space
+                </button>
+                <button class="header_btn2"
+                    onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');">
+                    GitHub
+                </button>
+            </div>
+            <div class="B">
+                <button class="loginPage" onclick="window.location.href='/register';">
+                    <img src="/resources/images/user.png" alt="User" class="loginImg" />
+                    <label class="login">Login</label>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <hr />
+        <div class="sContainer">
+            <input type="text" placeholder="Search" class="searchBar" />
+            <h1 id="h">Games :</h1>
+            <div id="name-list">
+                <ul>
+                    <li>Test (REMOVE ALL ULs)</li>
+                </ul>
+                <!-- TODO: Placer noms des bases api -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p class="license">
+            This project is under
+            <a href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE">MIT License</a>
+        </p>
+        <p class="authors">
+            Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa
+        </p>
+    </footer>
+</body>
+<script>
     window.addEventListener("load", async () => {
-      try {
-        const token = localStorage.getItem("token");
+        try {
+            const token = localStorage.getItem("token");
 
-        if (!token) {
-          window.location.href = "/login";
+            if (!token) {
+                window.location.href = "/login";
+            }
+
+            const check = await fetch("http://localhost:3000/api/checkAuth", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!check.ok) {
+                window.location.href = "/login";
+            }
+        } catch (err) {
+            console.log(err.message);
         }
-
-        const check = await fetch("http://localhost:3000/api/checkAuth", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!check.ok) {
-          window.location.href = "/login";
-        }
-      } catch (err) {
-        console.log(err.message);
-      }
     });
-  </script>
+</script>
+
 </html>

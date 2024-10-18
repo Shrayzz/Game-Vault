@@ -504,3 +504,46 @@ footer a:hover {
     color: aliceblue;
     text-shadow: 2px 2px 30px #afafafAA;
 }
+
+/*!---- Login & Register (For testing) ----*/
+
+.sContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    border: red 1px solid;
+}
+
+.searchBar {
+    font-family: 'sb';
+    font-size: 15px;
+    color: aliceblue;
+    width: 20vw;
+    height: auto;
+    padding: 17px;
+    background-color: black;
+    border: solid aliceblue 2px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.searchBar:hover {
+    transform: scale(1.05);
+    border: solid rgb(0, 102, 255) 2px;
+    border-radius: 10px;
+}
+
+#h {
+    font-family: 'eb';
+    color: aliceblue;
+    text-decoration: underline;
+    font-size: 40px;
+}
+#name-list {
+    font-family: 'm';
+    color: aliceblue;
+    font-size: 20px;
+}
