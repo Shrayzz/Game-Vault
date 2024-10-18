@@ -300,47 +300,59 @@ async function endTests(con) {
  * Test existUser function
  */
 async function testExistUser(con) {
-    console.log(await existUser(con, 'test2'));
-    console.log(await existUser(con, 'jesuisuntest@email.com'));
-    console.log(await existUser(con, 'badNameOrEmail'));
+    if (!await existUser(con, 'test2')) { throw new Error("testExistUser => can't get user with his login") }
+    if (!await existUser(con, 'jesuisuntest@email.com')) { throw new Error("testExistUser => can't get user with his email") }
+    if (await existUser(con, 'badNameOrEmail')) { throw new Error("testExistUser => get an user whith a bad login or email") }
+    console.log("testExistuser => OK");
 }
 
 /**
  * Test existEmail function
  */
 async function testExistEmail(con) {
-    console.log(await existEmail(con, 'a@a.com'));
+    if (!await existEmail(con, 'LeTest@email.fr')) { throw new Error("testExistEmail => can't get user with his email") }
+    if (await existEmail(con, 'BadEmail')) { throw new Error("testExistEmail => get an user whith a bad email") }
+    console.log("testExistEmail => OK");
 }
 
 /**
  * Test getUserPassword function
  */
+//TODO: faire avec cryptage 
 async function testGetUserPassword(con) {
-    console.log(await getUserPassword(con, 'test2'));
-    console.log(await getUserPassword(con, 'jesuisuntest@email.com'));
-    console.log(await getUserPassword(con, 'badNameOrEmail'));
+    if (await getUserPassword(con, 'test2') !== 'ABCDE') { throw new Error("testGetUserPassword => can't get user password") }
+    if (await getUserPassword(con, 'badNameOrEmail') !== undefined) { throw new Error("testGetUserPassword => get a password when he sould not") }
+    console.log("testGetUserPassword => OK")
 }
 
 /**
  * Test createUser function
  */
 async function testCreateUser(con) {
-    console.log(await createUser(con, 'insertTest', 'insert@test.testing', 'insertTestPWD'));
+    await createUser(con, 'insertTestUser', 'insert@test.testing', 'insertTestPWD');
+    if (!await existUser(con, 'insertTestUser')) { throw new Error("testCreateUser => can't create user") }
+    console.log("testCreateUser => OK")
 }
 
 //TODO: testUserToken
 
 // Test executions
-//TODO : upgrade tests + add errors
 /*
 (async () => {
+    // Initialise test environement
     const con = await startTests();
 
-    await testExistUser(con);
-    await testExistEmail(con);
-    await testGetUserPassword(con);
-    await testCreateUser(con);
+    // Execute tests
+    try {
+        await testExistUser(con);
+        await testExistEmail(con);
+        await testGetUserPassword(con);
+        await testCreateUser(con);
+    } catch (error) {
+        console.error(error)
+    }
 
+    // Finish tests
     await endTests(con);
 })();
 */
