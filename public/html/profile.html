@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/dark-mode.css">
+    <title>Profile - Game Vault</title>
+</head>
+
+<body class="blackBG">
+    <div class="mainProfileContainer">
+        <div class="profileHeader">
+            <h1>Profile</h1>
+            <div class="pPopups">
+                <div id="success" class="proSuccess" style="display: none">
+                    <p id="success-text"></p>
+                </div>
+                <div id="error" class="proError" style="display: none">
+                    <p id="error-text"></p>
+                </div>
+            </div>
+        </div>
+        <div class="profileContainer">
+            <img src="/resources/images/default-pp.png" alt="" id="pp" onclick="showImgDialog()">
+            <input type="file" id="imgInput" accept="image/*" style="display:none;" onchange="updateProfileImage(event)">
+            
+            <div class="usernameTab">
+                <h2 id="username">Placeholder</h2>
+                <input type="text" id="usernameInput" style="display: none;" onblur="saveUsername()">
+                <button class="editUsername" onclick="editUsername()">
+                    <img src="/resources/images/edit.png" alt="Edit Username">
+                </button>
+            </div>
+        </div>
+        <hr>
+        <div class="themeContainer">
+            <!-- TODO: A remplir -->
+        </div>
+        <div class="preferencesContainer">
+            <!-- TODO: A remplir -->
+        </div>
+    </div>
+    <script src="/js/profileSettings.js" type="module"></script>
+</body>
+
+</html>
