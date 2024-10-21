@@ -54,8 +54,7 @@ async function dbInit() {
     //Create Tables
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
 
-    //TODO: add blob 'image' data for account table
-    const accountsTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+    const accountsTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image blob, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const listTable = 'CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const gameTable = 'CREATE TABLE IF NOT EXISTS game(id int(11) NOT NULL AUTO_INCREMENT, source varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const categoryTable = 'CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;'
@@ -237,7 +236,7 @@ async function startTests() {
 
     const con = await dbConnect('localhost', 'root', 'root', 'simplegamelibrarytest');
 
-    const accountsTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
+    const accountsTable = 'CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image blob NULL, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const listTable = 'CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;';
     const gameTable = 'CREATE TABLE IF NOT EXISTS game(id int(11) NOT NULL AUTO_INCREMENT, source varchar(255) NOT NULL, PRIMARY KEY (id));';
     const categoryTable = 'CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;'
@@ -252,11 +251,9 @@ async function startTests() {
     con.query(gameHasCategory);
 
     //Insert data in test Database
-
-    //TODO: add blob 'image' data for account table
     const accountsTableData = "INSERT INTO accounts (username, password, email) VALUES('test1', 'test', 'test@email.com'), ('test2', 'ABCDE', 'LeTest@email.fr'), ('test3', 'AZERTY', 'jesuisuntest@email.com');";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1);";
-    const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3')) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+    const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
     const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
@@ -320,7 +317,6 @@ async function testExistEmail(con) {
 /**
  * Test getUserPassword function
  */
-//TODO: faire avec cryptage 
 async function testGetUserPassword(con) {
     if (await getUserPassword(con, 'test2') !== 'ABCDE') { throw new Error("testGetUserPassword => can't get user password") }
     if (await getUserPassword(con, 'badNameOrEmail') !== undefined) { throw new Error("testGetUserPassword => get a password when he sould not") }
@@ -336,7 +332,12 @@ async function testCreateUser(con) {
     console.log("testCreateUser => OK")
 }
 
-//TODO: testUserToken
+async function testUserToken(con) {
+    await addToken(con, 'test1', 'testNewToken');
+    if (await getUserToken(con, 'test1') !== 'testNewToken') { throw new Error("testUserToken => can't create or get an user token") }
+    if (await getUserToken(con, 'test2') !== null) { throw new Error("testUserToken => find a token when he sould not") }
+    console.log("testUserToken => OK");
+}
 
 // Test executions
 /*
@@ -350,6 +351,7 @@ async function testCreateUser(con) {
         await testExistEmail(con);
         await testGetUserPassword(con);
         await testCreateUser(con);
+        await testUserToken(con);
     } catch (error) {
         console.error(error)
     }
