@@ -213,9 +213,13 @@ async function addToken(con, username, token) {
     }
 }
 
+//TODO: update image
+
+//TODO: update password
+
 //----------------------------------DELETE----------------------------------\\
 
-
+//TODO: delete account
 
 //----------------------------------TESTS----------------------------------\\
 
