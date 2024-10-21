@@ -196,7 +196,7 @@ async function createUser(con, username, email, password) {
  * Update the account to add a new token
  * @param {object} con your connection
  * @param {string} username the user to add a login token 
- * @param {*} token the token value
+ * @param {string} token the token value
  * @returns {boolean} if the token was successfully added
  */
 async function addToken(con, username, token) {
@@ -213,13 +213,69 @@ async function addToken(con, username, token) {
     }
 }
 
-//TODO: update image
+/**
+ * Update the image of an account
+ * @param {object} con your connection
+ * @param {string} username the user to update the image 
+ * @param {blob} image the image value
+ * @returns {boolean} if the image was successfully added
+ */
+async function updateUserImage(con, username, image) {
+    try {
+        const sql = 'UPDATE accounts SET image = ? WHERE username = ?;';
+        const values = [image, username];
 
-//TODO: update password
+        await con.query(sql, values);
+        return true;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
+
+/**
+ * Update the password of an account
+ * @param {object} con your connection
+ * @param {string} username the user to update the password 
+ * @param {blob} password the password value
+ * @returns {boolean} if the password was successfully added
+ */
+async function updateUserPassword(con, username, password) {
+    try {
+        const sql = 'UPDATE accounts SET password = ? WHERE username = ?;';
+        const values = [password, username];
+
+        await con.query(sql, values);
+        return true;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
 
 //----------------------------------DELETE----------------------------------\\
 
-//TODO: delete account
+/**
+ * Delete an account from his username
+ * @param {object} con your connection
+ * @param {string} username the user to delete 
+ * @returns {boolean} if the account was successfully deleted
+ */
+async function deleteUser(con, username) {
+    try {
+        const sql = 'DELETE FROM accounts WHERE username = ?;';
+        const values = [username];
+
+        await con.query(sql, values);
+        return true;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
 
 //----------------------------------TESTS----------------------------------\\
 
@@ -337,11 +393,13 @@ async function testCreateUser(con) {
 }
 
 async function testUserToken(con) {
-    await addToken(con, 'test1', 'testNewToken');
-    if (await getUserToken(con, 'test1') !== 'testNewToken') { throw new Error("testUserToken => can't create or get an user token") }
+    if (!await addToken(con, 'test1', 'testNewToken')) { throw new Error("testUserToken => can't create an user token") }
+    if (await getUserToken(con, 'test1') !== 'testNewToken') { throw new Error("testUserToken => get an user token") }
     if (await getUserToken(con, 'test2') !== null) { throw new Error("testUserToken => find a token when he sould not") }
     console.log("testUserToken => OK");
 }
+
+//TODO: testUpdateUserImage, testUpdateUserPassword, testDeleteUser
 
 // Test executions
 /*
