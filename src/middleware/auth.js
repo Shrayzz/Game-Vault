@@ -6,7 +6,7 @@ import { SignJWT, decodeJwt, jwtVerify } from 'jose'
  * @param {Request} req the request with credentials
  * @returns {Response} the response if the user has logged in or not
  */
-async function auth(req, con) {
+async function auth(req, con, headers) {
     try {
         const { username, password } = await req.json();
 
@@ -16,7 +16,7 @@ async function auth(req, con) {
 
         // return error if credentials are invalid
         if (!usernameExist || !passwordExist) {
-            return new Response("Invalid Credentials !", { status: 401 });
+            return new Response("Invalid Credentials !", { status: 401, headers: headers });
         }
 
         // create the payload
@@ -34,10 +34,13 @@ async function auth(req, con) {
             .sign(secret);
 
         if (token !== null) {
-            return new Response(JSON.stringify({ token: token }), { status: 200 });
+            headers.append("Content-Type", "application/json")
+            return new Response(JSON.stringify({ token: token }), {
+                status: 200, headers: headers
+            });
         }
 
-        return new Response("Error while loging in", { status: 401 });
+        return new Response("Error while loging in", { status: 401, headers: headers });
     } catch (err) {
         console.log(err);
     }
@@ -48,27 +51,24 @@ async function auth(req, con) {
  * @param {Request} req the request
  * @returns {Response} the response if the token is valid or not
  */
-async function checkToken(req, con) {
+async function checkToken(req, con, headers) {
     try {
         const authHeader = req.headers.get('Authorization');
         const token = authHeader && authHeader.split(' ')[1]; // extract the token from auth header
 
         if (!token) {
-            // return false;
-            return new Response({ status: 401 });
+            return new Response({ status: 401, headers: headers });
         }
 
         const decoded = decodeJwt(token);
 
         // check expiration timestamp
         if (Math.floor(Date.now() / 1000) > decoded.exp) {
-            // return false;
-            return new Response("Connection expired", { status: 401 });
+            return new Response("Connection expired", { status: 401, headers: headers });
         }
 
         if (!decoded || !decoded.username) {
-            // return false
-            return new Response("User not found", { status: 401 });
+            return new Response("User not found", { status: 401, headers: headers });
         }
 
         const userKey = new TextEncoder().encode(await db.getUserToken(con, decoded.username)); // needed UTF-8
@@ -76,16 +76,14 @@ async function checkToken(req, con) {
         const verified = await jwtVerify(token, userKey);
 
         if (!verified) {
-            // return false;
-            return new Response("Token is invalid", { status: 401 });
+            return new Response("Token is invalid", { status: 401, headers: headers });
         }
 
-        // return true;
-        return new Response('Valid Token', { status: 200 });
+        return new Response('Valid Token', { status: 200, headers: headers });
 
     } catch (err) {
         console.log(err.message);
-        return new Response(err.message, { status: 500 });
+        return new Response(err.message, { status: 500, headers: headers });
     }
 }
 

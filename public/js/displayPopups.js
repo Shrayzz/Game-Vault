@@ -97,10 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                if (PLACEHOLDER) { // todo: invalid cradentials
-                    triggerPopup('error', '❌ㆍInvalid credentials', 5000);
-                    return;
-                }
+                // if (PLACEHOLDER) { // todo: invalid cradentials
+                //     triggerPopup('error', '❌ㆍInvalid credentials', 5000);
+                //     return;
+                // }
 
                 const response = await fetch("http://localhost:3000/api/auth", {
                     method: "POST",
@@ -117,14 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    await fetch("http://localhost:3000/", {
-                        method: "GET",
-                        headers: {
-                            Bearer: data.token,
-                        },
-                    });
-                    console.log("ok");
-                    window.location.href = "/";
+                    localStorage.setItem("token", data.token);
+                    window.location.href = "/library"; //TODO: change redrection
                     //pop up to says succesfull login
                     // todo: popup sur myspace
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);

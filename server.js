@@ -29,17 +29,15 @@ const server = serve({
             return new Response(null, { status: 204, headers });
         }
 
-        const responseHeaders = new Headers(headers);
-
         // POST
-        if (req.method === 'POST' && url.pathname === "/api/checkAuth") return new Response(await auth.checkToken(req, con), { headers: responseHeaders });
-        if (req.method === 'POST' && url.pathname === "/api/auth") return new Response(await auth.auth(req, con), { headers: responseHeaders });
-        if (req.method === 'POST' && url.pathname === "/api/register") return new Response(await register(req, con), { headers: responseHeaders });
-        if (req.method === 'POST' && url.pathname === "/api/email") return new Response(await email(req, con), { headers: responseHeaders });
+        if (req.method === 'POST' && url.pathname === "/api/checkAuth") return await auth.checkToken(req, con, headers);
+        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth.auth(req, con, headers);
+        if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
+        if (req.method === 'POST' && url.pathname === "/api/email") return await email(req, con);
 
         // GET
         if (req.method === 'GET' && url.pathname === "/") return new Response(Bun.file(path.join(__dirname, "public", "html", "index.html")));
-        if (req.method === 'GET' && url.pathname === "/space") return new Response(Bun.file(path.join(__dirname, "public", "html", "space.html")));
+        if (req.method === 'GET' && url.pathname === "/library") return new Response(Bun.file(path.join(__dirname, "public", "html", "library.html")));
         if (req.method === 'GET' && url.pathname === "/login") return new Response(Bun.file(path.join(__dirname, "public", "html", "login.html")));
         if (req.method === 'GET' && url.pathname === "/register") return new Response(Bun.file(path.join(__dirname, "public", "html", "register.html")));
         if (req.method === 'GET' && url.pathname === "/profile") return new Response(Bun.file(path.join(__dirname, "public", "html", "profile.html")));
