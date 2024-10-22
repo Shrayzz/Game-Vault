@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="/styles/dark-mode.css" />
     <title>Game Vault</title>
   </head>
@@ -15,14 +16,9 @@
       </div>
       <div class="h_right">
         <div class="A">
-          <button class="header_btn1" onclick="isConnected()">
+          <button class="header_btn1" onclick="window.location.href='/library';">
             My Space
           </button>
-          <script>
-            function isConnected() {
-                // TODO: Soit /login si non connecté, sinon /space
-            }
-          </script>
           <button
             class="header_btn2"
             onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');"

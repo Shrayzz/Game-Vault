@@ -30,7 +30,7 @@ async function auth(req, con, headers) {
         // create the token
         const token = await new SignJWT(payload)
             .setProtectedHeader({ alg: 'HS256' })
-            .setExpirationTime('15m')
+            .setExpirationTime('1m')
             .sign(secret);
 
         if (token !== null) {

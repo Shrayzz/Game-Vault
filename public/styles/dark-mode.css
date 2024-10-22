@@ -251,15 +251,15 @@ footer a:hover {
         text-shadow: 2px 2px 30px #afafaf;
     }
     25% {
-        color: rgb(132, 181, 223);
+        /* color: rgb(132, 181, 223); */
         text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.60);
     }
     50% {
-        color: rgb(63, 122, 173);
+        /* color: rgb(63, 122, 173); */
         text-shadow: 2px 2px 30px rgba(63, 122, 173, 0.60);
     }
     75% {
-        color: rgb(132, 181, 223);
+        /* color: rgb(132, 181, 223); */
         text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.60);
     }
     100% {
@@ -563,10 +563,6 @@ footer a:hover {
     /* border: blue solid 1px; */
 }
 
-.pPopups {
-    /* border: lime 2px solid; */
-}
-
 .proSuccess,
 .proError {
     /* left: 50%; */
@@ -677,6 +673,46 @@ footer a:hover {
 
 .editUsername img {
     height: 6vh;
+}
+
+.accountContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.accountContainer button {
+    font-family: 'm';
+    font-size: 1vw; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+    width: 13vw;
+    height: 7vh;
+    border: black solid 2px;
+    border-radius: 10px;
+    margin: 1vh;
+    transition: all 0.3s;
+}
+
+.accountContainer button:hover {
+    transform: scale(1.05);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#logoutBtn:hover, #changeEPBtn:hover {
+    border: aliceblue solid 3px;
+    color: aliceblue;
+    background-color: black;
+}
+#deleteAccBtn:hover {
+    border: rgb(188, 0, 0) solid 3px;
+    color: aliceblue;
+    background-color: rgb(94, 0, 0);
 }
 
 /*!---- Library (For testing) ----*/

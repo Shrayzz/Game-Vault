@@ -5,10 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/styles/dark-mode.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="/js/checkLogin.js"></script>
     <title>Library - Game Vault</title>
 </head>
 
-<body>
+<body class="normalBG">
     <header id="header">
         <div class="h_left">
             <img src="/resources/images/logo.png" alt="" class="logo">
@@ -55,29 +57,5 @@
         </p>
     </footer>
 </body>
-<script>
-    window.addEventListener("load", async () => {
-        try {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                window.location.href = "/login";
-            }
-
-            const check = await fetch("http://localhost:3000/api/checkAuth", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-            if (!check.ok) {
-                window.location.href = "/login";
-            }
-        } catch (err) {
-            console.log(err.message);
-        }
-    });
-</script>
 
 </html>
