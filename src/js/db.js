@@ -125,6 +125,58 @@ async function existEmail(con, id) {
 
 //----------------------------------SELECT----------------------------------\\
 
+//TODO: replace old functions by the newers
+/**
+ * Get selected datas from all accounts
+ * @param {object} con your connection 
+ * @param {Array[string]} columns array of the column(s) your need to get
+ */
+async function getFromAllAccounts(con, columns) {
+    try {
+        if (columns.length <= 0) {
+            throw new Error("getFromAccount => Le tableau 'columns' est vide")
+        }
+        let sql = 'SELECT ';
+        columns.forEach(element => {
+            sql += `'${element}', `
+        });
+        sql = sql.slice(0, -2);
+        sql += ' FROM accounts';
+        const [rows] = await con.query(sql);
+
+        return rows;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+//TODO: replace old functions by the newers
+/**
+ * Get selected datas from one account
+ * @param {object} con your connection 
+ * @param {string} username the username of the user you want data(s)
+ * @param {Array[string]} columns array of the column(s) your need to get
+ */
+async function getFromAccount(con, username, columns) {
+    try {
+        if (columns.length <= 0) {
+            throw new Error("getFromAccount => Le tableau 'columns' est vide")
+        }
+        let sql = 'SELECT ';
+        columns.forEach(element => {
+            sql += `'${element}', `
+        });
+        sql = sql.slice(0, -2);
+        sql += ' FROM accounts WHERE username = ?;';
+        const values = [username];
+        const [rows] = await con.query(sql, values);
+
+        return rows[0];
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 /**
  * Get the password of an user from his username or email
  * @param {object} con your connection
@@ -191,6 +243,9 @@ async function createUser(con, username, email, password) {
 
 
 //----------------------------------UPDATE----------------------------------\\
+
+//TODO: UPDATE IN accounts => updateInAccount(con, username, columns, values)
+//TODO: replace old functions by the newers
 
 /**
  * Update the account to add a new token
@@ -399,6 +454,7 @@ async function testUserToken(con) {
     console.log("testUserToken => OK");
 }
 
+//TODO: testgetFromAllAccounts, testgetFromAccount, test
 //TODO: testUpdateUserImage, testUpdateUserPassword, testDeleteUser
 
 // Test executions
@@ -422,5 +478,16 @@ async function testUserToken(con) {
     await endTests(con);
 })();
 */
+
+(async () => {
+    const con = await startTests();
+
+    console.log(await getFromAccount(con, 'test1', ['username', 'password']));
+    console.log(await getFromAccount(con, 'test1', []));
+    console.log(await getFromAllAccounts(con, ['username', 'password']));
+    console.log(await getFromAllAccounts(con, []));
+
+    await endTests(con);
+})();
 
 export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };
