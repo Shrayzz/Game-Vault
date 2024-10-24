@@ -2,10 +2,14 @@ import { serve } from "bun";
 import path from "path";
 import db from "./src/js/db"
 
+import 'dotenv/config';
+const bnetID = process.env.BNET_CLIENT_ID;
+
 // middleware functions
 import register from "./src/middleware/register";
 import auth from "./src/middleware/auth";
 import email from "./src/middleware/email"
+import blizzard from "./src/js/api/blizzard";
 
 await db.dbConnectServer('localhost', 'root', 'root');
 await db.dbInit();
@@ -43,6 +47,7 @@ const server = serve({
         if (req.method === 'GET' && url.pathname === "/profile") return new Response(Bun.file(path.join(__dirname, "public", "html", "profile.html")));
         if (req.method === 'GET' && url.pathname === "/forgot-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "forgot-password.html")));
         if (req.method === 'GET' && url.pathname === "/new-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "new-password.html")));
+        if (req.method === 'GET' && url.pathname === "/api/blizzard/link") return blizzard.linkAccount(bnetID, "http://localhost:3000/profile", ["d3.profile", "wow.profile", "sc2.profile", "openid"]);
 
         // get files in public directory
         const fpath = path.join(__dirname, "public", url.pathname.substring(1));
