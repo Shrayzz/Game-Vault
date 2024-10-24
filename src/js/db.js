@@ -244,8 +244,38 @@ async function createUser(con, username, email, password) {
 
 //----------------------------------UPDATE----------------------------------\\
 
-//TODO: UPDATE IN accounts => updateInAccount(con, username, columns, values)
 //TODO: replace old functions by the newers
+/**
+ * Updates selected datas into accounts
+ * @param {object} con your connection 
+ * @param {string} username the username of the user you want to update
+ * @param {Array[string]} columns array of the column(s) your need to update
+ * @param {Array[string]} values array of the value(s) you want to set
+ * @returns 
+ */
+async function updateInAccounts(con, username, columns, values) {
+    try {
+        if (columns.length <= 0 && values.length !== columns.length) {
+            throw new Error("getFromAccount => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'")
+        }
+        let sql = 'UPDATE accounts SET ';
+
+        for (let i = 0; i < columns.length; i++) {
+            sql += `${columns[i]} = ?, `;
+        }
+        sql = sql.slice(0, -2);
+        sql += " WHERE username = ?;"
+
+        values.push(username);
+        await con.query(sql, values);
+
+        return true;
+
+    } catch (err) {
+        console.log(err);
+        return false;
+    }
+}
 
 /**
  * Update the account to add a new token
@@ -454,7 +484,7 @@ async function testUserToken(con) {
     console.log("testUserToken => OK");
 }
 
-//TODO: testgetFromAllAccounts, testgetFromAccount, test
+//TODO: testgetFromAllAccounts, testgetFromAccount, testUpdateInAccounts
 //TODO: testUpdateUserImage, testUpdateUserPassword, testDeleteUser
 
 // Test executions
@@ -478,16 +508,5 @@ async function testUserToken(con) {
     await endTests(con);
 })();
 */
-
-(async () => {
-    const con = await startTests();
-
-    console.log(await getFromAccount(con, 'test1', ['username', 'password']));
-    console.log(await getFromAccount(con, 'test1', []));
-    console.log(await getFromAllAccounts(con, ['username', 'password']));
-    console.log(await getFromAllAccounts(con, []));
-
-    await endTests(con);
-})();
 
 export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };
