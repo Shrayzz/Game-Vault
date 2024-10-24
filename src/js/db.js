@@ -131,7 +131,7 @@ async function existEmail(con, id) {
  * @param {object} con your connection 
  * @param {Array[string]} columns array of the column(s) your need to get
  */
-async function getFromAllAccounts(con, columns) {
+async function getFromAllUsers(con, columns) {
     try {
         if (columns.length <= 0) {
             throw new Error("getFromAccount => Le tableau 'columns' est vide")
@@ -157,7 +157,7 @@ async function getFromAllAccounts(con, columns) {
  * @param {string} username the username of the user you want data(s)
  * @param {Array[string]} columns array of the column(s) your need to get
  */
-async function getFromAccount(con, username, columns) {
+async function getFromUser(con, username, columns) {
     try {
         if (columns.length <= 0) {
             throw new Error("getFromAccount => Le tableau 'columns' est vide")
@@ -253,7 +253,7 @@ async function createUser(con, username, email, password) {
  * @param {Array[string]} values array of the value(s) you want to set
  * @returns 
  */
-async function updateInAccounts(con, username, columns, values) {
+async function updateAnUser(con, username, columns, values) {
     try {
         if (columns.length <= 0 && values.length !== columns.length) {
             throw new Error("getFromAccount => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'")
@@ -484,7 +484,7 @@ async function testUserToken(con) {
     console.log("testUserToken => OK");
 }
 
-//TODO: testgetFromAllAccounts, testgetFromAccount, testUpdateInAccounts
+//TODO: testgetFromAllUsers, testgetFromUser, testUpdateAnUser
 //TODO: testUpdateUserImage, testUpdateUserPassword, testDeleteUser
 
 // Test executions
