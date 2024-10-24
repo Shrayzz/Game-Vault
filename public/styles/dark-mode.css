@@ -310,6 +310,9 @@ footer a:hover {
 
 /*---- Login & Register ----*/
 
+/* TODO: Responsive sur Login & Register */
+
+
 #login,
 #register {
     display: flex;
@@ -567,7 +570,7 @@ footer a:hover {
 .proError {
     /* left: 50%; */
     font-family: 'm';
-    font-size: 15px;
+    font-size: 17.5px;
     color: aliceblue;
     z-index: 6;
     display: flex;
@@ -635,6 +638,7 @@ footer a:hover {
     color: aliceblue;
     margin-left: 3vw;
     max-width: 40vw;
+    user-select: none;
     /* border: red solid 1px; */
 }
 

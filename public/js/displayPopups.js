@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // if (PLACEHOLDER) { // todo: invalid cradentials
+                // if (PLACEHOLDER) { // TODO: invalid cradentials
                 //     triggerPopup('error', '❌ㆍInvalid credentials', 5000);
                 //     return;
                 // }
@@ -118,9 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (response.ok) {
                     localStorage.setItem("token", data.token);
-                    window.location.href = "/library"; //TODO: change redrection
-                    //pop up to says succesfull login
-                    // todo: popup sur myspace
+                    window.location.href = "/library"; //TODO: changer redirection
+                    // TODO: popup sur library (à l'aide d'une sauvegarde)
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);
                     return;
                 } else {

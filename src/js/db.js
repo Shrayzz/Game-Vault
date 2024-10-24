@@ -138,7 +138,7 @@ async function getFromAllUsers(con, columns) {
         }
         let sql = 'SELECT ';
         columns.forEach(element => {
-            sql += `'${element}', `
+            sql += `${element}, `
         });
         sql = sql.slice(0, -2);
         sql += ' FROM accounts';
@@ -152,7 +152,7 @@ async function getFromAllUsers(con, columns) {
 
 //TODO: replace old functions by the newers
 /**
- * Get selected datas from one account
+ * Get selected datas from one account with his username or email
  * @param {object} con your connection 
  * @param {string} username the username of the user you want data(s)
  * @param {Array[string]} columns array of the column(s) your need to get
@@ -164,11 +164,11 @@ async function getFromUser(con, username, columns) {
         }
         let sql = 'SELECT ';
         columns.forEach(element => {
-            sql += `'${element}', `
+            sql += `${element}, `
         });
         sql = sql.slice(0, -2);
-        sql += ' FROM accounts WHERE username = ?;';
-        const values = [username];
+        sql += ' FROM accounts WHERE username = ? OR email = ?;';
+        const values = [username, username];
         const [rows] = await con.query(sql, values);
 
         return rows[0];

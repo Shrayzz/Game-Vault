@@ -49,6 +49,9 @@ const server = serve({
         if (req.method === 'GET' && url.pathname === "/new-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "new-password.html")));
         if (req.method === 'GET' && url.pathname === "/api/blizzard/link") return blizzard.linkAccount(bnetID, "http://localhost:3000/profile", ["d3.profile", "wow.profile", "sc2.profile", "openid"]);
 
+        // GET - HTML Codes
+        if (req.method === 'GET' && url.pathname === "/403") return new Response(Bun.file(path.join(__dirname, "public", "html", "error", "403.html")));
+
         // get files in public directory
         const fpath = path.join(__dirname, "public", url.pathname.substring(1));
         const file = Bun.file(fpath);

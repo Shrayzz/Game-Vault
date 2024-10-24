@@ -55,3 +55,5 @@ window.editUsername = editUsername;
 window.saveUsername = saveUsername;
 
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB
+// TODO: Interdire les champs vides, trop grands
+// TODO: Désactiver l'affichage du bouton lors de l'édit
