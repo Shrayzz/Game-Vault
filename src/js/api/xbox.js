@@ -1,6 +1,7 @@
 import "dotenv/config";
 import axios from "axios";
 
+//TODO: put in an async function
 /**
  * Create your instance with Xbox live API
  */
