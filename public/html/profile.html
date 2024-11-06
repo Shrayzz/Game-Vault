@@ -11,7 +11,7 @@
 
 <body class="blackBG">
     <div class="mainProfileContainer">
-        <div class="profileHeader">
+        <div class="profileHeader">             
             <h1>Profile</h1>
             <div class="pPopups">
                 <div id="success" class="proSuccess" style="display: none">
@@ -30,8 +30,22 @@
                 <h2 id="username"></h2>
                 <input type="text" id="usernameInput"  placeholder="Username" style="display: none;" onblur="saveUsername()">
                 <button class="editUsername" onclick="editUsername()">  
-                    <img src="/resources/images/edit.png" alt="Edit Username">
+                    <img id="pencil" src="/resources/images/edit.png" alt="Edit Username">
                 </button>
+                <script>
+                    const enterEdit = document.getElementById('usernameInput');
+                
+                    function confirmEdit() {
+                        saveUsername(); 
+                    }
+                
+                    window.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' && document.activeElement === enterEdit) {
+                            confirmEdit();
+                        }
+                    });
+                </script>
+                
             </div>
         </div>
         <hr>

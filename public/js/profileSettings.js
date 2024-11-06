@@ -27,7 +27,9 @@ function updateProfileImage(event) {
 function editUsername() {
     const u = document.getElementById('username');
     const uInput = document.getElementById('usernameInput');
+    const pen = document.getElementById('pencil');
 
+    pen.style.display = 'none';
     u.style.display = 'none';
     uInput.style.display = 'inline';
     uInput.value = u.textContent; 
@@ -37,16 +39,18 @@ function editUsername() {
 function saveUsername() {
     const u = document.getElementById('username');
     const uInput = document.getElementById('usernameInput');
+    const pen = document.getElementById('pencil');
 
-    if (uInput.value.trim() !== '') {
-        u.textContent = uInput.value;
-        triggerPopup('success', '✔️ㆍUsername updated successfully!', 5000);
-    } else {
+    if (uInput.value.trim() === '') {
         triggerPopup('error', '❌ㆍUsername cannot be empty!', 5000);
+    } else if (uInput.value.length > 20) {
+        triggerPopup('error', '❌ㆍMax characters reached! (Max: 20)', 5000);
+    } else {
+        u.textContent = uInput.value;
+        pen.style.display = 'inline';
+        uInput.style.display = 'none';
+        u.style.display = 'inline';
     }
-
-    uInput.style.display = 'none';
-    u.style.display = 'inline';
 }
 
 window.showImgDialog = showImgDialog;
@@ -55,5 +59,3 @@ window.editUsername = editUsername;
 window.saveUsername = saveUsername;
 
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB
-// TODO: Interdire les champs vides, trop grands
-// TODO: Désactiver l'affichage du bouton lors de l'édit
