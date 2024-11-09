@@ -30,8 +30,8 @@ function editUsername() {
 
     u.style.display = 'none';
     uInput.style.display = 'inline';
-    uInput.value = u.textContent; 
-    uInput.focus(); 
+    uInput.value = u.textContent;
+    uInput.focus();
 }
 
 function saveUsername() {
@@ -47,6 +47,12 @@ function saveUsername() {
 
     uInput.style.display = 'none';
     u.style.display = 'inline';
+}
+
+function saveBnetToken() {
+    const params = new URLSearchParams(document.location.search)
+    console.log(params.toString());
+    console.log(params.get('code')); //TODO: send it to db, create an endpoint post for this.
 }
 
 window.showImgDialog = showImgDialog;

@@ -61,6 +61,8 @@ const server = serve({
             return new Response(file);
         }
 
+        console.log(url.pathname);
+
         return new Response((Bun.file(path.join(__dirname, "public", "html", "error", "404.html"))), { status: 404 });
     },
     port: 3000
