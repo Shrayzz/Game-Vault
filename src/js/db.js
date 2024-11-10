@@ -125,7 +125,6 @@ async function existEmail(con, id) {
 
 //----------------------------------SELECT----------------------------------\\
 
-//TODO: replace old functions by the newers
 /**
  * Get selected datas from all accounts
  * @param {object} con your connection 
@@ -150,7 +149,6 @@ async function getFromAllUsers(con, columns) {
     }
 }
 
-//TODO: replace old functions by the newers
 /**
  * Get selected datas from one account with his username or email
  * @param {object} con your connection 
@@ -170,6 +168,25 @@ async function getFromUser(con, username, columns) {
         sql += ' FROM accounts WHERE username = ? OR email = ?;';
         const values = [username, username];
         const [rows] = await con.query(sql, values);
+
+        if (columns.length === 1) {
+            switch (columns[0]) {
+                case 'id':
+                    return rows[0]?.id;
+                case 'username':
+                    return rows[0]?.username;
+                case 'password':
+                    return rows[0]?.password;
+                case 'email':
+                    return rows[0]?.email;
+                case 'image':
+                    return rows[0]?.image;
+                case 'token':
+                    return rows[0]?.token;
+                default:
+                    return rows[0];
+            }
+        }
 
         return rows[0];
     } catch (err) {
@@ -244,7 +261,6 @@ async function createUser(con, username, email, password) {
 
 //----------------------------------UPDATE----------------------------------\\
 
-//TODO: replace old functions by the newers
 /**
  * Updates selected datas into accounts
  * @param {object} con your connection 
@@ -362,7 +378,7 @@ async function deleteUser(con, username) {
     }
 }
 
-//----------------------------------TESTS----------------------------------\\
+//----------------------------------TESTS----------------------------------\\ //TODO: remake it with AVA https://github.com/avajs/ava
 
 /**
  * Create a test Database if not exists and add data to tables
@@ -509,4 +525,4 @@ async function testUserToken(con) {
 })();
 */
 
-export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken };
+export default { dbConnectServer, dbConnect, dbInit, existUser, getUserPassword, existEmail, createUser, addToken, getUserToken, getFromUser, getFromAllUsers, updateAnUser, updateUserImage, updateUserPassword, deleteUser };
