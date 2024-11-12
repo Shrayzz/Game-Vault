@@ -1,21 +1,23 @@
 import "dotenv/config";
 import axios from "axios";
 
-//TODO: put in an async function
 /**
  * Create your instance with Xbox live API
- */
-const instance = axios.create({
-    baseURL: 'https://xbl.io/api/v2/',
-    timeout: 5000,
-    headers: { 'X-Authorization': process.env.XBOX_API_KEY }
-})
+*/
+async function XboxConnect() {
+    const instance = axios.create({
+        baseURL: 'https://xbl.io/api/v2/',
+        timeout: 10000,
+        headers: { 'X-Authorization': process.env.XBOX_API_KEY }
+    })
+    return instance
+}
 
 /**
  * Return your account informations
  * @returns 
  */
-async function getAccount() {
+async function getXboxAccount(instance) {
     try {
         const response = await instance.get('/account');
         return response.data;
@@ -24,10 +26,4 @@ async function getAccount() {
     }
 }
 
-//Test
-/* 
-(async () => {
-    let data = await getAccount();
-    console.log(data);
-})();
-*/
+export default { XboxConnect, getXboxAccount }
