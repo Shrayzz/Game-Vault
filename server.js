@@ -1,72 +1,120 @@
 import { serve } from "bun";
 import path from "path";
-import db from "./src/js/db"
+import db from "./src/js/db";
 
-import 'dotenv/config';
+import "dotenv/config";
 const bnetID = process.env.BNET_CLIENT_ID;
 
 // middleware functions
 import register from "./src/middleware/register";
 import auth from "./src/middleware/auth";
-import email from "./src/middleware/email"
+import email from "./src/middleware/email";
 import blizzard from "./src/js/api/blizzard";
 
-await db.dbConnectServer('localhost', 'root', 'root');
+await db.dbConnectServer("localhost", "root", "root");
 await db.dbInit();
 
-const con = await db.dbConnect('localhost', 'root', 'root', 'simplegamelibrary');
+const con = await db.dbConnect(
+  "localhost",
+  "root",
+  "root",
+  "SimpleGameLibrary",
+);
 
 const server = serve({
+  async fetch(req) {
+    const url = new URL(req.url);
 
-    async fetch(req) {
+    // Enable CORS
+    const headers = new Headers({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    });
 
-        const url = new URL(req.url);
+    if (req.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers });
+    }
 
-        // Enable CORS
-        const headers = new Headers({
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        });
+    // POST
+    if (req.method === "POST" && url.pathname === "/api/checkAuth")
+      return await auth.checkToken(req, con, headers);
+    if (req.method === "POST" && url.pathname === "/api/auth")
+      return await auth.auth(req, con, headers);
+    if (req.method === "POST" && url.pathname === "/api/register")
+      return await register(req, con);
+    if (req.method === "POST" && url.pathname === "/api/email")
+      return await email(req, con);
 
-        if (req.method === 'OPTIONS') {
-            return new Response(null, { status: 204, headers });
-        }
+    // GET
+    if (req.method === "GET" && url.pathname === "/")
+      return new Response(
+        Bun.file(path.join(__dirname, "public", "html", "index.html")),
+      );
+    if (req.method === "GET" && url.pathname === "/library")
+      return new Response(
+        Bun.file(path.join(__dirname, "public", "html", "library.html")),
+      );
+    if (req.method === "GET" && url.pathname === "/login")
+      return new Response(
+        Bun.file(path.join(__dirname, "public", "html", "login.html")),
+      );
+    if (req.method === "GET" && url.pathname === "/register")
+      return new Response(
+        Bun.file(path.join(__dirname, "public", "html", "register.html")),
+      );
+    if (req.method === "GET" && url.pathname === "/profile")
+      return new Response(
+        Bun.file(path.join(__dirname, "public", "html", "profile.html")),
+      );
+    if (req.method === "GET" && url.pathname === "/forgot-password")
+      return new Response(
+        Bun.file(
+          path.join(__dirname, "public", "html", "new", "forgot-password.html"),
+        ),
+      );
+    if (req.method === "GET" && url.pathname === "/new-password")
+      return new Response(
+        Bun.file(
+          path.join(__dirname, "public", "html", "new", "new-password.html"),
+        ),
+      );
 
-        // POST
-        if (req.method === 'POST' && url.pathname === "/api/checkAuth") return await auth.checkToken(req, con, headers);
-        if (req.method === 'POST' && url.pathname === "/api/auth") return await auth.auth(req, con, headers);
-        if (req.method === 'POST' && url.pathname === "/api/register") return await register(req, con);
-        if (req.method === 'POST' && url.pathname === "/api/email") return await email(req, con);
+    // BLIZZARD
+    if (req.method === "GET" && url.pathname === "/api/blizzard/link")
+      return blizzard.linkAccount(bnetID, "http://localhost:3000/profile", [
+        "d3.profile",
+        "wow.profile",
+        "sc2.profile",
+        "openid",
+      ]);
 
-        // GET
-        if (req.method === 'GET' && url.pathname === "/") return new Response(Bun.file(path.join(__dirname, "public", "html", "index.html")));
-        if (req.method === 'GET' && url.pathname === "/library") return new Response(Bun.file(path.join(__dirname, "public", "html", "library.html")));
-        if (req.method === 'GET' && url.pathname === "/login") return new Response(Bun.file(path.join(__dirname, "public", "html", "login.html")));
-        if (req.method === 'GET' && url.pathname === "/register") return new Response(Bun.file(path.join(__dirname, "public", "html", "register.html")));
-        if (req.method === 'GET' && url.pathname === "/profile") return new Response(Bun.file(path.join(__dirname, "public", "html", "profile.html")));
-        if (req.method === 'GET' && url.pathname === "/forgot-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "forgot-password.html")));
-        if (req.method === 'GET' && url.pathname === "/new-password") return new Response(Bun.file(path.join(__dirname, "public", "html", "new", "new-password.html")));
-        if (req.method === 'GET' && url.pathname === "/api/blizzard/link") return blizzard.linkAccount(bnetID, "http://localhost:3000/profile", ["d3.profile", "wow.profile", "sc2.profile", "openid"]);
+    if (req.method === "POST" && url.pathname === "/api/blizzard/token")
+      return await blizzard.getAccessToken(
+        "http://localhost:3000/profile",
+        req,
+      );
 
-        // GET - HTML Codes
-        if (req.method === 'GET' && url.pathname === "/403") return new Response(Bun.file(path.join(__dirname, "public", "html", "error", "403.html")));
+    if (req.method === "POST" && url.pathname === "/api/blizzard/check")
+      return await blizzard.checkAccessToken(req);
 
-        // get files in public directory
-        const fpath = path.join(__dirname, "public", url.pathname.substring(1));
-        const file = Bun.file(fpath);
+    // get files in public directory
+    const fpath = path.join(__dirname, "public", url.pathname.substring(1));
+    const file = Bun.file(fpath);
 
-        // return public file if it exist
-        if (await file.exists()) {
-            return new Response(file);
-        }
+    // return public file if it exist
+    if (await file.exists()) {
+      return new Response(file);
+    }
 
-        console.log(url.pathname);
+    console.log(url.pathname);
 
-        return new Response((Bun.file(path.join(__dirname, "public", "html", "error", "404.html"))), { status: 404 });
-    },
-    port: 3000
+    return new Response(
+      Bun.file(path.join(__dirname, "public", "html", "error", "404.html")),
+      { status: 404 },
+    );
+  },
+  port: 3000,
 });
 
 console.log(`Server Running at ${server.url.href}`);
-
