@@ -678,14 +678,60 @@ footer a:hover {
     height: 6vh;
 }
 
+.profileTabs {
+    font-family: 'm';
+    padding: 1vw;
+    font-size: 2vw;
+    color: white;
+}
+
 .accountContainer {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
 }
 
-.accountContainer button {
+.profileLinkings {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+
+.profileLinkings img {
+    display: inline;
+    width: 3vw;                            
+    height: 3vw;
+}
+
+.profileLinkings button {
+    background-color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vw;
+    height: 4vw;
+    border: solid 2px aliceblue;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.profileLinkings button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profileImportant {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+.profileImportant button {
     font-family: 'm';
     font-size: 1vw; 
     display: flex;
@@ -700,7 +746,7 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-.accountContainer button:hover {
+.profileImportant button:hover {
     transform: scale(1.05);
     border-radius: 10px;
     cursor: pointer;

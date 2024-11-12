@@ -11,7 +11,7 @@
 
 <body class="blackBG">
     <div class="mainProfileContainer">
-        <div class="profileHeader">             
+        <div class="profileHeader">
             <h1>Profile</h1>
             <div class="pPopups">
                 <div id="success" class="proSuccess" style="display: none">
@@ -24,44 +24,67 @@
         </div>
         <div class="profileContainer">
             <img src="/resources/images/default-pp.png" alt="" id="pp" onclick="showImgDialog()">
-            <input type="file" id="imgInput" accept="image/*" style="display:none;" onchange="updateProfileImage(event)">
-            
+            <input type="file" id="imgInput" accept="image/*" style="display:none;"
+                onchange="updateProfileImage(event)">
+
             <div class="usernameTab">
                 <h2 id="username"></h2>
-                <input type="text" id="usernameInput"  placeholder="Username" style="display: none;" onblur="saveUsername()">
-                <button class="editUsername" onclick="editUsername()">  
+                <input type="text" id="usernameInput" placeholder="Username" style="display: none;"
+                    onblur="saveUsername()">
+                <button class="editUsername" onclick="editUsername()">
                     <img id="pencil" src="/resources/images/edit.png" alt="Edit Username">
                 </button>
                 <script>
                     const enterEdit = document.getElementById('usernameInput');
-                
+
                     function confirmEdit() {
-                        saveUsername(); 
+                        saveUsername();
                     }
-                
+
                     window.addEventListener('keydown', (e) => {
                         if (e.key === 'Enter' && document.activeElement === enterEdit) {
                             confirmEdit();
                         }
                     });
                 </script>
-                
+
             </div>
         </div>
         <hr>
+        <h2 class="profileTabs" id="accountTab">Account :</h2>
         <div class="accountContainer">
-            <button id="logoutBtn">
-                <i class="ph ph-sign-out"></i>
-                <p class="logout">Log out</p>
-            </button>
-            <button id="changeEPBtn">
-                <i class="ph ph-user-gear"></i>
-                <p class="chengeEP">Account Infos</p>
-            </button>
-            <button id="deleteAccBtn">
-                <i class="ph ph-trash"></i>
-                <p class="deleteAcc">Delete Account</p>
-            </button>
+            <div class="profileLinkings">
+                <!-- TODO: Donner un indicateur pour pouvoir changer l'état du bouton en fonction d'une connexion/déconnexion -->
+                <button class="linkBtns">
+                    <img src="/resources/images/battle-net.png" alt="" class="blizzardIcon">
+                </button>
+                <button class="linkBtns">
+                    <img src="/resources/images/xbox.png" alt="" class="blizzardIcon">
+                </button>
+                <button class="linkBtns">
+                    <img src="/resources/images/placeholder.png" alt="" class="blizzardIcon">
+                </button>
+                <button class="linkBtns">
+                    <img src="/resources/images/placeholder.png" alt="" class="blizzardIcon">
+                </button>
+                <button class="linkBtns">
+                    <img src="/resources/images/placeholder.png" alt="" class="blizzardIcon">
+                </button>
+            </div>
+            <div class="profileImportant">
+                <button id="logoutBtn" onclick="LogOut()">
+                    <i class="ph ph-sign-out"></i>
+                    <p class="logout">Log out</p>
+                </button>
+                <button id="changeEPBtn">
+                    <i class="ph ph-user-gear"></i>
+                    <p class="chengeEP">Account Infos</p>
+                </button>
+                <button id="deleteAccBtn">
+                    <i class="ph ph-trash"></i>
+                    <p class="deleteAcc">Delete Account</p>
+                </button>
+            </div>
         </div>
         <div class="themeContainer">
             <!-- TODO: A remplir -->
