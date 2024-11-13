@@ -121,7 +121,6 @@ async function checkToken(req, con, headers) {
       headers: headers,
     });
   } catch (err) {
-    console.log(err.message);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: headers,

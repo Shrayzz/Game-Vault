@@ -20,3 +20,5 @@ window.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 });
+
+// TODO: add checkLogin here and in register so if logged in redirect to profile page.
