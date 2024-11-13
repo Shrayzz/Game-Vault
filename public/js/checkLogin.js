@@ -1,22 +1,22 @@
 window.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-        if (!token) {
-            window.location.href = "/login";
-        }
+  if (token) {
+    const check = await fetch("http://localhost:3000/api/checkAuth", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-        const check = await fetch("http://localhost:3000/api/checkAuth", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
+    if (check.ok) {
+      const data = await check.json();
 
-        if (!check.ok) {
-            window.location.href = "/login";
-        }
-    } catch (err) {
-        console.log(err.message);
+      localStorage.setItem("username", data.username);
+      return;
     }
+  } else {
+    window.location.href = "/login";
+    return;
+  }
 });

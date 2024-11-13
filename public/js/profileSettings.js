@@ -57,6 +57,15 @@ function saveUsername() {
   }
 }
 
+export function logout() {
+  try {
+    localStorage.removeItem(token);
+    window.Location.href = "/";
+  } finally {
+    return;
+  }
+}
+
 function saveToken() {
   const param = new URLSearchParams(document.location.search);
   param.get("code")
@@ -68,6 +77,5 @@ window.showImgDialog = showImgDialog;
 window.updateProfileImage = updateProfileImage;
 window.editUsername = editUsername;
 window.saveUsername = saveUsername;
-window.onload = saveToken();
 
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB

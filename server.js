@@ -43,8 +43,6 @@ const server = serve({
       return await auth.auth(req, con, headers);
     if (req.method === "POST" && url.pathname === "/api/register")
       return await register(req, con);
-    if (req.method === "POST" && url.pathname === "/api/email")
-      return await email(req, con);
 
     // GET
     if (req.method === "GET" && url.pathname === "/")
@@ -98,6 +96,9 @@ const server = serve({
     if (req.method === "POST" && url.pathname === "/api/blizzard/check")
       return await blizzard.checkAccessToken(req);
 
+    if (req.method === "GET" && url.pathname === "/api/blizzard/wow/profile")
+      return await blizzard.getWowCharacter(req, headers);
+
     // get files in public directory
     const fpath = path.join(__dirname, "public", url.pathname.substring(1));
     const file = Bun.file(fpath);
@@ -106,8 +107,6 @@ const server = serve({
     if (await file.exists()) {
       return new Response(file);
     }
-
-    console.log(url.pathname);
 
     return new Response(
       Bun.file(path.join(__dirname, "public", "html", "error", "404.html")),

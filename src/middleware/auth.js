@@ -76,10 +76,16 @@ async function checkToken(req, con, headers) {
 
     // check expiration timestamp
     if (Math.floor(Date.now() / 1000) > decoded.exp) {
-      return new Response("Connection expired", {
-        status: 401,
-        headers: headers,
-      });
+      return new Response(
+        JSON.stringify({
+          valid: false,
+          exp_time: decoded.exp,
+        }),
+        {
+          status: 401,
+          headers: headers,
+        },
+      );
     }
 
     if (!decoded || !decoded.username) {
@@ -93,16 +99,33 @@ async function checkToken(req, con, headers) {
     const verified = await jwtVerify(token, userKey);
 
     if (!verified) {
-      return new Response("Token is invalid", {
-        status: 401,
-        headers: headers,
-      });
+      return new Response(
+        JSON.stringify({
+          valid: false,
+        }),
+        {
+          status: 401,
+          headers: headers,
+        },
+      );
     }
 
-    return new Response("Valid Token", { status: 200, headers: headers });
+    const responseJson = {
+      valid: true,
+      exp_time: decoded.exp,
+      username: decoded.username,
+    };
+
+    return new Response(JSON.stringify(responseJson), {
+      status: 200,
+      headers: headers,
+    });
   } catch (err) {
     console.log(err.message);
-    return new Response(err.message, { status: 500, headers: headers });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: headers,
+    });
   }
 }
 

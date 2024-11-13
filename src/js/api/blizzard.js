@@ -22,7 +22,7 @@ function linkAccount(clientID, redirectURI, scopes) {
  * Function to get the access token for the client app
  * @param {string} the uri to redirect after logged in battle net account
  * @param {string} the request including the access code
- * @returns {Promise<Object>} the access token from the access code
+ * @returns {Promise<Response>} the access token from the access code
  */
 async function getAccessToken(redirectUri, req) {
   const reqData = await req.json();
@@ -48,7 +48,7 @@ async function getAccessToken(redirectUri, req) {
 /**
  * Function to check a token validity
  * @param {string} the request including the access token
- * @returns {Promise<Object>} the token metadata
+ * @returns {Promise<Response>} the token metadata
  */
 async function checkAccessToken(req) {
   const reqData = await req.json();
@@ -70,27 +70,40 @@ async function checkAccessToken(req) {
 //----------------------------------WOW PROFILE----------------------------------\\
 
 /**
- * Function to get user wow profile data
+ * Function to get the wow character of the account
  * @param {string} token the token to use
- * @returns
+ * @returns {Promise<Response>} the request response with the wow characters list if authorized
  */
-async function getWowProfile(token) {
-  try {
-    const response = await fetch(
-      "https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en-US&region=eu",
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+async function getWowCharacter(req, headers) {
+  const authHeader = req.headers.get("Authorization");
+  const token = authHeader && authHeader.split(" ")[1];
+
+  const response = await fetch(
+    "https://eu.api.blizzard.com/profile/user/wow?namespace=profile-eu&locale=en-US&region=eu",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    },
+  );
+
+  if (response.ok) {
+    headers.append("Content-Type", "application/json");
 
     const data = await response.json();
-    return data;
-  } catch (err) {
-    console.error(err);
+
+    const returnJSON = {
+      character_count: data.wow_accounts[0].characters.length,
+      character_list: data.wow_accounts[0].characters,
+    };
+
+    return new Response(JSON.stringify(returnJSON), {
+      status: response.status,
+      headers: headers,
+    });
   }
+  return new Response(null, { status: response.status, headers: headers });
 }
 
 /**
@@ -143,6 +156,13 @@ async function getPets(token) {
 
 // getAccessToken('http://localhost:3000/profile', 'EUYG2VUYSRNKNIYMUETY3LMJGQBYSN4L8G').then((t) => console.log(t))
 // checkAccessToken('EUd4BlxawnnUG35LSOy6dNwRvDDSTNhFwL').then((t) => console.log(t));
-// getMounts('EUd4BlxawnnUG35LSOy6dNwRvDDSTNhFwL').then((t) => console.log(t.mounts[0]));
+// getWowProfile("EUit7kAmT8swMa8PAgUEEt6zPabhemhrvFA").then((t) =>
+//   console.log(t),
+// );
 
-export default { linkAccount, getAccessToken, checkAccessToken };
+export default {
+  linkAccount,
+  getAccessToken,
+  checkAccessToken,
+  getWowCharacter,
+};
