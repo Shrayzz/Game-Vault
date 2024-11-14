@@ -576,6 +576,7 @@ export default {
   dbConnectServer,
   dbConnect,
   dbInit,
+  dbDisconnect,
   existUser,
   getUserPassword,
   existEmail,
