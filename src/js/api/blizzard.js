@@ -20,8 +20,8 @@ function linkAccount(clientID, redirectURI, scopes) {
 
 /**
  * Function to get the access token for the client app
- * @param {string} the uri to redirect after logged in battle net account
- * @param {string} the request including the access code
+ * @param {string} redirecUri the uri to redirect after logged in battle net account
+ * @param {string} req the request including the access code
  * @returns {Promise<Response>} the access token from the access code
  */
 async function getAccessToken(redirectUri, req) {
@@ -47,7 +47,7 @@ async function getAccessToken(redirectUri, req) {
 
 /**
  * Function to check a token validity
- * @param {string} the request including the access token
+ * @param {string} req the request including the access token
  * @returns {Promise<Response>} the token metadata
  */
 async function checkAccessToken(req) {
@@ -71,7 +71,8 @@ async function checkAccessToken(req) {
 
 /**
  * Function to get the wow character of the account
- * @param {string} token the token to use
+ * @param {string} req the token to use
+ * @param {string} headers the headers for the response
  * @returns {Promise<Response>} the request response with the wow characters list if authorized
  */
 async function getWowCharacter(req, headers) {
