@@ -3,13 +3,9 @@ import path from "path";
 import db from "./src/js/db";
 
 import "dotenv/config";
-const bnetID = process.env.BNET_CLIENT_ID;
 
-// middleware functions
-import register from "./src/middleware/register";
-import auth from "./src/middleware/auth";
-import email from "./src/middleware/email";
-import blizzard from "./src/js/api/blizzard";
+import indexRouter from "./src/routes/indexRouter";
+import apiRouter from "./src/routes/apiRouter";
 
 await db.dbConnectServer("localhost", "root", "root");
 await db.dbInit();
@@ -36,83 +32,31 @@ const server = serve({
       return new Response(null, { status: 204, headers });
     }
 
-    // POST
-    if (req.method === "POST" && url.pathname === "/api/checkAuth")
-      return await auth.checkToken(req, con, headers);
-    if (req.method === "POST" && url.pathname === "/api/auth")
-      return await auth.auth(req, con, headers);
-    if (req.method === "POST" && url.pathname === "/api/register")
-      return await register(req, con);
-
-    // GET
-    if (req.method === "GET" && url.pathname === "/")
-      return new Response(
-        Bun.file(path.join(__dirname, "public", "html", "index.html")),
-      );
-    if (req.method === "GET" && url.pathname === "/library")
-      return new Response(
-        Bun.file(path.join(__dirname, "public", "html", "library.html")),
-      );
-    if (req.method === "GET" && url.pathname === "/login")
-      return new Response(
-        Bun.file(path.join(__dirname, "public", "html", "login.html")),
-      );
-    if (req.method === "GET" && url.pathname === "/register")
-      return new Response(
-        Bun.file(path.join(__dirname, "public", "html", "register.html")),
-      );
-    if (req.method === "GET" && url.pathname === "/profile")
-      return new Response(
-        Bun.file(path.join(__dirname, "public", "html", "profile.html")),
-      );
-    if (req.method === "GET" && url.pathname === "/forgot-password")
-      return new Response(
-        Bun.file(
-          path.join(__dirname, "public", "html", "new", "forgot-password.html"),
-        ),
-      );
-    if (req.method === "GET" && url.pathname === "/new-password")
-      return new Response(
-        Bun.file(
-          path.join(__dirname, "public", "html", "new", "new-password.html"),
-        ),
-      );
-
-    // BLIZZARD
-    if (req.method === "GET" && url.pathname === "/api/blizzard/link")
-      return blizzard.linkAccount(bnetID, "http://localhost:3000/profile", [
-        "d3.profile",
-        "wow.profile",
-        "sc2.profile",
-        "openid",
-      ]);
-
-    if (req.method === "POST" && url.pathname === "/api/blizzard/token")
-      return await blizzard.getAccessToken(
-        "http://localhost:3000/profile",
-        req,
-      );
-
-    if (req.method === "POST" && url.pathname === "/api/blizzard/check")
-      return await blizzard.checkAccessToken(req);
-
-    if (req.method === "GET" && url.pathname === "/api/blizzard/wow/profile")
-      return await blizzard.getWowCharacter(req, headers);
-
     // get files in public directory
     const fpath = path.join(__dirname, "public", url.pathname.substring(1));
     const file = Bun.file(fpath);
 
     // return public file if it exist
     if (await file.exists()) {
+      headers.append("Content-Type", file.type);
       return new Response(file);
     }
+
+    const indexReq = await indexRouter(req, url, con, headers);
+    if (indexReq) return indexReq;
+
+    const apiReq = await apiRouter.apiRouter(req, url, con, headers);
+    if (apiReq) return apiReq;
+
+    const blizzardReq = await apiRouter.blizzardRouter(req, url, headers);
+    if (blizzardReq) return blizzardReq;
 
     return new Response(
       Bun.file(path.join(__dirname, "public", "html", "error", "404.html")),
       { status: 404 },
     );
   },
+
   port: 3000,
 });
 

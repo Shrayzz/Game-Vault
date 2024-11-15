@@ -2,32 +2,31 @@
 
 /*---- Requirements ----*/
 
-
 @font-face {
-    font-family: 'arcade';
-    src: url('./../resources/fonts/ARCADECLASSIC.ttf');
+    font-family: "arcade";
+    src: url("../resources/fonts/ARCADECLASSIC.ttf");
 }
 
 @font-face {
-    font-family: 'eb';
-    src: url('./../resources/fonts/Inter-ExtraBold.ttf');
+    font-family: "eb";
+    src: url("../resources/fonts/Inter-ExtraBold.ttf");
 }
 
 @font-face {
-    font-family: 'm';
-    src: url('./../resources/fonts/Inter-Medium.ttf');
+    font-family: "m";
+    src: url("../resources/fonts/Inter-Medium.ttf");
 }
 
 @font-face {
-    font-family: 'sb';
-    src: url('./../resources/fonts/Inter-SemiBold.ttf');
+    font-family: "sb";
+    src: url("../resources/fonts/Inter-SemiBold.ttf");
 }
 
 /*---- Global ----*/
 
 * {
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 .active {
@@ -42,7 +41,8 @@
     transition: all 0.5s;
 }
 
-.forbiddenError, .notFoundError {
+.forbiddenError,
+.notFoundError {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,26 +53,30 @@
     gap: 15px;
 }
 
-.forbiddenError h1, .notFoundError h1 {
-    font-family: 'arcade';
+.forbiddenError h1,
+.notFoundError h1 {
+    font-family: "arcade";
     font-size: 250px;
 }
-.forbiddenError p, .notFoundError p {
-    font-family: 'm';
+.forbiddenError p,
+.notFoundError p {
+    font-family: "m";
     font-size: 20px;
 }
 
-.forbiddenError a, .notFoundError a {
+.forbiddenError a,
+.notFoundError a {
     text-decoration: none;
     color: rgb(0, 102, 255);
     transition: all 0.3s;
     font-size: 20px;
-    font-family: 'm';
+    font-family: "m";
 }
-.forbiddenError a:hover, .notFoundError a:hover {
+.forbiddenError a:hover,
+.notFoundError a:hover {
     text-decoration: underline;
     color: rgb(8, 0, 237);
-    transition: all 0.3s
+    transition: all 0.3s;
 }
 
 .normalBG {
@@ -81,13 +85,18 @@
 }
 
 .blackBG {
-    background-image: linear-gradient(135deg, rgb(1, 12, 26), #04060a, rgb(0, 0, 0));
+    background-image: linear-gradient(
+        135deg,
+        rgb(1, 12, 26),
+        #04060a,
+        rgb(0, 0, 0)
+    );
     background-attachment: fixed;
 }
 
 hr {
     opacity: 0.25;
-    background-color: #3B4244;
+    background-color: #3b4244;
     user-select: none;
 }
 
@@ -115,7 +124,7 @@ footer {
     width: 100%;
     height: 12vh;
     line-height: 2;
-    font-family: 'm';
+    font-family: "m";
     color: aliceblue;
     user-select: none;
 }
@@ -129,7 +138,7 @@ footer a {
 footer a:hover {
     text-decoration: underline;
     color: rgb(8, 0, 237);
-    transition: all 0.3s
+    transition: all 0.3s;
 }
 
 /*---- Index ----*/
@@ -141,9 +150,9 @@ footer a:hover {
     margin: 1vh;
 
     border: none;
-    background-color: #DDDDDDF0;
+    background-color: #ddddddf0;
 
-    font-family: 'sb';
+    font-family: "sb";
     font-size: 1.5vh;
 
     transition: all 0.3s;
@@ -162,7 +171,7 @@ footer a:hover {
 }
 
 .B button {
-    font-family: 'eb';
+    font-family: "eb";
     background-color: transparent;
     border: none;
     border-radius: 30px;
@@ -182,7 +191,8 @@ footer a:hover {
     transform: scale(1.2);
     cursor: pointer;
     transition: all 0.3s;
-    filter: invert(52%) sepia(96%) saturate(750%) hue-rotate(185deg) brightness(90%) contrast(90%);
+    filter: invert(52%) sepia(96%) saturate(750%) hue-rotate(185deg)
+        brightness(90%) contrast(90%);
 }
 
 .B label {
@@ -196,7 +206,7 @@ footer a:hover {
 }
 
 .headerTitle {
-    font-family: 'arcade';
+    font-family: "arcade";
     color: aliceblue;
     letter-spacing: 3px;
     text-shadow: 2px 2px 40px #7a7a7a;
@@ -241,7 +251,7 @@ footer a:hover {
 .mainTitle {
     user-select: none;
     color: aliceblue;
-    font-family: 'eb';
+    font-family: "eb";
     font-size: 7vw;
 }
 
@@ -252,15 +262,15 @@ footer a:hover {
     }
     25% {
         /* color: rgb(132, 181, 223); */
-        text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.60);
+        text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.6);
     }
     50% {
         /* color: rgb(63, 122, 173); */
-        text-shadow: 2px 2px 30px rgba(63, 122, 173, 0.60);
+        text-shadow: 2px 2px 30px rgba(63, 122, 173, 0.6);
     }
     75% {
         /* color: rgb(132, 181, 223); */
-        text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.60);
+        text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.6);
     }
     100% {
         color: aliceblue;
@@ -272,10 +282,10 @@ footer a:hover {
     animation: gvTitleAnim linear 5s infinite;
     color: aliceblue;
     user-select: none;
-    font-family: 'arcade';
+    font-family: "arcade";
     font-size: 10vw;
     letter-spacing: 10px;
-    text-shadow: 2px 2px 30px rgba(240, 248, 255, 0.60);
+    text-shadow: 2px 2px 30px rgba(240, 248, 255, 0.6);
 }
 
 .void0 {
@@ -289,7 +299,7 @@ footer a:hover {
 }
 
 .pjtOverview {
-    font-family: 'eb';
+    font-family: "eb";
     font-size: 5vw;
     color: aliceblue;
     text-shadow: 5px 5px 10px #111111;
@@ -297,7 +307,7 @@ footer a:hover {
 }
 
 .descOverview {
-    font-family: 'm';
+    font-family: "m";
     font-size: 1.4vw;
     color: aliceblue;
     text-shadow: 5px 5px 10px #111111;
@@ -311,7 +321,6 @@ footer a:hover {
 /*---- Login & Register ----*/
 
 /* TODO: Responsive sur Login & Register */
-
 
 #login,
 #register {
@@ -332,8 +341,8 @@ footer a:hover {
     color: aliceblue;
 }
 
-.lContainer>hr,
-.rContainer>hr {
+.lContainer > hr,
+.rContainer > hr {
     opacity: 0.2;
 }
 
@@ -349,12 +358,12 @@ footer a:hover {
 
 #lParts h1,
 #pParts h1,
-.rParts>h1 {
+.rParts > h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    font-family: 'arcade';
+    font-family: "arcade";
     text-shadow: 2px 2px 30px #afafaf80;
     font-size: 75px;
     margin-bottom: 30px;
@@ -371,7 +380,7 @@ footer a:hover {
 }
 
 .register {
-    font-family: 'm';
+    font-family: "m";
     font-size: 15px;
     width: 25vw;
     padding: 17px;
@@ -382,10 +391,17 @@ footer a:hover {
     user-select: none;
 }
 
-.show-hide-password, .show-hide-cpassword {position: relative;}
-.show-hide-password input[type=password], .show-hide-cpassword input[type=password] {position: relative;}
+.show-hide-password,
+.show-hide-cpassword {
+    position: relative;
+}
+.show-hide-password input[type="password"],
+.show-hide-cpassword input[type="password"] {
+    position: relative;
+}
 
-.show-hide-password img, .show-hide-cpassword img {
+.show-hide-password img,
+.show-hide-cpassword img {
     position: absolute;
     width: 20px;
     height: auto;
@@ -396,14 +412,17 @@ footer a:hover {
     border-radius: 10px;
 }
 
-.show-hide-password img:hover, .show-hide-cpassword img:hover {
+.show-hide-password img:hover,
+.show-hide-cpassword img:hover {
     transform: scale(1.2);
     transition: all 0.3s;
     cursor: pointer;
 }
 
-#submitBtn, #loginBtn, #fpBtn {
-    font-family: 'eb';
+#submitBtn,
+#loginBtn,
+#fpBtn {
+    font-family: "eb";
     font-size: 15px;
     width: 10vw;
     padding: 17px;
@@ -411,7 +430,9 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-#submitBtn:hover, #loginBtn:hover, #fpBtn:hover {
+#submitBtn:hover,
+#loginBtn:hover,
+#fpBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
@@ -440,14 +461,13 @@ footer a:hover {
     }
 }
 
-
 .lrfnSuccess,
 .lrfnError {
     position: absolute;
-    top: 3%; 
+    top: 3%;
     /* left: 50%; */
-    transform: translateX(-50%); 
-    font-family: 'm';
+    transform: translateX(-50%);
+    font-family: "m";
     font-size: 15px;
     color: aliceblue;
     z-index: 6;
@@ -456,8 +476,8 @@ footer a:hover {
     align-items: center;
     text-align: center;
     padding: 15px;
-    max-width: 70%; 
-    word-wrap: break-word; 
+    max-width: 70%;
+    word-wrap: break-word;
     border: rgb(124, 0, 0) 2px solid;
     border-radius: 20px;
     background-color: rgba(124, 0, 0, 0.415);
@@ -482,7 +502,7 @@ footer a:hover {
 #lParts p,
 #pParts p,
 .rParts p {
-    font-family: 'm';
+    font-family: "m";
     font-size: 15px;
     display: flex;
     flex-direction: row;
@@ -507,7 +527,7 @@ footer a:hover {
     text-decoration: underline;
     cursor: pointer;
     color: rgb(8, 0, 237);
-    transition: all 0.3s
+    transition: all 0.3s;
 }
 
 .rTitle {
@@ -521,19 +541,18 @@ footer a:hover {
     /* border: red 1px solid; */
 }
 
-.rTitle>img {
+.rTitle > img {
     width: 260px;
     height: 260px;
-    
 }
 
-.rTitle>h1 {
-    font-family: 'arcade';
+.rTitle > h1 {
+    font-family: "arcade";
     font-size: 100px;
     letter-spacing: 5px;
     text-align: center;
     color: aliceblue;
-    text-shadow: 2px 2px 30px #afafafAA;
+    text-shadow: 2px 2px 30px #afafafaa;
 }
 
 /*---- Profile ----*/
@@ -550,10 +569,10 @@ footer a:hover {
 }
 
 .mainProfileContainer h1 {
-    font-family: 'arcade';
+    font-family: "arcade";
     font-size: 5vw;
     color: aliceblue;
-    text-shadow: 2px 2px 30px #afafafAA;
+    text-shadow: 2px 2px 30px #afafafaa;
 }
 
 .profileHeader {
@@ -569,7 +588,7 @@ footer a:hover {
 .proSuccess,
 .proError {
     /* left: 50%; */
-    font-family: 'm';
+    font-family: "m";
     font-size: 17.5px;
     color: aliceblue;
     z-index: 6;
@@ -580,7 +599,7 @@ footer a:hover {
     padding: 15px;
     min-width: 10vw;
     max-width: 30vw;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     border: rgb(124, 0, 0) 2px solid;
     border-radius: 20px;
     background-color: rgba(124, 0, 0, 0.415);
@@ -600,7 +619,6 @@ footer a:hover {
     border-radius: 20px;
     background-color: rgba(124, 0, 0, 0.415);
 }
-
 
 .profileContainer {
     margin-top: 4vh;
@@ -633,7 +651,7 @@ footer a:hover {
 }
 
 #username {
-    font-family: 'eb';
+    font-family: "eb";
     font-size: 3vw;
     color: aliceblue;
     margin-left: 3vw;
@@ -642,7 +660,7 @@ footer a:hover {
 }
 
 #usernameInput {
-    font-family: 'm';
+    font-family: "m";
     font-size: 3vw;
     color: aliceblue;
     background-color: transparent;
@@ -679,7 +697,7 @@ footer a:hover {
 }
 
 .profileTabs {
-    font-family: 'm';
+    font-family: "m";
     padding: 1vw;
     font-size: 2vw;
     color: white;
@@ -701,7 +719,7 @@ footer a:hover {
 
 .profileLinkings img {
     display: inline;
-    width: 3vw;                            
+    width: 3vw;
     height: 3vw;
 }
 
@@ -732,8 +750,8 @@ footer a:hover {
 }
 
 .profileImportant button {
-    font-family: 'm';
-    font-size: 1vw; 
+    font-family: "m";
+    font-size: 1vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -753,7 +771,8 @@ footer a:hover {
     transition: all 0.3s;
 }
 
-#logoutBtn:hover, #changeEPBtn:hover {
+#logoutBtn:hover,
+#changeEPBtn:hover {
     border: aliceblue solid 3px;
     color: aliceblue;
     background-color: black;
@@ -777,7 +796,7 @@ footer a:hover {
 }
 
 .searchBar {
-    font-family: 'sb';
+    font-family: "sb";
     font-size: 15px;
     color: aliceblue;
     width: 20vw;
@@ -796,14 +815,13 @@ footer a:hover {
 }
 
 #h {
-    font-family: 'eb';
+    font-family: "eb";
     color: aliceblue;
     text-decoration: underline;
     font-size: 40px;
 }
 #name-list {
-    font-family: 'm';
+    font-family: "m";
     color: aliceblue;
     font-size: 20px;
 }
-
