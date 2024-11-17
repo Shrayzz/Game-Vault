@@ -1,7 +1,7 @@
 import test from 'ava';
 import db from '../src/js/db.js';
 
-test.beforeEach(async (t) => {
+test.before(async () => {
     //Create test Database
     const serv = await db.dbConnectServer("localhost", "root", "root");
 
@@ -57,7 +57,7 @@ test.beforeEach(async (t) => {
     await con.query(categoryTableIncrementReset);
 
     //Insert data in test Database
-    const accountsTableData = "INSERT INTO accounts (username, password, email) VALUES('test1', 'test', 'test@email.com'), ('test2', 'ABCDE', 'LeTest@email.fr'), ('test3', 'AZERTY', 'jesuisuntest@email.com');";
+    const accountsTableData = "INSERT INTO accounts (username, password, email) VALUES('test1', 'test', 'test@email.com'), ('test2', 'ABCDE', 'LeTest@email.fr'), ('test3', 'AZERTY', 'jesuisuntest@email.com'), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de'), ('testDelete', 'deletein2seconds', 'help@email.del');";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1);";
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
@@ -74,30 +74,133 @@ test.beforeEach(async (t) => {
     await db.dbDisconnect(con);
 });
 
-test('mon test qui passe', t => {
-    t.pass();
+test('test existUser', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.existUser(con, "test2"));
+    t.true(await db.existUser(con, "jesuisuntest@email.com"));
+    t.false(await db.existUser(con, "badNameOrEmail"));
+
+    db.dbDisconnect(con);
 });
 
-test.todo('test existUser');
+test('test existEmail', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test existEmail');
+    t.true(await db.existEmail(con, "LeTest@email.fr"));
+    t.false(await db.existEmail(con, "BadEmail"));
 
-test.todo('test getFromAllUsers');
+    db.dbDisconnect(con);
+});
 
-test.todo('test getFromUser');
+test('test getFromAllUsers', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test getUserPassword');
+    let data = await db.getFromAllUsers(con, ['username', 'password']);
 
-test.todo('test getUserToken');
+    t.is(data[0].username, 'test1');
+    t.is(data[0].password, 'test');
+    t.is(data[1].username, 'test2');
+    t.is(data[1].password, 'ABCDE');
+    t.is(data[2].username, 'test3');
+    t.is(data[2].password, 'AZERTY');
 
-test.todo('test createUser');
+    db.dbDisconnect(con);
+});
 
-test.todo('test updateAnUser');
+test('test getFromUser', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test addToken');
+    let data = await db.getFromUser(con, 'test1', ['id', 'email']);
 
-test.todo('test updateUserImage');
+    t.is(data.id, 1);
+    t.is(data.email, 'test@email.com');
 
-test.todo('test updateUserPassword');
+    t.is(await db.getFromUser(con, 'test2', ['id']), 2);
+    t.is(await db.getFromUser(con, 'test2', ['username']), 'test2');
+    t.is(await db.getFromUser(con, 'test2', ['password']), 'ABCDE');
+    t.is(await db.getFromUser(con, 'test2', ['email']), 'LeTest@email.fr');
+    t.is(await db.getFromUser(con, 'test1', ['image']), null)
 
-test.todo('test deleteUser');
+    db.dbDisconnect(con);
+});
+
+test('test getUserPassword', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.is(await db.getUserPassword(con, "test2"), "ABCDE");
+    t.is(await db.getUserPassword(con, "badNameOrEmail"), undefined);
+
+    db.dbDisconnect(con);
+});
+
+test('test createUser', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.createUser(con, "insertTestUser", "insert@test.testing", "insertTestPWD");
+    t.true(await db.existUser(con, "insertTestUser"));
+
+    db.dbDisconnect(con);
+});
+
+test('test updateAnUser', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.updateAnUser(con, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
+    let data = await db.getFromUser(con, 'updatedTest', ['username', 'password', 'email']);
+
+    t.is(data.username, 'updatedTest');
+    t.is(data.password, 'aNewPwd');
+    t.is(data.email, 'updated@mail.fr');
+
+    db.dbDisconnect(con);
+});
+
+test('test deleteUser', async (t) => {
+    const con = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.deleteUser(con, 'testDelete');
+    t.false(await db.existUser(con, 'testDelete'));
+
+    db.dbDisconnect(con);
+});
