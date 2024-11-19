@@ -25,13 +25,15 @@ test.before(async () => {
     const categoryTable = "CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
     const listHasGameTable = "CREATE TABLE IF NOT EXISTS listHasGames(idList int(11) NOT NULL, idGame int(11) NOT NULL, PRIMARY KEY (idList, idGame), FOREIGN KEY (idList) REFERENCES list (id), FOREIGN KEY (idGame) REFERENCES game (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
     const gameHasCategory = "CREATE TABLE IF NOT EXISTS gameHasCategory(idGame int(11) NOT NULL, idCategory int(11) NOT NULL, PRIMARY KEY (idGame, idCategory), FOREIGN KEY (idGame) REFERENCES game (id), FOREIGN KEY (idCategory) REFERENCES category (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+    const api_token = "CREATE TABLE IF NOT EXISTS api_token(accountId int(11) NOT NULL, token varchar(255) NOT NULL, api_provider varchar(50) NOT NULL, exp_date timestamp, PRIMARY KEY (accountId, token), FOREIGN KEY (accountid) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;"
 
-    con.query(accountsTable);
-    con.query(listTable);
-    con.query(gameTable);
-    con.query(categoryTable);
-    con.query(listHasGameTable);
-    con.query(gameHasCategory);
+    await con.query(accountsTable);
+    await con.query(listTable);
+    await con.query(gameTable);
+    await con.query(categoryTable);
+    await con.query(listHasGameTable);
+    await con.query(gameHasCategory);
+    await con.query(api_token);
 
     // Drop all datas in the test database
     const listHasGameTableDataDrop = "DELETE FROM listHasGames;";
