@@ -361,8 +361,8 @@ async function deleteUser(pool, username) {
 //----------------------------------EXPORT----------------------------------\\
 
 export default {
-  dbConnectServer,
   dbConnect,
+  dbConnectServer,
   dbInit,
   dbDisconnect,
   existUser,
