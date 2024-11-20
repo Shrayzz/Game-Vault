@@ -1,23 +1,25 @@
 import test from 'ava';
 import db from '../src/js/db.js';
 
-test.beforeEach(async (t) => {
+test.before(async () => {
     //Create test Database
-    const serv = await db.dbConnectServer("localhost", "root", "root");
+    const servPool = await db.dbConnectServer("localhost", "root", "root");
+    const serv = await servPool.getConnection();
 
     const SimpleGameLibraryTestDatabase = "CREATE DATABASE IF NOT EXISTS SimpleGameLibraryTest;";
 
     await serv.query(SimpleGameLibraryTestDatabase);
 
-    await db.dbDisconnect(serv);
+    await db.dbDisconnect(servPool);
 
     //Create Tables in test Database
-    const con = await db.dbConnect(
+    const pool = await db.dbConnect(
         "localhost",
         "root",
         "root",
         "simplegamelibrarytest",
     );
+    const con = await pool.getConnection();
 
     const accountsTable = "CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image blob NULL, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
     const listTable = "CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
@@ -25,13 +27,15 @@ test.beforeEach(async (t) => {
     const categoryTable = "CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
     const listHasGameTable = "CREATE TABLE IF NOT EXISTS listHasGames(idList int(11) NOT NULL, idGame int(11) NOT NULL, PRIMARY KEY (idList, idGame), FOREIGN KEY (idList) REFERENCES list (id), FOREIGN KEY (idGame) REFERENCES game (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
     const gameHasCategory = "CREATE TABLE IF NOT EXISTS gameHasCategory(idGame int(11) NOT NULL, idCategory int(11) NOT NULL, PRIMARY KEY (idGame, idCategory), FOREIGN KEY (idGame) REFERENCES game (id), FOREIGN KEY (idCategory) REFERENCES category (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+    const api_token = "CREATE TABLE IF NOT EXISTS api_token(accountId int(11) NOT NULL, token varchar(255) NOT NULL, api_provider varchar(50) NOT NULL, exp_date timestamp, PRIMARY KEY (accountId, token), FOREIGN KEY (accountid) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;"
 
-    con.query(accountsTable);
-    con.query(listTable);
-    con.query(gameTable);
-    con.query(categoryTable);
-    con.query(listHasGameTable);
-    con.query(gameHasCategory);
+    await con.query(accountsTable);
+    await con.query(listTable);
+    await con.query(gameTable);
+    await con.query(categoryTable);
+    await con.query(listHasGameTable);
+    await con.query(gameHasCategory);
+    await con.query(api_token);
 
     // Drop all datas in the test database
     const listHasGameTableDataDrop = "DELETE FROM listHasGames;";
@@ -57,7 +61,7 @@ test.beforeEach(async (t) => {
     await con.query(categoryTableIncrementReset);
 
     //Insert data in test Database
-    const accountsTableData = "INSERT INTO accounts (username, password, email) VALUES('test1', 'test', 'test@email.com'), ('test2', 'ABCDE', 'LeTest@email.fr'), ('test3', 'AZERTY', 'jesuisuntest@email.com');";
+    const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', NULL), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1);";
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
@@ -71,33 +75,163 @@ test.beforeEach(async (t) => {
     con.query(listHasGameTableData);
     con.query(gameHasCategoryData);
 
-    await db.dbDisconnect(con);
+    await db.dbDisconnect(pool);
 });
 
-test('mon test qui passe', t => {
-    t.pass();
+test('test existUser', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.existUser(pool, "test2"));
+    t.true(await db.existUser(pool, "jesuisuntest@email.com"));
+    t.false(await db.existUser(pool, "badNameOrEmail"));
+
+    db.dbDisconnect(pool);
 });
 
-test.todo('test existUser');
+test('test existEmail', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test existEmail');
+    t.true(await db.existEmail(pool, "LeTest@email.fr"));
+    t.false(await db.existEmail(pool, "BadEmail"));
 
-test.todo('test getFromAllUsers');
+    db.dbDisconnect(pool);
+});
 
-test.todo('test getFromUser');
+test('test getFromAllUsers', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test getUserPassword');
+    let data = await db.getFromAllUsers(pool, ['username', 'password']);
 
-test.todo('test getUserToken');
+    t.is(data[0].username, 'test1');
+    t.is(data[0].password, 'test');
+    t.is(data[1].username, 'test2');
+    t.is(data[1].password, 'ABCDE');
+    t.is(data[2].username, 'test3');
+    t.is(data[2].password, 'AZERTY');
 
-test.todo('test createUser');
+    db.dbDisconnect(pool);
+});
 
-test.todo('test updateAnUser');
+test('test getFromUser', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
 
-test.todo('test addToken');
+    let data = await db.getFromUser(pool, 'test1', ['id', 'email']);
 
-test.todo('test updateUserImage');
+    t.is(data.id, 1);
+    t.is(data.email, 'test@email.com');
 
-test.todo('test updateUserPassword');
+    t.is(await db.getFromUser(pool, 'test2', ['id']), 2);
+    t.is(await db.getFromUser(pool, 'test2', ['username']), 'test2');
+    t.is(await db.getFromUser(pool, 'test2', ['password']), 'ABCDE');
+    t.is(await db.getFromUser(pool, 'test2', ['email']), 'LeTest@email.fr');
+    t.is(await db.getFromUser(pool, 'test1', ['image']), null)
 
-test.todo('test deleteUser');
+    db.dbDisconnect(pool);
+});
+
+test('test getUserPassword', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.is(await db.getUserPassword(pool, "test2"), "ABCDE");
+    t.is(await db.getUserPassword(pool, "badNameOrEmail"), undefined);
+
+    db.dbDisconnect(pool);
+});
+
+test('test createUser', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.createUser(pool, "insertTestUser", "insert@test.testing", "insertTestPWD"));
+    t.true(await db.existUser(pool, "insertTestUser"));
+
+    db.dbDisconnect(pool);
+});
+
+test('test updateAnUser', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.updateAnUser(pool, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
+    let data = await db.getFromUser(pool, 'updatedTest', ['username', 'password', 'email']);
+
+    t.is(data.username, 'updatedTest');
+    t.is(data.password, 'aNewPwd');
+    t.is(data.email, 'updated@mail.fr');
+
+    db.dbDisconnect(pool);
+});
+
+test('test deleteUser', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteUser(pool, 'testDelete'));
+    t.false(await db.existUser(pool, 'testDelete'));
+
+    db.dbDisconnect(pool);
+});
+
+test('test getUserToken', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.is(await db.getUserToken(pool, 'test1'), 'token1')
+
+    db.dbDisconnect(pool);
+});
+
+test('test addToken', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.addToken(pool, 'test2', 'tokenUpdate'));
+    t.is(await db.getUserToken(pool, 'test2'), 'tokenUpdate')
+
+    db.dbDisconnect(pool);
+});

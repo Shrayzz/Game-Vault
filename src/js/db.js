@@ -12,14 +12,15 @@ import mysql from "mysql2/promise";
  * @returns {object} the database connection
  */
 async function dbConnect(host, user, password, database) {
-  const con = await mysql.createPool({
+  const pool = await mysql.createPool({
     host: host,
     user: user,
     password: password,
     database: database,
+    connectionLimit: Infinity,
   });
 
-  return await con.getConnection();
+  return pool;
 }
 
 /**
@@ -30,13 +31,13 @@ async function dbConnect(host, user, password, database) {
  * @returns {object} the server connection
  */
 async function dbConnectServer(host, user, password) {
-  const serv = await mysql.createPool({
+  const servPool = await mysql.createPool({
     host: host,
     user: user,
     password: password,
   });
 
-  return await serv.getConnection();
+  return await servPool;
 }
 
 /**
@@ -44,21 +45,23 @@ async function dbConnectServer(host, user, password) {
  */
 async function dbInit() {
   //Create DataBase
-  const serv = await dbConnectServer("localhost", "root", "root");
+  const servPool = await dbConnectServer("localhost", "root", "root");
+  const serv = await servPool.getConnection();
 
   const SimpleGameLibraryDatabase =
     "CREATE DATABASE IF NOT EXISTS SimpleGameLibrary;";
 
   await serv.query(SimpleGameLibraryDatabase);
 
-  await dbDisconnect(serv);
+  await dbDisconnect(servPool);
   //Create Tables
-  const con = await dbConnect("localhost", "root", "root", "SimpleGameLibrary");
+  const pool = await dbConnect("localhost", "root", "root", "SimpleGameLibrary");
+  const con = await pool.getConnection();
 
   const accountsTable =
     "CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image blob, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const listTable =
-    "CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+    "CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountid) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const gameTable =
     "CREATE TABLE IF NOT EXISTS game(id int(11) NOT NULL AUTO_INCREMENT, source varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const categoryTable =
@@ -67,6 +70,8 @@ async function dbInit() {
     "CREATE TABLE IF NOT EXISTS listHasGames(idList int(11) NOT NULL, idGame int(11) NOT NULL, PRIMARY KEY (idList, idGame), FOREIGN KEY (idList) REFERENCES list (id), FOREIGN KEY (idGame) REFERENCES game (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const gameHasCategory =
     "CREATE TABLE IF NOT EXISTS gameHasCategory(idGame int(11) NOT NULL, idCategory int(11) NOT NULL, PRIMARY KEY (idGame, idCategory), FOREIGN KEY (idGame) REFERENCES game (id), FOREIGN KEY (idCategory) REFERENCES category (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+  const api_token =
+    "CREATE TABLE IF NOT EXISTS api_token(accountId int(11) NOT NULL, token varchar(255) NOT NULL, api_provider varchar(50) NOT NULL, exp_date timestamp, PRIMARY KEY (accountId, token), FOREIGN KEY (accountid) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;"
 
   await con.query(accountsTable);
   await con.query(listTable);
@@ -74,19 +79,23 @@ async function dbInit() {
   await con.query(categoryTable);
   await con.query(listHasGameTable);
   await con.query(gameHasCategory);
+  await con.query(api_token);
 
-  await dbDisconnect(con);
+  await dbDisconnect(pool);
 }
 
 /**
  * Disconnect the Database
  * @param {object} con your database to disconnect
  */
-async function dbDisconnect(con) {
-  con.release(function (err) {
-    if (err) throw err;
-    console.log("connection to DB successfully closed");
-  });
+async function dbDisconnect(pool) {
+  const con = await pool.getConnection();
+  try {
+    await con.release();
+    pool.end();
+  } catch (err) {
+    throw err;
+  }
 }
 
 //----------------------------------Boolean Method----------------------------------\\
@@ -97,8 +106,9 @@ async function dbDisconnect(con) {
  * @param {string} id the username or email of the user
  * @returns {boolean} true if the user exist and false if the user does not exist
  */
-async function existUser(con, id) {
+async function existUser(pool, id) {
   try {
+    const con = await pool.getConnection();
     const sql =
       "SELECT id, username, email FROM accounts WHERE username = ? OR email = ?;";
     const values = [id, id];
@@ -114,8 +124,9 @@ async function existUser(con, id) {
   }
 }
 
-async function existEmail(con, id) {
+async function existEmail(pool, id) {
   try {
+    const con = await pool.getConnection();
     const sql = "SELECT email FROM accounts WHERE email = ?;";
 
     const [rows] = await con.query(sql, id);
@@ -136,8 +147,9 @@ async function existEmail(con, id) {
  * @param {object} con your connection
  * @param {Array[string]} columns array of the column(s) your need to get
  */
-async function getFromAllUsers(con, columns) {
+async function getFromAllUsers(pool, columns) {
   try {
+    const con = await pool.getConnection();
     if (columns.length <= 0) {
       throw new Error("getFromAccount => Le tableau 'columns' est vide");
     }
@@ -161,8 +173,9 @@ async function getFromAllUsers(con, columns) {
  * @param {string} username the username of the user you want data(s)
  * @param {Array[string]} columns array of the column(s) your need to get
  */
-async function getFromUser(con, username, columns) {
+async function getFromUser(pool, username, columns) {
   try {
+    const con = await pool.getConnection();
     if (columns.length <= 0) {
       throw new Error("getFromAccount => Le tableau 'columns' est vide");
     }
@@ -206,8 +219,9 @@ async function getFromUser(con, username, columns) {
  * @param {string} id the username or email of the user
  * @returns {string} the password of the user or undefined
  */
-async function getUserPassword(con, id) {
+async function getUserPassword(pool, id) {
   try {
+    const con = await pool.getConnection();
     const sql =
       "SELECT password FROM accounts WHERE username = ? OR email = ?;";
     const values = [id, id];
@@ -226,8 +240,9 @@ async function getUserPassword(con, id) {
  * @param {string} id the username or email of the user
  * @returns {string} the token of the user or undefined
  */
-async function getUserToken(con, id) {
+async function getUserToken(pool, id) {
   try {
+    const con = await pool.getConnection();
     const sql = "SELECT token FROM accounts WHERE username = ? OR email = ?;";
     const values = [id, id];
 
@@ -249,8 +264,9 @@ async function getUserToken(con, id) {
  * @param {string} password the password of your user
  * @returns {boolean} if the user creation succeed
  */
-async function createUser(con, username, email, password) {
+async function createUser(pool, username, email, password) {
   try {
+    const con = await pool.getConnection();
     const sql =
       "INSERT INTO accounts(username, password, email) VALUES(?, ?, ?)";
     const values = [username, password, email];
@@ -273,8 +289,9 @@ async function createUser(con, username, email, password) {
  * @param {Array[string]} values array of the value(s) you want to set
  * @returns
  */
-async function updateAnUser(con, username, columns, values) {
+async function updateAnUser(pool, username, columns, values) {
   try {
+    const con = await pool.getConnection();
     if (columns.length <= 0 && values.length !== columns.length) {
       throw new Error(
         "getFromAccount => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'",
@@ -305,50 +322,11 @@ async function updateAnUser(con, username, columns, values) {
  * @param {string} token the token value
  * @returns {boolean} if the token was successfully added
  */
-async function addToken(con, username, token) {
+async function addToken(pool, username, token) {
   try {
+    const con = await pool.getConnection();
     const sql = "UPDATE accounts SET token = ? WHERE username = ?;";
     const values = [token, username];
-
-    await con.query(sql, values);
-    return true;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
-
-/**
- * Update the image of an account
- * @param {object} con your connection
- * @param {string} username the user to update the image
- * @param {blob} image the image value
- * @returns {boolean} if the image was successfully added
- */
-async function updateUserImage(con, username, image) {
-  try {
-    const sql = "UPDATE accounts SET image = ? WHERE username = ?;";
-    const values = [image, username];
-
-    await con.query(sql, values);
-    return true;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
-
-/**
- * Update the password of an account
- * @param {object} con your connection
- * @param {string} username the user to update the password
- * @param {blob} password the password value
- * @returns {boolean} if the password was successfully added
- */
-async function updateUserPassword(con, username, password) {
-  try {
-    const sql = "UPDATE accounts SET password = ? WHERE username = ?;";
-    const values = [password, username];
 
     await con.query(sql, values);
     return true;
@@ -366,8 +344,9 @@ async function updateUserPassword(con, username, password) {
  * @param {string} username the user to delete
  * @returns {boolean} if the account was successfully deleted
  */
-async function deleteUser(con, username) {
+async function deleteUser(pool, username) {
   try {
+    const con = await pool.getConnection();
     const sql = "DELETE FROM accounts WHERE username = ?;";
     const values = [username];
 
@@ -379,202 +358,11 @@ async function deleteUser(con, username) {
   }
 }
 
-//----------------------------------TESTS----------------------------------\\ //TODO: remake it with AVA https://github.com/avajs/ava
-
-/**
- * Create a test Database if not exists and add data to tables
- */
-async function startTests() {
-  //Create test Database
-  const serv = await dbConnectServer("localhost", "root", "root");
-
-  const SimpleGameLibraryTestDatabase =
-    "CREATE DATABASE IF NOT EXISTS SimpleGameLibraryTest;";
-
-  await serv.query(SimpleGameLibraryTestDatabase);
-
-  await dbDisconnect(serv);
-
-  //Create Tables in test Database
-
-  const con = await dbConnect(
-    "localhost",
-    "root",
-    "root",
-    "simplegamelibrarytest",
-  );
-
-  const accountsTable =
-    "CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image blob NULL, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-  const listTable =
-    "CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountID) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-  const gameTable =
-    "CREATE TABLE IF NOT EXISTS game(id int(11) NOT NULL AUTO_INCREMENT, source varchar(255) NOT NULL, PRIMARY KEY (id));";
-  const categoryTable =
-    "CREATE TABLE IF NOT EXISTS category(id int(11) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-  const listHasGameTable =
-    "CREATE TABLE IF NOT EXISTS listHasGames(idList int(11) NOT NULL, idGame int(11) NOT NULL, PRIMARY KEY (idList, idGame), FOREIGN KEY (idList) REFERENCES list (id), FOREIGN KEY (idGame) REFERENCES game (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-  const gameHasCategory =
-    "CREATE TABLE IF NOT EXISTS gameHasCategory(idGame int(11) NOT NULL, idCategory int(11) NOT NULL, PRIMARY KEY (idGame, idCategory), FOREIGN KEY (idGame) REFERENCES game (id), FOREIGN KEY (idCategory) REFERENCES category (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
-
-  con.query(accountsTable);
-  con.query(listTable);
-  con.query(gameTable);
-  con.query(categoryTable);
-  con.query(listHasGameTable);
-  con.query(gameHasCategory);
-
-  //Insert data in test Database
-  const accountsTableData =
-    "INSERT INTO accounts (username, password, email) VALUES('test1', 'test', 'test@email.com'), ('test2', 'ABCDE', 'LeTest@email.fr'), ('test3', 'AZERTY', 'jesuisuntest@email.com');";
-  const listTableData =
-    "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1);";
-  const gameTableData =
-    "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
-  const categoryTableData =
-    "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
-  const listHasGameTableData =
-    "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
-  const gameHasCategoryData =
-    "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
-
-  con.query(accountsTableData);
-  con.query(listTableData);
-  con.query(gameTableData);
-  con.query(categoryTableData);
-  con.query(listHasGameTableData);
-  con.query(gameHasCategoryData);
-
-  return con;
-}
-
-async function endTests(con) {
-  // Drop all datas
-  const listHasGameTableDataDrop = "DELETE FROM listHasGames;";
-  const gameHasCategoryDataDrop = "DELETE FROM gameHasCategory;";
-  const listTableDataDrop = "DELETE FROM list;";
-  const accountsTableDataDrop = "DELETE FROM accounts";
-  const gameTableDataDrop = "DELETE FROM game;";
-  const categoryTableDataDrop = "DELETE FROM category;";
-  const accountTableIncrementReset = "ALTER TABLE accounts AUTO_INCREMENT = 1;";
-  const listTableIncrementReset = "ALTER TABLE list AUTO_INCREMENT = 1;";
-  const gameTableIncrementReset = "ALTER TABLE game AUTO_INCREMENT = 1;";
-  const categoryTableIncrementReset =
-    "ALTER TABLE category AUTO_INCREMENT = 1;";
-
-  await con.query(listHasGameTableDataDrop);
-  await con.query(gameHasCategoryDataDrop);
-  await con.query(listTableDataDrop);
-  await con.query(accountsTableDataDrop);
-  await con.query(gameTableDataDrop);
-  await con.query(categoryTableDataDrop);
-  await con.query(accountTableIncrementReset);
-  await con.query(listTableIncrementReset);
-  await con.query(gameTableIncrementReset);
-  await con.query(categoryTableIncrementReset);
-
-  await dbDisconnect(con);
-}
-
-/**
- * Test existUser function
- */
-async function testExistUser(con) {
-  if (!(await existUser(con, "test2"))) {
-    throw new Error("testExistUser => can't get user with his login");
-  }
-  if (!(await existUser(con, "jesuisuntest@email.com"))) {
-    throw new Error("testExistUser => can't get user with his email");
-  }
-  if (await existUser(con, "badNameOrEmail")) {
-    throw new Error("testExistUser => get an user whith a bad login or email");
-  }
-  console.log("testExistuser => OK");
-}
-
-/**
- * Test existEmail function
- */
-async function testExistEmail(con) {
-  if (!(await existEmail(con, "LeTest@email.fr"))) {
-    throw new Error("testExistEmail => can't get user with his email");
-  }
-  if (await existEmail(con, "BadEmail")) {
-    throw new Error("testExistEmail => get an user whith a bad email");
-  }
-  console.log("testExistEmail => OK");
-}
-
-/**
- * Test getUserPassword function
- */
-async function testGetUserPassword(con) {
-  if ((await getUserPassword(con, "test2")) !== "ABCDE") {
-    throw new Error("testGetUserPassword => can't get user password");
-  }
-  if ((await getUserPassword(con, "badNameOrEmail")) !== undefined) {
-    throw new Error("testGetUserPassword => get a password when he sould not");
-  }
-  console.log("testGetUserPassword => OK");
-}
-
-/**
- * Test createUser function
- */
-async function testCreateUser(con) {
-  await createUser(
-    con,
-    "insertTestUser",
-    "insert@test.testing",
-    "insertTestPWD",
-  );
-  if (!(await existUser(con, "insertTestUser"))) {
-    throw new Error("testCreateUser => can't create user");
-  }
-  console.log("testCreateUser => OK");
-}
-
-async function testUserToken(con) {
-  if (!(await addToken(con, "test1", "testNewToken"))) {
-    throw new Error("testUserToken => can't create an user token");
-  }
-  if ((await getUserToken(con, "test1")) !== "testNewToken") {
-    throw new Error("testUserToken => get an user token");
-  }
-  if ((await getUserToken(con, "test2")) !== null) {
-    throw new Error("testUserToken => find a token when he sould not");
-  }
-  console.log("testUserToken => OK");
-}
-
-//TODO: testgetFromAllUsers, testgetFromUser, testUpdateAnUser
-//TODO: testUpdateUserImage, testUpdateUserPassword, testDeleteUser
-
-// Test executions
-/*
-(async () => {
-    // Initialise test environement
-    const con = await startTests();
-
-    // Execute tests
-    try {
-        await testExistUser(con);
-        await testExistEmail(con);
-        await testGetUserPassword(con);
-        await testCreateUser(con);
-        await testUserToken(con);
-    } catch (error) {
-        console.error(error)
-    }
-
-    // Finish tests
-    await endTests(con);
-})();
-*/
+//----------------------------------EXPORT----------------------------------\\
 
 export default {
-  dbConnectServer,
   dbConnect,
+  dbConnectServer,
   dbInit,
   dbDisconnect,
   existUser,
@@ -586,7 +374,5 @@ export default {
   getFromUser,
   getFromAllUsers,
   updateAnUser,
-  updateUserImage,
-  updateUserPassword,
   deleteUser,
 };
