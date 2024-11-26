@@ -86,7 +86,7 @@ async function dbInit() {
 
 /**
  * Disconnect the Database
- * @param {object} con your database to disconnect
+ * @param {object} pool your database pool connection to disconnect
  */
 async function dbDisconnect(pool) {
   const con = await pool.getConnection();
@@ -102,7 +102,7 @@ async function dbDisconnect(pool) {
 
 /**
  * Return is an user exist with his username or email
- * @param {object} con your connetion
+ * @param {object} pool your pool connection
  * @param {string} id the username or email of the user
  * @returns {boolean} true if the user exist and false if the user does not exist
  */
@@ -124,6 +124,12 @@ async function existUser(pool, id) {
   }
 }
 
+/**
+ * 
+ * @param {object} pool your pool connection
+ * @param {string} id the email to check
+ * @returns {boolean} true if the email exist and false if the email does not exist
+ */
 async function existEmail(pool, id) {
   try {
     const con = await pool.getConnection();
@@ -144,14 +150,15 @@ async function existEmail(pool, id) {
 
 /**
  * Get selected datas from all accounts
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {Array[string]} columns array of the column(s) your need to get
+ * @returns {object} data of all users asked
  */
 async function getFromAllUsers(pool, columns) {
   try {
     const con = await pool.getConnection();
     if (columns.length <= 0) {
-      throw new Error("getFromAccount => Le tableau 'columns' est vide");
+      throw new Error("getFromAllUsers => Le tableau 'columns' est vide");
     }
     let sql = "SELECT ";
     columns.forEach((element) => {
@@ -169,15 +176,16 @@ async function getFromAllUsers(pool, columns) {
 
 /**
  * Get selected datas from one account with his username or email
- * @param {object} con your connection
- * @param {string} username the username of the user you want data(s)
+ * @param {object} pool your pool connection
+ * @param {string} id the username or email of the user you want data(s)
  * @param {Array[string]} columns array of the column(s) your need to get
+ * @returns {object} data asked of the user by his username or email
  */
-async function getFromUser(pool, username, columns) {
+async function getFromUser(pool, id, columns) {
   try {
     const con = await pool.getConnection();
     if (columns.length <= 0) {
-      throw new Error("getFromAccount => Le tableau 'columns' est vide");
+      throw new Error("getFromUser => Le tableau 'columns' est vide");
     }
     let sql = "SELECT ";
     columns.forEach((element) => {
@@ -185,7 +193,7 @@ async function getFromUser(pool, username, columns) {
     });
     sql = sql.slice(0, -2);
     sql += " FROM accounts WHERE username = ? OR email = ?;";
-    const values = [username, username];
+    const values = [id, id];
     const [rows] = await con.query(sql, values);
 
     if (columns.length === 1) {
@@ -215,7 +223,7 @@ async function getFromUser(pool, username, columns) {
 
 /**
  * Get the password of an user from his username or email
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} id the username or email of the user
  * @returns {string} the password of the user or undefined
  */
@@ -236,7 +244,7 @@ async function getUserPassword(pool, id) {
 
 /**
  * Get the token of an user from his username or email
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} id the username or email of the user
  * @returns {string} the token of the user or undefined
  */
@@ -254,11 +262,80 @@ async function getUserToken(pool, id) {
   }
 }
 
+/**
+ * Get selected data from all lists
+ * @param {object} pool your pool connection 
+ * @param {Array[string]} columns array of the column(s) your need to get
+ * @returns {object} data asked from all lists
+ */
+async function getFromAllLists(pool, columns) {
+  try {
+    const con = await pool.getConnection();
+    if (columns.length <= 0) {
+      throw new Error("getFromAllLists => Le tableau 'columns' est vide");
+    }
+    let sql = "SELECT ";
+    columns.forEach((element) => {
+      sql += `${element}, `;
+    });
+    sql = sql.slice(0, -2);
+    sql += " FROM list";
+    const [rows] = await con.query(sql);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get selected datas from one list with his ID
+ * @param {object} pool your pool connection 
+ * @param {int} id your list ID
+ * @param {Array[string]} columns array of the column(s) your need to get
+ * @returns {object} data asked of the list by his ID 
+ */
+async function getFromList(pool, id, columns) {
+  try {
+    const con = await pool.getConnection();
+    if (columns.length <= 0) {
+      throw new Error("getFromList => Le tableau 'columns' est vide");
+    }
+    let sql = "SELECT ";
+    columns.forEach((element) => {
+      sql += `${element}, `;
+    });
+    sql = sql.slice(0, -2);
+    sql += " FROM list WHERE id = ?;";
+    const values = [id];
+    const [rows] = await con.query(sql, values);
+
+    if (columns.length === 1) {
+      switch (columns[0]) {
+        case "id":
+          return rows[0]?.id;
+        case "name":
+          return rows[0]?.name;
+        case "favorite":
+          return rows[0]?.favorite;
+        case "accountId":
+          return rows[0]?.accountId;
+        default:
+          return rows[0];
+      }
+    }
+
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------INSERT----------------------------------\\
 
 /**
  * Insert a new user into the database
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} username the username of your user
  * @param {string} email the email of your user
  * @param {string} password the password of your user
@@ -283,7 +360,7 @@ async function createUser(pool, username, email, password) {
 
 /**
  * Updates selected datas into accounts
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} username the username of the user you want to update
  * @param {Array[string]} columns array of the column(s) your need to update
  * @param {Array[string]} values array of the value(s) you want to set
@@ -317,7 +394,7 @@ async function updateAnUser(pool, username, columns, values) {
 
 /**
  * Update the account to add a new token
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} username the user to add a login token
  * @param {string} token the token value
  * @returns {boolean} if the token was successfully added
@@ -340,7 +417,7 @@ async function addToken(pool, username, token) {
 
 /**
  * Delete an account from his username
- * @param {object} con your connection
+ * @param {object} pool your pool connection
  * @param {string} username the user to delete
  * @returns {boolean} if the account was successfully deleted
  */
@@ -375,4 +452,6 @@ export default {
   getFromAllUsers,
   updateAnUser,
   deleteUser,
+  getFromAllLists,
+  getFromList,
 };

@@ -115,14 +115,14 @@ test('test getFromAllUsers', async (t) => {
         "simplegamelibrarytest",
     );
 
-    let data = await db.getFromAllUsers(pool, ['username', 'password']);
+    const data = await db.getFromAllUsers(pool, ['username', 'password']);
 
-    t.is(data[0].username, 'test1');
-    t.is(data[0].password, 'test');
-    t.is(data[1].username, 'test2');
-    t.is(data[1].password, 'ABCDE');
-    t.is(data[2].username, 'test3');
-    t.is(data[2].password, 'AZERTY');
+    t.is(data[0]?.username, 'test1');
+    t.is(data[0]?.password, 'test');
+    t.is(data[1]?.username, 'test2');
+    t.is(data[1]?.password, 'ABCDE');
+    t.is(data[2]?.username, 'test3');
+    t.is(data[2]?.password, 'AZERTY');
 
     db.dbDisconnect(pool);
 });
@@ -135,7 +135,7 @@ test('test getFromUser', async (t) => {
         "simplegamelibrarytest",
     );
 
-    let data = await db.getFromUser(pool, 'test1', ['id', 'email']);
+    const data = await db.getFromUser(pool, 'test1', ['id', 'email']);
 
     t.is(data.id, 1);
     t.is(data.email, 'test@email.com');
@@ -186,11 +186,11 @@ test('test updateAnUser', async (t) => {
     );
 
     await db.updateAnUser(pool, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
-    let data = await db.getFromUser(pool, 'updatedTest', ['username', 'password', 'email']);
+    const data = await db.getFromUser(pool, 'updatedTest', ['username', 'password', 'email']);
 
-    t.is(data.username, 'updatedTest');
-    t.is(data.password, 'aNewPwd');
-    t.is(data.email, 'updated@mail.fr');
+    t.is(data?.username, 'updatedTest');
+    t.is(data?.password, 'aNewPwd');
+    t.is(data?.email, 'updated@mail.fr');
 
     db.dbDisconnect(pool);
 });
@@ -235,3 +235,45 @@ test('test addToken', async (t) => {
 
     db.dbDisconnect(pool);
 });
+
+test('test getFromAllLists', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getFromAllLists(pool, ['id', 'name', 'accountId']);
+
+    t.is(data[0]?.id, 1);
+    t.is(data[0]?.name, 'testList1');
+    t.is(data[0]?.accountId, 1);
+    t.is(data[1]?.id, 2);
+    t.is(data[1]?.name, 'testList2');
+    t.is(data[1]?.accountId, 1);
+
+    db.dbDisconnect(pool);
+})
+
+test('test getFromList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getFromList(pool, 1, ['id', 'name', 'accountId']);
+
+    t.is(data?.id, 1);;
+    t.is(data?.name, 'testList1');
+    t.is(data?.accountId, 1);
+
+    t.is(await db.getFromList(pool, 2, ['id']), 2);
+    t.is(await db.getFromList(pool, 2, ['name']), 'testList2');
+    t.is(await db.getFromList(pool, 2, ['favorite']), 1);
+    t.is(await db.getFromList(pool, 2, ['accountId']), 1);
+
+    db.dbDisconnect(pool);
+})
