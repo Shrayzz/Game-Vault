@@ -339,7 +339,7 @@ async function getFromList(pool, id, columns) {
  * @param {string} username the username of your user
  * @param {string} email the email of your user
  * @param {string} password the password of your user
- * @returns {boolean} if the user creation succeed
+ * @returns {boolean} true if the user creation succeed
  */
 async function createUser(pool, username, email, password) {
   try {
@@ -347,6 +347,28 @@ async function createUser(pool, username, email, password) {
     const sql =
       "INSERT INTO accounts(username, password, email) VALUES(?, ?, ?)";
     const values = [username, password, email];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+/**
+ * Insert a new list into the database
+ * @param {object} pool your pool connection
+ * @param {string} name your list name 
+ * @param {boolean} isFavorite true if the list is a favorite games list
+ * @param {int} account the account who had the list 
+ * @returns {boolean} true if the list creation succeed
+ */
+async function createList(pool, name, isFavorite, account) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "INSERT INTO list(name, favorite, accountId) VALUES(?, ?, ?)";
+    const values = [name, isFavorite, account];
 
     await con.query(sql, values);
     return true;
@@ -443,15 +465,16 @@ export default {
   dbInit,
   dbDisconnect,
   existUser,
-  getUserPassword,
   existEmail,
-  createUser,
-  addToken,
+  getUserPassword,
   getUserToken,
-  getFromUser,
   getFromAllUsers,
-  updateAnUser,
-  deleteUser,
+  getFromUser,
   getFromAllLists,
   getFromList,
+  createUser,
+  createList,
+  addToken,
+  updateAnUser,
+  deleteUser,
 };

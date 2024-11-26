@@ -277,3 +277,17 @@ test('test getFromList', async (t) => {
 
     db.dbDisconnect(pool);
 })
+
+test('test createList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.createList(pool, 'insertListTest', true, 2);
+    t.is(await db.getFromList(pool, 3, ['name']), 'insertListTest');
+
+    db.dbDisconnect(pool);
+})
