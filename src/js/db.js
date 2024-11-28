@@ -388,12 +388,12 @@ async function createList(pool, name, isFavorite, account) {
  * @param {Array[string]} values array of the value(s) you want to set
  * @returns
  */
-async function updateAnUser(pool, username, columns, values) {
+async function updateUser(pool, username, columns, values) {
   try {
     const con = await pool.getConnection();
     if (columns.length <= 0 && values.length !== columns.length) {
       throw new Error(
-        "getFromAccount => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'",
+        "updateUser => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'",
       );
     }
     let sql = "UPDATE accounts SET ";
@@ -435,6 +435,40 @@ async function addToken(pool, username, token) {
   }
 }
 
+/**
+ * Updates selected datas into list
+ * @param {object} pool your pool connection
+ * @param {string} id the ID of the list you want to update
+ * @param {Array[string]} columns array of the column(s) your need to update
+ * @param {Array[mixed]} values array of the value(s) you want to set
+ * @returns
+ */
+async function updateList(pool, id, columns, values) {
+  try {
+    const con = await pool.getConnection();
+    if (columns.length <= 0 && values.length !== columns.length) {
+      throw new Error(
+        "updateList => Le tableau 'columns' est vide ou le tableau 'values' n'as pas autant de valeurs que le tableau 'columns'",
+      );
+    }
+    let sql = "UPDATE list SET ";
+
+    for (let i = 0; i < columns.length; i++) {
+      sql += `${columns[i]} = ?, `;
+    }
+    sql = sql.slice(0, -2);
+    sql += " WHERE id = ?;";
+
+    values.push(id);
+    await con.query(sql, values);
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------DELETE----------------------------------\\
 
 /**
@@ -448,6 +482,20 @@ async function deleteUser(pool, username) {
     const con = await pool.getConnection();
     const sql = "DELETE FROM accounts WHERE username = ?;";
     const values = [username];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function deleteList(pool, id) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "DELETE FROM list WHERE id = ?;";
+    const values = [id];
 
     await con.query(sql, values);
     return true;
@@ -475,6 +523,8 @@ export default {
   createUser,
   createList,
   addToken,
-  updateAnUser,
+  updateUser,
+  updateList,
   deleteUser,
+  deleteList,
 };

@@ -62,7 +62,7 @@ test.before(async () => {
 
     //Insert data in test Database
     const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', NULL), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
-    const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1);";
+    const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1), ('testUpdateList', 0, 2), ('testDeleteList', 0, 1);";
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
@@ -177,7 +177,7 @@ test('test createUser', async (t) => {
     db.dbDisconnect(pool);
 });
 
-test('test updateAnUser', async (t) => {
+test('test updateUser', async (t) => {
     const pool = await db.dbConnect(
         "localhost",
         "root",
@@ -185,7 +185,7 @@ test('test updateAnUser', async (t) => {
         "simplegamelibrarytest",
     );
 
-    await db.updateAnUser(pool, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
+    await db.updateUser(pool, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
     const data = await db.getFromUser(pool, 'updatedTest', ['username', 'password', 'email']);
 
     t.is(data?.username, 'updatedTest');
@@ -287,7 +287,38 @@ test('test createList', async (t) => {
     );
 
     await db.createList(pool, 'insertListTest', true, 2);
-    t.is(await db.getFromList(pool, 3, ['name']), 'insertListTest');
+    t.is(await db.getFromList(pool, 5, ['name']), 'insertListTest');
+
+    db.dbDisconnect(pool);
+})
+
+test('test updateList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    await db.updateList(pool, 3, ['name', 'favorite'], ['updatedList', 1]);
+    const data = await db.getFromList(pool, 3, ['name', 'favorite']);
+
+    t.is(data?.name, 'updatedList');
+    t.is(data?.favorite, 1);
+
+    db.dbDisconnect(pool);
+})
+
+test('test deleteList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteList(pool, 4));
+    t.is(await db.getFromList(pool, 4, ['name']), undefined);
 
     db.dbDisconnect(pool);
 })
