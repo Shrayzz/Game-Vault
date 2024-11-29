@@ -370,6 +370,46 @@ async function getGame(pool, id) {
   }
 }
 
+/**
+ * Get all games that are in a list identified by his ID
+ * @param {object} pool your pool connection  
+ * @param {int} listId the ID of the list
+ * @returns {object} the games in the list
+ */
+async function getGamesFromList(pool, listId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id AS idGame, source FROM listhasgames INNER JOIN game ON listhasgames.idGame = game.id WHERE idList = ?;";
+    const values = [listId];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get all Lists where is a game identified by his ID
+ * @param {object} pool your pool connection 
+ * @param {int} gameId the ID of the game 
+ * @returns {object} the lists where is the game
+ */
+async function getGameList(pool, gameId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id AS idList, name, favorite, accountId FROM listhasgames INNER JOIN list ON listhasgames.idList = list.id WHERE idGame = ?;";
+    const values = [gameId];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------INSERT----------------------------------\\
 
 /**
@@ -428,6 +468,27 @@ async function createGame(pool, source) {
     const con = await pool.getConnection();
     const sql = "INSERT INTO game(source) VALUES(?)";
     const values = [source];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+/**
+ * Add a game into a list both identified with their ID
+ * @param {object} pool your pool connection 
+ * @param {int} listId the ID of the list 
+ * @param {int} gameId the ID of the game 
+ * @returns {boolean} true if the creation succeed
+ */
+async function addGameToList(pool, listId, gameId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "INSERT INTO listhasgames(idList, idGame) VALUES(?, ?)";
+    const values = [listId, gameId];
 
     await con.query(sql, values);
     return true;
@@ -611,6 +672,27 @@ async function deleteGame(pool, id) {
   }
 }
 
+/**
+ * Delete a game from a list both identified whith their ID
+ * @param {object} pool your pool connection 
+ * @param {int} listId your list ID
+ * @param {int} gameId your game ID
+ * @returns {boolean} true if the game was successfully removed from the list
+ */
+async function deleteGameFromList(pool, listId, gameId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "DELETE FROM listhasgames WHERE idList = ? AND idGame = ?;";
+    const values = [listId, gameId];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------EXPORT----------------------------------\\
 
 export default {
@@ -628,14 +710,18 @@ export default {
   getFromList,
   getAllGames,
   getGame,
+  getGamesFromList,
+  getGameList,
   createUser,
   createList,
   createGame,
   addToken,
+  addGameToList,
   updateUser,
   updateList,
   updateGame,
   deleteUser,
   deleteList,
   deleteGame,
+  deleteGameFromList,
 };

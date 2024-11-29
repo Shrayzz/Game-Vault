@@ -409,3 +409,78 @@ test('test deleteGame', async (t) => {
 
     db.dbDisconnect(pool);
 });
+
+test('test getGamesFromList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getGamesFromList(pool, 1);
+
+    t.is(data[0]?.idGame, 1);
+    t.is(data[0]?.source, 'source1');
+    t.is(data[1]?.idGame, 2);
+    t.is(data[1]?.source, 'source2');
+
+    db.dbDisconnect(pool);
+});
+
+test('test getGameList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getGameList(pool, 2);
+
+    t.is(data[0]?.idList, 1);
+    t.is(data[0]?.name, 'testList1');
+    t.is(data[0]?.favorite, 0);
+    t.is(data[0]?.accountId, 1);
+    t.is(data[1]?.idList, 2);
+    t.is(data[1]?.name, 'testList2');
+    t.is(data[1]?.favorite, 1);
+    t.is(data[1]?.accountId, 1);
+
+    db.dbDisconnect(pool);
+});
+
+test('test addGameToList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.addGameToList(pool, 2, 1));
+
+    const data = await db.getGamesFromList(pool, 2);
+
+    t.is(data[0]?.idGame, 1);
+
+    db.dbDisconnect(pool);
+});
+
+test('test deleteGameFromList', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteGameFromList(pool, 2, 3));
+
+    const data = await db.getGamesFromList(pool, 2);
+
+    t.not(data[2]?.idGame, 3);
+    t.not(data[2]?.source, 'source3');
+
+    db.dbDisconnect(pool);
+})
