@@ -63,7 +63,7 @@ test.before(async () => {
     //Insert data in test Database
     const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', NULL), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1), ('testUpdateList', 0, 2), ('testDeleteList', 0, 1);";
-    const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3');";
+    const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3'), ('testUpdateSource'), ('testDeleteSource');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
     const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
@@ -254,7 +254,7 @@ test('test getFromAllLists', async (t) => {
     t.is(data[1]?.accountId, 1);
 
     db.dbDisconnect(pool);
-})
+});
 
 test('test getFromList', async (t) => {
     const pool = await db.dbConnect(
@@ -276,7 +276,7 @@ test('test getFromList', async (t) => {
     t.is(await db.getFromList(pool, 2, ['accountId']), 1);
 
     db.dbDisconnect(pool);
-})
+});
 
 test('test createList', async (t) => {
     const pool = await db.dbConnect(
@@ -290,7 +290,7 @@ test('test createList', async (t) => {
     t.is(await db.getFromList(pool, 5, ['name']), 'insertListTest');
 
     db.dbDisconnect(pool);
-})
+});
 
 test('test updateList', async (t) => {
     const pool = await db.dbConnect(
@@ -307,7 +307,7 @@ test('test updateList', async (t) => {
     t.is(data?.favorite, 1);
 
     db.dbDisconnect(pool);
-})
+});
 
 test('test deleteList', async (t) => {
     const pool = await db.dbConnect(
@@ -321,4 +321,91 @@ test('test deleteList', async (t) => {
     t.is(await db.getFromList(pool, 4, ['name']), undefined);
 
     db.dbDisconnect(pool);
-})
+});
+
+test('test getAllGames', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getAllGames(pool);
+
+    t.is(data[0]?.id, 1);
+    t.is(data[0]?.source, 'source1')
+    t.is(data[1]?.id, 2);
+    t.is(data[1]?.source, 'source2')
+    t.is(data[2]?.id, 3);
+    t.is(data[2]?.source, 'source3')
+
+    db.dbDisconnect(pool);
+});
+
+test('test getGame', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getGame(pool, 1);
+
+    t.is(data?.id, 1);
+    t.is(data?.source, 'source1');
+
+    db.dbDisconnect(pool);
+});
+
+test('test createGame', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.createGame(pool, 'createdSource'));
+
+    const data = await db.getGame(pool, 6);
+
+    t.is(data?.source, 'createdSource');
+
+    db.dbDisconnect(pool);
+});
+
+test('test updateGame', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.updateGame(pool, 4, 'updatedSource'));
+
+    const data = await db.getGame(pool, 4);
+
+    t.is(data?.source, 'updatedSource');
+
+    db.dbDisconnect(pool);
+});
+
+test('test deleteGame', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteGame(pool, 5));
+
+    const data = await db.getGame(pool, 5);
+
+    t.is(data, undefined);
+
+    db.dbDisconnect(pool);
+});

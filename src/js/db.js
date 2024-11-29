@@ -125,7 +125,7 @@ async function existUser(pool, id) {
 }
 
 /**
- * 
+ * Check if an account Email exist
  * @param {object} pool your pool connection
  * @param {string} id the email to check
  * @returns {boolean} true if the email exist and false if the email does not exist
@@ -331,6 +331,45 @@ async function getFromList(pool, id, columns) {
   }
 }
 
+/**
+ * Get all games data
+ * @param {object} pool your pool connection 
+ * @returns {object} data of the games
+ */
+async function getAllGames(pool) {
+  try {
+    const con = await pool.getConnection();
+    const sql =
+      "SELECT id, source FROM game;";
+
+    const [rows] = await con.query(sql);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get data of a game with his ID
+ * @param {object} pool your pool connection  
+ * @param {int} id the ID of the game 
+ * @returns the data of the game of the ID
+ */
+async function getGame(pool, id) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id, source FROM game WHERE id = ?;";
+    const values = [id];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------INSERT----------------------------------\\
 
 /**
@@ -378,6 +417,26 @@ async function createList(pool, name, isFavorite, account) {
   }
 }
 
+/**
+ * Create a new game
+ * @param {object} pool your pool connection 
+ * @param {string} source the source of the new game 
+ * @returns  {boolean} true if the game creation succeed
+ */
+async function createGame(pool, source) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "INSERT INTO game(source) VALUES(?)";
+    const values = [source];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------UPDATE----------------------------------\\
 
 /**
@@ -386,7 +445,7 @@ async function createList(pool, name, isFavorite, account) {
  * @param {string} username the username of the user you want to update
  * @param {Array[string]} columns array of the column(s) your need to update
  * @param {Array[string]} values array of the value(s) you want to set
- * @returns
+ * @returns  {boolean} true if the user update succeed
  */
 async function updateUser(pool, username, columns, values) {
   try {
@@ -441,7 +500,7 @@ async function addToken(pool, username, token) {
  * @param {string} id the ID of the list you want to update
  * @param {Array[string]} columns array of the column(s) your need to update
  * @param {Array[mixed]} values array of the value(s) you want to set
- * @returns
+ * @returns{boolean} if the list was successfully added
  */
 async function updateList(pool, id, columns, values) {
   try {
@@ -469,13 +528,34 @@ async function updateList(pool, id, columns, values) {
   }
 }
 
+/**
+ * Update a game with his ID
+ * @param {object} pool your pool connection
+ * @param {int} id the ID of the game
+ * @param {string} source the new source of the game
+ * @returns {boolean} if the game was successfully added
+ */
+async function updateGame(pool, id, source) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "UPDATE game SET source = ? WHERE id = ?;";
+    const values = [source, id];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------DELETE----------------------------------\\
 
 /**
  * Delete an account from his username
  * @param {object} pool your pool connection
  * @param {string} username the user to delete
- * @returns {boolean} if the account was successfully deleted
+ * @returns {boolean} true if the account was successfully deleted
  */
 async function deleteUser(pool, username) {
   try {
@@ -491,10 +571,36 @@ async function deleteUser(pool, username) {
   }
 }
 
+/**
+ * Delete a list with his ID
+ * @param {object} pool your pool connection 
+ * @param {int} id the ID of the list 
+ * @returns {boolean} true if the list was successfully deleted
+ */
 async function deleteList(pool, id) {
   try {
     const con = await pool.getConnection();
     const sql = "DELETE FROM list WHERE id = ?;";
+    const values = [id];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+/**
+ * Delete a game with his ID
+ * @param {object} pool your pool connection
+ * @param {int} id teh ID of the game
+ * @returns {boolean} true if the game was successfully deleted
+ */
+async function deleteGame(pool, id) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "DELETE FROM game WHERE id = ?;";
     const values = [id];
 
     await con.query(sql, values);
@@ -520,11 +626,16 @@ export default {
   getFromUser,
   getFromAllLists,
   getFromList,
+  getAllGames,
+  getGame,
   createUser,
   createList,
+  createGame,
   addToken,
   updateUser,
   updateList,
+  updateGame,
   deleteUser,
   deleteList,
+  deleteGame,
 };
