@@ -596,6 +596,27 @@ async function createCategory(pool, name) {
   }
 }
 
+/**
+ * Add a category to a game both identified with their ID
+ * @param {object} pool your pool connection
+ * @param {int} gameId your game ID
+ * @param {int} categoryId your category ID
+ * @returns {boolean} true if the creation succeed
+ */
+async function addGameToCategory(pool, gameId, categoryId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "INSERT INTO gamehascategory(idGame, idCategory) VALUES(?, ?)";
+    const values = [gameId, categoryId];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------UPDATE----------------------------------\\
 
 /**
@@ -832,6 +853,27 @@ async function deleteCategory(pool, id) {
   }
 }
 
+/**
+ * Delete a category from a game both identified whith their ID 
+ * @param {object} pool your pool connection
+ * @param {int} gameId your game ID
+ * @param {int} categoryId your category ID
+ * @returns {boolean} true if the category was successfully deleted from teh game
+ */
+async function deleteGameCategory(pool, gameId, categoryId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "DELETE FROM gamehascategory WHERE idGame = ? AND idCategory = ?;";
+    const values = [gameId, categoryId];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------EXPORT----------------------------------\\
 
 export default {
@@ -861,6 +903,7 @@ export default {
   createCategory,
   addToken,
   addGameToList,
+  addGameToCategory,
   updateUser,
   updateList,
   updateGame,
@@ -870,4 +913,5 @@ export default {
   deleteGame,
   deleteGameFromList,
   deleteCategory,
+  deleteGameCategory,
 };

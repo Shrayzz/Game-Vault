@@ -66,7 +66,7 @@ test.before(async () => {
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3'), ('testUpdateSource'), ('testDeleteSource');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3'), ('testUpdateCategory'), ('testDeleteCategory');";
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
-    const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
+    const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 1), (2, 3), (3, 3);";
 
     await con.query(accountsTableData);
     await con.query(listTableData);
@@ -584,8 +584,8 @@ test('test getGamesFromCategory', async (t) => {
 
     t.is(data[0].idGame, 1);
     t.is(data[0].source, 'source1');
-    t.is(data[1].idGame, 3);
-    t.is(data[1].source, 'source3');
+    t.is(data[1].idGame, 2);
+    t.is(data[1].source, 'source2');
 
     db.dbDisconnect(pool);
 })
@@ -604,6 +604,40 @@ test('test getGameCategories', async (t) => {
     t.is(data[0].name, 'testCategory1');
     t.is(data[1].idCategory, 2);
     t.is(data[1].name, 'testCategory2');
+
+    db.dbDisconnect(pool);
+})
+
+test('test addGameToCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.addGameToCategory(pool, 2, 2));
+
+    const data = await db.getGameCategories(pool, 2);
+
+    t.is(data[1].name, 'testCategory2')
+
+    db.dbDisconnect(pool);
+})
+
+test('test deleteGameCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteGameCategory(pool, 3, 3));
+
+    const data = await db.getGameCategories(pool, 3);
+
+    t.is(data[0], undefined)
 
     db.dbDisconnect(pool);
 })
