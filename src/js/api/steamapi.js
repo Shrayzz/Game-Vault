@@ -1,5 +1,5 @@
-const fs = require("fs");
-require("dotenv").config();
+// const fs = require("fs");
+import "dotenv/config";
 
 /**
  * Function to get all apps from the steam api
