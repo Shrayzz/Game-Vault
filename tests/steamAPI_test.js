@@ -1,16 +1,16 @@
 import test from 'ava';
-import steamAPI from '../src/js/api/steamapi';
+// import steamAPI from '../src/js/api/steamapi';
 
-test.todo('GetApps');
+test.todo('test GetApps');
 
-test.todo('GetAppDetails');
+test.todo('test GetAppDetails');
 
-test.todo('GetOwnedGames');
+test.todo('test GetOwnedGames');
 
-test.todo('GetFriends');
+test.todo('test GetFriends');
 
-test.todo('GetPlayerSummary');
+test.todo('test GetPlayerSummary');
 
-test.todo('GetPlayerAchievements');
+test.todo('test GetPlayerAchievements');
 
-test.todo('GetAchievementsData');
+test.todo('test GetAchievementsData');

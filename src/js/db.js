@@ -410,6 +410,44 @@ async function getGameList(pool, gameId) {
   }
 }
 
+/**
+ * Get all categories
+ * @param {object} pool your pool connection 
+ * @returns {object} all categories
+ */
+async function getAllCategories(pool) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id, name FROM category;";
+
+    const [rows] = await con.query(sql);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get a category by his ID
+ * @param {object} pool your pool connection 
+ * @param {int} id your category ID
+ * @returns the category data
+ */
+async function getCategory(pool, id) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id, name FROM category WHERE id = ?;";
+    const values = [id];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------INSERT----------------------------------\\
 
 /**
@@ -489,6 +527,26 @@ async function addGameToList(pool, listId, gameId) {
     const con = await pool.getConnection();
     const sql = "INSERT INTO listhasgames(idList, idGame) VALUES(?, ?)";
     const values = [listId, gameId];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+/**
+ * Create a new category
+ * @param {object} pool your pool connection
+ * @param {string} name the name of your category
+ * @returns true if the creation succeed
+ */
+async function createCategory(pool, name) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "INSERT INTO category(name) VALUES(?)";
+    const values = [name];
 
     await con.query(sql, values);
     return true;
@@ -610,6 +668,20 @@ async function updateGame(pool, id, source) {
   }
 }
 
+async function updateCategory(pool, id, name) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "UPDATE category SET name = ? WHERE id = ?;";
+    const values = [name, id];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------DELETE----------------------------------\\
 
 /**
@@ -693,6 +765,20 @@ async function deleteGameFromList(pool, listId, gameId) {
   }
 }
 
+async function deleteCategory(pool, id) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "DELETE FROM category WHERE id = ?;";
+    const values = [id];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------EXPORT----------------------------------\\
 
 export default {
@@ -712,16 +798,21 @@ export default {
   getGame,
   getGamesFromList,
   getGameList,
+  getAllCategories,
+  getCategory,
   createUser,
   createList,
   createGame,
+  createCategory,
   addToken,
   addGameToList,
   updateUser,
   updateList,
   updateGame,
+  updateCategory,
   deleteUser,
   deleteList,
   deleteGame,
   deleteGameFromList,
+  deleteCategory,
 };

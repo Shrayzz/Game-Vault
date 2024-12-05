@@ -64,7 +64,7 @@ test.before(async () => {
     const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', NULL), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1), ('testUpdateList', 0, 2), ('testDeleteList', 0, 1);";
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3'), ('testUpdateSource'), ('testDeleteSource');";
-    const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3');";
+    const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3'), ('testUpdateCategory'), ('testDeleteCategory');";
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
     const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
 
@@ -481,6 +481,93 @@ test('test deleteGameFromList', async (t) => {
 
     t.not(data[2]?.idGame, 3);
     t.not(data[2]?.source, 'source3');
+
+    db.dbDisconnect(pool);
+})
+
+test('test getAllCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getAllCategories(pool);
+
+    t.is(data[0].id, 1);
+    t.is(data[0].name, 'testCategory1');
+    t.is(data[1].id, 2);
+    t.is(data[1].name, 'testCategory2');
+    t.is(data[2].id, 3);
+    t.is(data[2].name, 'testCategory3');
+
+    db.dbDisconnect(pool);
+})
+
+test('test getCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getCategory(pool, 2);
+
+    t.is(data?.id, 2);
+    t.is(data?.name, 'testCategory2');
+
+    db.dbDisconnect(pool);
+})
+
+test('test createCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.createCategory(pool, 'createdCategory'));
+
+    const data = await db.getCategory(pool, 6);
+
+    t.is(data.name, 'createdCategory');
+
+    db.dbDisconnect(pool);
+})
+
+test('test updateCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.updateCategory(pool, 4, 'updatedCategory'));
+
+    const data = await db.getCategory(pool, 4);
+
+    t.is(data.name, 'updatedCategory');
+
+    db.dbDisconnect(pool);
+})
+
+test('test deleteCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteCategory(pool, 5));
+
+    const data = await db.getCategory(pool, 5);
+
+    t.is(data, undefined);
 
     db.dbDisconnect(pool);
 })
