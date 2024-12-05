@@ -191,9 +191,13 @@ async function GetAchievementsData(appid, debug = false) {
 }
 
 (async () => {
-  const a = await GetAchievementsData("322170", true);
+  // const a = await GetAchievementsData("322170", true);
+  // console.log(a);
   // const b = await GetAppDetails("1222140", true);
   // console.log(b);
+  const c = await GetApps(true);
+  console.log(c)
+
 })();
 
 export default {
