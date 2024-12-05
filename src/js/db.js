@@ -354,7 +354,7 @@ async function getAllGames(pool) {
  * Get data of a game with his ID
  * @param {object} pool your pool connection  
  * @param {int} id the ID of the game 
- * @returns the data of the game of the ID
+ * @returns {object} the data of the game of the ID
  */
 async function getGame(pool, id) {
   try {
@@ -379,7 +379,7 @@ async function getGame(pool, id) {
 async function getGamesFromList(pool, listId) {
   try {
     const con = await pool.getConnection();
-    const sql = "SELECT id AS idGame, source FROM listhasgames INNER JOIN game ON listhasgames.idGame = game.id WHERE idList = ?;";
+    const sql = "SELECT game.id AS idGame, source FROM listhasgames INNER JOIN game ON listhasgames.idGame = game.id WHERE idList = ?;";
     const values = [listId];
 
     const [rows] = await con.query(sql, values);
@@ -432,7 +432,7 @@ async function getAllCategories(pool) {
  * Get a category by his ID
  * @param {object} pool your pool connection 
  * @param {int} id your category ID
- * @returns the category data
+ * @returns {object} the category data
  */
 async function getCategory(pool, id) {
   try {
@@ -443,6 +443,46 @@ async function getCategory(pool, id) {
     const [rows] = await con.query(sql, values);
 
     return rows[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get all games from a category
+ * @param {object} pool your pool connection
+ * @param {int} categoryId the ID of the category
+ * @returns {object} All games from a category by his ID
+ */
+async function getGamesFromCategory(pool, categoryId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT game.id AS idGame, source FROM gamehascategory INNER JOIN game ON gamehascategory.idGame = game.id WHERE idCategory = ?;";
+    const values = [categoryId];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * Get categories of a game by his ID
+ * @param {object} pool your pool connection
+ * @param {int} gameId your game ID
+ * @returns {object} the categories of a game
+ */
+async function getGameCategories(pool, gameId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT id AS idCategory, name FROM gamehascategory INNER JOIN category ON gamehascategory.idCategory = category.id WHERE idGame = ?;";
+    const values = [gameId];
+
+    const [rows] = await con.query(sql, values);
+
+    return rows;
   } catch (err) {
     console.log(err);
   }
@@ -540,7 +580,7 @@ async function addGameToList(pool, listId, gameId) {
  * Create a new category
  * @param {object} pool your pool connection
  * @param {string} name the name of your category
- * @returns true if the creation succeed
+ * @returns {boolean} true if the creation succeed
  */
 async function createCategory(pool, name) {
   try {
@@ -597,7 +637,7 @@ async function updateUser(pool, username, columns, values) {
  * @param {object} pool your pool connection
  * @param {string} username the user to add a login token
  * @param {string} token the token value
- * @returns {boolean} if the token was successfully added
+ * @returns {boolean} if the token was successfully modified
  */
 async function addToken(pool, username, token) {
   try {
@@ -619,7 +659,7 @@ async function addToken(pool, username, token) {
  * @param {string} id the ID of the list you want to update
  * @param {Array[string]} columns array of the column(s) your need to update
  * @param {Array[mixed]} values array of the value(s) you want to set
- * @returns{boolean} if the list was successfully added
+ * @returns{boolean} if the list was successfully modified
  */
 async function updateList(pool, id, columns, values) {
   try {
@@ -652,7 +692,7 @@ async function updateList(pool, id, columns, values) {
  * @param {object} pool your pool connection
  * @param {int} id the ID of the game
  * @param {string} source the new source of the game
- * @returns {boolean} if the game was successfully added
+ * @returns {boolean} true if the game was successfully modified
  */
 async function updateGame(pool, id, source) {
   try {
@@ -668,6 +708,13 @@ async function updateGame(pool, id, source) {
   }
 }
 
+/**
+ * update a category by his ID
+ * @param {object} pool your pool connection
+ * @param {int} id your category ID
+ * @param {string} name your new category name
+ * @returns {boolean} true if the game was successfully modified
+ */
 async function updateCategory(pool, id, name) {
   try {
     const con = await pool.getConnection();
@@ -765,6 +812,12 @@ async function deleteGameFromList(pool, listId, gameId) {
   }
 }
 
+/**
+ * Delete a category by his ID
+ * @param {object} pool your pool connection
+ * @param {int} id the category ID
+ * @returns {boolean} true if the category was successfully deleted
+ */
 async function deleteCategory(pool, id) {
   try {
     const con = await pool.getConnection();
@@ -800,6 +853,8 @@ export default {
   getGameList,
   getAllCategories,
   getCategory,
+  getGamesFromCategory,
+  getGameCategories,
   createUser,
   createList,
   createGame,

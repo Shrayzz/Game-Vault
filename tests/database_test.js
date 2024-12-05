@@ -68,12 +68,12 @@ test.before(async () => {
     const listHasGameTableData = "INSERT INTO listHasGames (idList, idGame) VALUES(1, 1), (1, 2), (2, 2), (2, 3);";
     const gameHasCategoryData = "INSERT INTO gameHasCategory (idGame, idCategory) VALUES(1, 1), (1, 2), (2, 3), (3, 1), (3, 2), (3, 3);";
 
-    con.query(accountsTableData);
-    con.query(listTableData);
-    con.query(gameTableData);
-    con.query(categoryTableData);
-    con.query(listHasGameTableData);
-    con.query(gameHasCategoryData);
+    await con.query(accountsTableData);
+    await con.query(listTableData);
+    await con.query(gameTableData);
+    await con.query(categoryTableData);
+    await con.query(listHasGameTableData);
+    await con.query(gameHasCategoryData);
 
     await db.dbDisconnect(pool);
 });
@@ -568,6 +568,42 @@ test('test deleteCategory', async (t) => {
     const data = await db.getCategory(pool, 5);
 
     t.is(data, undefined);
+
+    db.dbDisconnect(pool);
+})
+
+test('test getGamesFromCategory', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getGamesFromCategory(pool, 1);
+
+    t.is(data[0].idGame, 1);
+    t.is(data[0].source, 'source1');
+    t.is(data[1].idGame, 3);
+    t.is(data[1].source, 'source3');
+
+    db.dbDisconnect(pool);
+})
+
+test('test getGameCategories', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    const data = await db.getGameCategories(pool, 1);
+
+    t.is(data[0].idCategory, 1);
+    t.is(data[0].name, 'testCategory1');
+    t.is(data[1].idCategory, 2);
+    t.is(data[1].name, 'testCategory2');
 
     db.dbDisconnect(pool);
 })
