@@ -641,3 +641,18 @@ test('test deleteGameCategory', async (t) => {
 
     db.dbDisconnect(pool);
 })
+
+test('test deleteUserToken', async (t) => {
+    const pool = await db.dbConnect(
+        "localhost",
+        "root",
+        "root",
+        "simplegamelibrarytest",
+    );
+
+    t.true(await db.deleteUserToken(pool, 'test1'));
+
+    t.is(await db.getFromUser(pool, 'test1', ['token']), null);
+
+    db.dbDisconnect(pool);
+})

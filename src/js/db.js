@@ -750,6 +750,26 @@ async function updateCategory(pool, id, name) {
   }
 }
 
+/**
+ * Modify the Account token to set it to NULL
+ * @param {object} pool your pool connection
+ * @param {string} username the username of the account
+ * @returns {boolean} true if the token was successfully modified
+ */
+async function deleteUserToken(pool, username) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "UPDATE accounts SET token = NULL WHERE username = ?;";
+    const values = [username];
+
+    await con.query(sql, values);
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
 //----------------------------------DELETE----------------------------------\\
 
 /**
@@ -904,6 +924,7 @@ export default {
   addToken,
   addGameToList,
   addGameToCategory,
+  deleteUserToken,
   updateUser,
   updateList,
   updateGame,
