@@ -2,8 +2,8 @@
 const nameList = document.getElementById('name-list');
 const container = document.getElementById('sContainer');
 
-let i = 1;
-for (i; i < 100 + 1; i++) {
+let i = 0; //! On cemmence à l'index 0
+for (i; i < 100; i++) {
     const newLine = document.createElement("li");
     newLine.textContent = `Jeux n°${i}`;
     nameList.appendChild(newLine);
@@ -18,8 +18,8 @@ button.addEventListener('click', () => {
 
 function showMoreGames() {
     const nameList = document.getElementById('name-list');
-    i = 1
-    for (i; i < 100 + 1; i++) {
+    i = 0; //! On cemmence à l'index 0
+    for (i; i < 100; i++) {
         const newLine = document.createElement("li");
         newLine.textContent = `Jeux n°${i}`;
         nameList.appendChild(newLine);
