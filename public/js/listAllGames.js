@@ -2,24 +2,24 @@
 const nameList = document.getElementById('name-list');
 const container = document.getElementById('sContainer');
 
-let i = 0;
-for (i; i < 100; i++) {
+let i = 1;
+for (i; i < 100 + 1; i++) {
     const newLine = document.createElement("li");
     newLine.textContent = `Jeux n°${i}`;
     nameList.appendChild(newLine);
 }
 const button = document.createElement("button");
-button.textContent = 'Afficher 100 de plus';
+button.textContent = 'More Games (+100)';
 container.appendChild(button);
 
-button.addEventListener('click', function () {
+button.addEventListener('click', () => {
     showMoreGames();
 })
 
 function showMoreGames() {
     const nameList = document.getElementById('name-list');
-    i = 0
-    for (i; i < 100; i++) {
+    i = 1
+    for (i; i < 100 + 1; i++) {
         const newLine = document.createElement("li");
         newLine.textContent = `Jeux n°${i}`;
         nameList.appendChild(newLine);

@@ -17,34 +17,32 @@
                 <h1 class="headerTitle">Game Vault</h1>
             </div>
             <div class="h_right">
-                <div class="A">
-                    <button
-                        class="header_btn1"
-                        onclick="window.location.href='/login';"
-                    >
-                        My Space
-                    </button>
-                    <button
-                        class="header_btn2"
-                        onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');"
-                    >
-                        GitHub
-                    </button>
+                <button class="burger_menu" onclick="toggleMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f0f8ff" viewBox="0 0 256 256">
+                        <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path>
+                    </svg>
+                </button>
+                <div class="menu_content">
+                    <div class="A">
+                        <button class="header_btn1" onclick="window.location.href='/';">
+                            <div class="display">
+                                <i class="ph ph-house"></i>
+                                <label>Home</label>
+                            </div>
+                        </button>
+                        <button class="header_btn2" onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');">
+                            <i class="ph ph-github-logo"></i>
+                            <label>GitHub</label>
+                        </button>
+                    </div>
+                    <div class="B">
+                        <button class="loginPage" onclick="window.location.href='/register';">
+                            <img src="/resources/images/user.png" alt="User" class="loginImg" />
+                            <label class="login">Login</label>
+                        </button>
+                    </div>
                 </div>
-                <div class="B">
-                    <button
-                        class="loginPage"
-                        onclick="window.location.href='/register';"
-                    >
-                        <img
-                            src="/resources/images/user.png"
-                            alt="User"
-                            class="loginImg"
-                        />
-                        <label class="login">Login</label>
-                    </button>
-                </div>
-            </div>
+            </div>        
         </header>
         <main>
             <hr />
