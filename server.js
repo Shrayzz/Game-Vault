@@ -7,14 +7,14 @@ import "dotenv/config";
 import indexRouter from "./src/routes/indexRouter";
 import apiRouter from "./src/routes/apiRouter";
 
-await db.dbConnectServer("localhost", "root", "root");
+await db.dbConnectServer(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS);
 await db.dbInit();
 
 const con = await db.dbConnect(
-  "localhost",
-  "root",
-  "root",
-  "SimpleGameLibrary",
+  process.env.DB_HOST,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  process.env.DB_NAME,
 );
 
 const server = serve({

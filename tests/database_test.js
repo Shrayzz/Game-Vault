@@ -1,9 +1,11 @@
 import test from 'ava';
 import db from '../src/js/db.js';
 
+import "dotenv/config";
+
 test.before(async () => {
     //Create test Database
-    const servPool = await db.dbConnectServer("localhost", "root", "root");
+    const servPool = await db.dbConnectServer(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS);
     const serv = await servPool.getConnection();
 
     const SimpleGameLibraryTestDatabase = "CREATE DATABASE IF NOT EXISTS SimpleGameLibraryTest;";
@@ -14,10 +16,10 @@ test.before(async () => {
 
     //Create Tables in test Database
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
     const con = await pool.getConnection();
 
@@ -61,7 +63,7 @@ test.before(async () => {
     await con.query(categoryTableIncrementReset);
 
     //Insert data in test Database
-    const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', NULL), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
+    const accountsTableData = "INSERT INTO accounts (username, password, email, token) VALUES('test1', 'test', 'test@email.com', 'token1'), ('test2', 'ABCDE', 'LeTest@email.fr', NULL), ('test3', 'AZERTY', 'jesuisuntest@email.com', 'TokenToDelete'), ('testUpdate', 'azeqsdwxc', 'updateTest@email.de', NULL), ('testDelete', 'deletein2seconds', 'help@email.del', NULL);";
     const listTableData = "INSERT INTO list (name, favorite, accountId) VALUES('testList1', 0, 1), ('testList2', 1, 1), ('testUpdateList', 0, 2), ('testDeleteList', 0, 1);";
     const gameTableData = "INSERT INTO game (source) VALUES('source1'), ('source2'), ('source3'), ('testUpdateSource'), ('testDeleteSource');";
     const categoryTableData = "INSERT INTO category (name) VALUES('testCategory1'), ('testCategory2'), ('testCategory3'), ('testUpdateCategory'), ('testDeleteCategory');";
@@ -80,10 +82,10 @@ test.before(async () => {
 
 test('test existUser', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.existUser(pool, "test2"));
@@ -95,10 +97,10 @@ test('test existUser', async (t) => {
 
 test('test existEmail', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.existEmail(pool, "LeTest@email.fr"));
@@ -109,10 +111,10 @@ test('test existEmail', async (t) => {
 
 test('test getFromAllUsers', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getFromAllUsers(pool, ['username', 'password']);
@@ -129,10 +131,10 @@ test('test getFromAllUsers', async (t) => {
 
 test('test getFromUser', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getFromUser(pool, 'test1', ['id', 'email']);
@@ -151,10 +153,10 @@ test('test getFromUser', async (t) => {
 
 test('test getUserPassword', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.is(await db.getUserPassword(pool, "test2"), "ABCDE");
@@ -165,10 +167,10 @@ test('test getUserPassword', async (t) => {
 
 test('test createUser', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.createUser(pool, "insertTestUser", "insert@test.testing", "insertTestPWD"));
@@ -179,10 +181,10 @@ test('test createUser', async (t) => {
 
 test('test updateUser', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     await db.updateUser(pool, 'testUpdate', ['username', 'password', 'email'], ['updatedTest', 'aNewPwd', 'updated@mail.fr']);
@@ -197,10 +199,10 @@ test('test updateUser', async (t) => {
 
 test('test deleteUser', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteUser(pool, 'testDelete'));
@@ -211,10 +213,10 @@ test('test deleteUser', async (t) => {
 
 test('test getUserToken', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.is(await db.getUserToken(pool, 'test1'), 'token1')
@@ -224,10 +226,10 @@ test('test getUserToken', async (t) => {
 
 test('test addToken', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.addToken(pool, 'test2', 'tokenUpdate'));
@@ -238,10 +240,10 @@ test('test addToken', async (t) => {
 
 test('test getFromAllLists', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getFromAllLists(pool, ['id', 'name', 'accountId']);
@@ -258,10 +260,10 @@ test('test getFromAllLists', async (t) => {
 
 test('test getFromList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getFromList(pool, 1, ['id', 'name', 'accountId']);
@@ -280,10 +282,10 @@ test('test getFromList', async (t) => {
 
 test('test createList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     await db.createList(pool, 'insertListTest', true, 2);
@@ -294,10 +296,10 @@ test('test createList', async (t) => {
 
 test('test updateList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     await db.updateList(pool, 3, ['name', 'favorite'], ['updatedList', 1]);
@@ -311,10 +313,10 @@ test('test updateList', async (t) => {
 
 test('test deleteList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteList(pool, 4));
@@ -325,10 +327,10 @@ test('test deleteList', async (t) => {
 
 test('test getAllGames', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getAllGames(pool);
@@ -345,10 +347,10 @@ test('test getAllGames', async (t) => {
 
 test('test getGame', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getGame(pool, 1);
@@ -361,10 +363,10 @@ test('test getGame', async (t) => {
 
 test('test createGame', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.createGame(pool, 'createdSource'));
@@ -378,10 +380,10 @@ test('test createGame', async (t) => {
 
 test('test updateGame', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.updateGame(pool, 4, 'updatedSource'));
@@ -395,10 +397,10 @@ test('test updateGame', async (t) => {
 
 test('test deleteGame', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteGame(pool, 5));
@@ -412,10 +414,10 @@ test('test deleteGame', async (t) => {
 
 test('test getGamesFromList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getGamesFromList(pool, 1);
@@ -430,10 +432,10 @@ test('test getGamesFromList', async (t) => {
 
 test('test getGameList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getGameList(pool, 2);
@@ -452,10 +454,10 @@ test('test getGameList', async (t) => {
 
 test('test addGameToList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.addGameToList(pool, 2, 1));
@@ -469,10 +471,10 @@ test('test addGameToList', async (t) => {
 
 test('test deleteGameFromList', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteGameFromList(pool, 2, 3));
@@ -487,10 +489,10 @@ test('test deleteGameFromList', async (t) => {
 
 test('test getAllCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getAllCategories(pool);
@@ -507,10 +509,10 @@ test('test getAllCategory', async (t) => {
 
 test('test getCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getCategory(pool, 2);
@@ -523,10 +525,10 @@ test('test getCategory', async (t) => {
 
 test('test createCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.createCategory(pool, 'createdCategory'));
@@ -540,10 +542,10 @@ test('test createCategory', async (t) => {
 
 test('test updateCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.updateCategory(pool, 4, 'updatedCategory'));
@@ -557,10 +559,10 @@ test('test updateCategory', async (t) => {
 
 test('test deleteCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteCategory(pool, 5));
@@ -574,10 +576,10 @@ test('test deleteCategory', async (t) => {
 
 test('test getGamesFromCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getGamesFromCategory(pool, 1);
@@ -592,10 +594,10 @@ test('test getGamesFromCategory', async (t) => {
 
 test('test getGameCategories', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     const data = await db.getGameCategories(pool, 1);
@@ -610,10 +612,10 @@ test('test getGameCategories', async (t) => {
 
 test('test addGameToCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.addGameToCategory(pool, 2, 2));
@@ -627,10 +629,10 @@ test('test addGameToCategory', async (t) => {
 
 test('test deleteGameCategory', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
     t.true(await db.deleteGameCategory(pool, 3, 3));
@@ -644,15 +646,15 @@ test('test deleteGameCategory', async (t) => {
 
 test('test deleteUserToken', async (t) => {
     const pool = await db.dbConnect(
-        "localhost",
-        "root",
-        "root",
-        "simplegamelibrarytest",
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
     );
 
-    t.true(await db.deleteUserToken(pool, 'test1'));
+    t.true(await db.deleteUserToken(pool, 'test3'));
 
-    t.is(await db.getFromUser(pool, 'test1', ['token']), null);
+    t.is(await db.getFromUser(pool, 'test3', ['token']), null);
 
     db.dbDisconnect(pool);
 })
