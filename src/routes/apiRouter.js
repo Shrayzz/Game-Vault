@@ -5,6 +5,7 @@ const bnetID = process.env.BNET_CLIENT_ID;
 import auth from "../middleware/auth";
 import register from "../middleware/register";
 import blizzard from "../js/api/blizzard";
+import steam from "../js/api/steamapi";
 
 /**
  * Router function for SimpleGameLibrary api endpoint
@@ -50,4 +51,41 @@ async function blizzardRouter(req, url, headers) {
   return null;
 }
 
-export default { apiRouter, blizzardRouter };
+async function steamRouter(req, url, headers) {
+  if (req.method === "GET" && url.pathname === "/api/steam/apps")
+    return await steam.GetApps(headers);
+
+  if (req.method === "GET" && url.pathname === "/api/steam/appdetail") {
+    const appid = url.searchParams.get("appid");
+    return await steam.GetAppDetails(appid, headers);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/steam/ownedgames") {
+    const steamid = url.searchParams.get("steamid");
+    return await steam.GetAppDetails(steamid, headers);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/steam/friends") {
+    const steamid = url.searchParams.get("steamid");
+    return await steam.GetFriends(steamid, headers);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/steam/playersummary") {
+    const steamid = url.searchParams.get("steamid");
+    return await steam.GetPlayerSummary(steamid, headers);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/steam/playerachievements") {
+    const steamid = url.searchParams.get("steamid");
+    const appid = url.searchParams.get("appid");
+    return await steam.GetPlayerAchievements(steamid, appid, headers);
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/steam/achievementdata") {
+    const appid = url.searchParams.get("appid");
+    return await steam.GetAchievementsData(appid, headers);
+  }
+}
+
+
+export default { apiRouter, blizzardRouter, steamRouter };

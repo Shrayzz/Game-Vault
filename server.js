@@ -51,6 +51,9 @@ const server = serve({
     const blizzardReq = await apiRouter.blizzardRouter(req, url, headers);
     if (blizzardReq) return blizzardReq;
 
+    const steamReq = await apiRouter.steamRouter(req, url, headers)
+    if (steamReq) return steamReq;
+
     return new Response(
       Bun.file(path.join(__dirname, "public", "html", "error", "404.html")),
       { status: 404 },
