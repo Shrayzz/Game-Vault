@@ -78,4 +78,11 @@ window.updateProfileImage = updateProfileImage;
 window.editUsername = editUsername;
 window.saveUsername = saveUsername;
 
+const usernameTitle = document.getElementById('username')
+
+window.addEventListener("DOMContentLoaded", async () => {
+  const username = localStorage.getItem("username");
+  usernameTitle.innerHTML = username;
+});
+
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB
