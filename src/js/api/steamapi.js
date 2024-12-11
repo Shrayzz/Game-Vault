@@ -3,7 +3,6 @@ import "dotenv/config";
 
 /**
  * Function to get all apps from the steam api
- * @param {boolean} debug if you want to output the response to a json file
  * @param {headers} headers response headers
  * @return {Promise<JSON>} the apps list
  */
@@ -30,7 +29,6 @@ async function GetApps(headers) {
 /**
  * Function to get the details of an app from the steam api
  * @param {string} appid the appid of the app
- * @param {boolean} debug if you want to output the response to a json file
  * @param {headers} headers response headers
  * @returns {Promise<JSON>} the app details
  */
@@ -80,7 +78,6 @@ async function GetAppDetails(appid, headers) {
 /**
  * Function to get games owned by the specified account steamid
  * @param {string} steamId steamid of the account to get owned games
- * @param {boolean} debug if you want to output the response to a json file
  * @param {headers} headers response headers
  * @returns {Promise<Object>} the owned games list of the account
  */
@@ -104,7 +101,6 @@ async function GetOwnedGames(steamid, headers) {
 /**
  * Function to get friends of the specified account steamid
  * @param {string} steamid steamid of the account to get friends
- * @param {boolean} debug if you want to output the response to a json file
  * @param {headers} headers response headers
  * @returns {Promise<Object>} the friends list of the account
  */
@@ -128,7 +124,6 @@ async function GetFriends(steamid, headers) {
 /**
  *
  * @param {string} steamid steamid of the account to get the summary of it
- * @param {boolean} debug if you want to output the response to a json file
  * @param {headers} headers response headers
  * @returns {Promise<Object>} the account steamid summary
  */
@@ -176,8 +171,8 @@ async function GetPlayerAchievements(steamid, appid, headers) {
 
 /**
  * Function to get achievements data from an app id
- * @param {*} appid appid of the to get the achievements data
- * @param {*} debug if you want to output the response to a json file
+ * @param {string} appid appid of the to get the achievements data
+ * @param {headers} headers response headers
  */
 async function GetAchievementsData(appid, headers) {
   try {
@@ -196,15 +191,15 @@ async function GetAchievementsData(appid, headers) {
   }
 }
 
-(async () => {
-  // const a = await GetAchievementsData("322170", true);
-  // console.log(a);
-  // const b = await GetAppDetails("1222140", true);
-  // console.log(b);
-  const c = await GetApps(true);
-  console.log(c)
+// (async () => {
+//   const a = await GetAchievementsData("322170", true);
+//   console.log(a);
+//   const b = await GetAppDetails("1222140", true);
+//   console.log(b);
+//   const c = await GetApps();
+//   console.log(c)
 
-})();
+// })();
 
 export default {
   GetApps,
