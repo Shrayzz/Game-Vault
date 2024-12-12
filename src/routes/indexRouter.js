@@ -1,6 +1,6 @@
 import path from "path";
 
-async function indexRouter(req, url, con, headers) {
+async function indexRouter(req, url, pool, headers) {
   // GET
   if (req.method === "GET" && url.pathname === "/")
     return new Response(
