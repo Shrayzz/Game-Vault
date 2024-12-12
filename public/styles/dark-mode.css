@@ -244,6 +244,11 @@ footer a:hover {
     align-items: center;
 }
 
+
+
+
+
+
 .void-main {
     padding: 5vh;
     display: flex;
@@ -970,6 +975,247 @@ footer a:hover {
     color: aliceblue;
     font-size: 20px;
 }
+
+/*---- Library 2 ----*/
+
+.AA { 
+    display: flex;
+    gap: 45px;
+}
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+  
+.icon-button img {
+    height: 7vh;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.AA button:hover {
+    transform: scale(1.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: transparent;
+
+
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+
+
+.headerTitle {
+    font-family: 'arcade', sans-serif;
+    color: aliceblue;
+    letter-spacing: 3px;
+    font-size: 3vw;
+}
+
+
+#hh {
+    font-family: "arcade";
+    font-size: 4vw;
+    color: aliceblue;
+    text-shadow: 2px 2px 30px #afafafaa;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 50px; 
+}
+
+.nav-links {
+    font-family: 'eb';
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.search-bar {
+    
+
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.SearchBar:hover {
+    transform: scale(1.04);
+    border: solid rgb(1, 7, 14) 2px;
+    border-radius: 15px;
+}
+
+.search-bar input {
+
+    font-family: "sb";
+    font-size: 15px;
+    color: aliceblue;
+    width: 30vw;
+    height: auto;
+    padding: 7px;
+    background-color: black;
+    border: solid aliceblue 2px;
+    border-radius: 15px;
+    transition: all 0.3s;
+    
+}
+
+
+.search-bar button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 7px;
+    
+}
+
+
+.recommendation {
+    text-align: left;
+    margin: 30px 0;
+    
+}
+
+.recommendation h2 {
+    font-family: 'eb';
+    color: white;
+    margin-bottom: 60px;
+    margin-left: 30px;
+    font-size: 1.8rem;
+    
+}
+
+.carousel {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    display: flex;
+    min-width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.carousel-slide img {
+    width: 435px;
+    height: 235px;
+    border-radius: 10px;
+    
+}
+
+button.prev, button.next {
+    position: absolute;
+    top: 37%;
+   
+    
+    
+    background: none;
+    
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev img {
+    height: 8vh;
+    width: auto;
+    transition: all 0.3s;
+}
+.next img {
+    height: 8vh;
+    width: auto;
+    transition: all 0.3s;
+}
+
+button.prev {
+    left: 0;
+}
+
+button.next {
+    right: 0;
+}
+
+button.prev.hidden {
+    display: none;
+}
+
+
+
+button:hover {
+    transform: scale(1.3);
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: transparent;
+}
+
+
+
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+  
+
+.all-games {
+    text-align: left;
+    margin: 30px 0;
+    margin-top: 70px;
+}
+
+.all-games h2 {
+    font-family: 'eb';
+    color: white;
+    margin-bottom: 60px;
+    margin-left: 30px;
+    font-size: 1.8rem;
+    
+}
+
+
+
+
+
+
 
 /*---- Responsive Part ----*/
 
