@@ -97,11 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // if (PLACEHOLDER) { // TODO: invalid cradentials
-                //     triggerPopup('error', '❌ㆍInvalid credentials', 5000);
-                //     return;
-                // }
-
                 const response = await fetch("http://localhost:3000/api/auth", {
                     method: "POST",
                     headers: {
@@ -113,17 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }),
                 });
 
-
-                const data = await response.json();
-
+                let data;
                 if (response.ok) {
+                    data = await response.json();
                     localStorage.setItem("token", data.token);
                     window.location.href = "/library"; //TODO: changer redirection
                     // TODO: popup sur library (à l'aide d'une sauvegarde)
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);
                     return;
+                } else if (response.status === 401) {
+                    triggerPopup('error', '❌ㆍInvalid username or password. Try again.', 5000);
+                    return;
                 } else {
-                    console.log("pas ok");
                     triggerPopup('error', '❌ㆍThis account doesn\'t exist. Try again or register.', 5000);
                     return;
                 }
