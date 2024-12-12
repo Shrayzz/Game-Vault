@@ -1,61 +1,98 @@
 <!doctype html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,minimum-scale=1" />
+        <link rel="icon" href="/flavicon.ico" />
+        <link rel="stylesheet" href="/styles/dark-mode.css" />
+        <title>Register - Game Vault</title>
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,minimum-scale=1" />
-    <link rel="icon" href="/flavicon.ico" />
-    <link rel="stylesheet" href="/styles/dark-mode.css" />
-    <title>Register - Game Vault</title>
-</head>
+    <body class="normalBG" id="register">
+        <div class="rContainer">
+            <div class="rBox">
+                <div id="error" class="lrfnError" style="display: none">
+                    <p id="error-text"></p>
+                </div>
+                <div class="rParts">
+                    <h1>Register</h1>
+                    <form novalidate autocomplete="on">
+                        <!-- 2 chars minimum -->
+                        <input
+                            class="register"
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            id="r_username"
+                            required
+                        />
 
-<body class="normalBG" id="register">
-    <div class="rContainer">
-        <div class="rBox">
-            <div id="error" class="lrfnError" style="display: none">
-                <p id="error-text"></p>
+                        <input
+                            class="register"
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            id="email"
+                            required
+                        />
+
+                        <input
+                            class="register"
+                            type="email"
+                            name="cemail"
+                            placeholder="Confirm Email"
+                            id="cemail"
+                            required
+                        />
+
+                        <!-- 8 chars minimum, 1 majuscule, 1 minuscule, 1 numéro -->
+                        <div class="show-hide-password">
+                            <input
+                                class="register"
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                id="r_password"
+                                required
+                            />
+                            <img
+                                src="/resources/images/show.png"
+                                alt=""
+                                id="eye"
+                                onclick="ShowHidePassword('r_password', 'eye')"
+                            />
+                        </div>
+
+                        <!-- 8 chars, majuscule, minuscule, numéro -->
+                        <div class="show-hide-cpassword">
+                            <input
+                                class="register"
+                                type="password"
+                                name="cpassword"
+                                placeholder="Confirm Password"
+                                id="cpassword"
+                                required
+                            />
+                            <img
+                                src="/resources/images/show.png"
+                                alt=""
+                                id="ceye"
+                                onclick="ShowHidePassword('cpassword', 'ceye')"
+                            />
+                        </div>
+                        <input id="registerBtn" type="button" value="Register" />
+                    </form>
+                    <script src="/js/displayPopups.js" type="module"></script>
+                    <script src="/js/displayPassword.js"></script>
+                    <script src="/js/accountEvents.js"></script>
+                    <p>Already have an account ? <a href="/login">Login</a></p>
+                </div>
             </div>
-            <div class="rParts">
-                <h1>Register</h1>
-                <form novalidate autocomplete="on">
-                    <!-- 2 chars minimum -->
-                    <input class="register" type="text" name="username" placeholder="Username" id="r_username"
-                        required />
-
-                    <input class="register" type="email" name="email" placeholder="Email" id="email" required />
-
-                    <input class="register" type="email" name="cemail" placeholder="Confirm Email" id="cemail"
-                        required />
-
-                    <!-- 8 chars minimum, 1 majuscule, 1 minuscule, 1 numéro -->
-                    <div class="show-hide-password">
-                        <input class="register" type="password" name="password" placeholder="Password" id="r_password"
-                            required />
-                        <img src="/resources/images/show.png" alt="" id="eye"
-                            onclick="ShowHidePassword('r_password', 'eye')" />
-                    </div>
-
-                    <!-- 8 chars, majuscule, minuscule, numéro -->
-                    <div class="show-hide-cpassword">
-                        <input class="register" type="password" name="cpassword" placeholder="Confirm Password"
-                            id="cpassword" required />
-                        <img src="/resources/images/show.png" alt="" id="ceye"
-                            onclick="ShowHidePassword('cpassword', 'ceye')" />
-                    </div>
-                    <input id="registerBtn" type="button" value="Register" />
-                </form>
-                <script src="/js/displayPassword.js"></script>
-                <script src="/js/popup.js"></script>
-                <script src="/js/events/enter.js"></script>
-                <p>Already have an account ? <a href="/login">Login</a></p>
-            </div>
+            <hr />
         </div>
-        <hr />
-    </div>
-    <div class="rTitle">
-        <img src="/resources/images/logo.png" alt="" class="logo" />
-        <h1>Game<br />Vault</h1>
-    </div>
-</body>
-
+        <div class="rTitle">
+            <img src="/resources/images/logo.png" alt="" class="logo" />
+            <h1>Game<br />Vault</h1>
+        </div>
+    </body>
 </html>
