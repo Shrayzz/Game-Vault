@@ -1,4 +1,5 @@
 import triggerPopup from "./popupBuilder.js";
+// import db from "../../src/js/db.js";
 
 const pp = document.getElementById("pp");
 const imgInput = document.getElementById("imgInput");
@@ -47,14 +48,50 @@ function saveUsername() {
 
   if (uInput.value.trim() === "") {
     triggerPopup("error", "❌ㆍUsername cannot be empty!", 5000);
-  } else if (uInput.value.length > 20) {
-    triggerPopup("error", "❌ㆍMax characters reached! (Max: 20)", 5000);
-  } else {
-    u.textContent = uInput.value;
-    pen.style.display = "inline";
-    uInput.style.display = "none";
-    u.style.display = "inline";
   }
+  if (uInput.value.length > 20) {
+    triggerPopup("error", "❌ㆍMax characters reached! (Max: 20)", 5000);
+  }
+
+  (async () => {
+    try {
+      const oldUsername = localStorage.getItem("username")
+      const newUsername = uInput.value
+
+      const response = await fetch(
+        "http://localhost:3000/api/updateUsername",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            oldUsername: oldUsername,
+            newUsername: newUsername,
+          }),
+        }
+      );
+
+      if (response.status === 502) {
+        triggerPopup('error', '❌ㆍUser does not exist!', 5000);
+        return;
+      }
+      if (response.status === 500 || response.status === 404) {
+        triggerPopup('error', '❌ㆍAn error occurred', 5000);
+        return;
+      }
+
+      localStorage.setItem("username", newUsername);
+      u.textContent = uInput.value;
+      pen.style.display = "inline";
+      uInput.style.display = "none";
+      u.style.display = "inline";
+    } catch (error) {
+      triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);
+      return;
+    }
+  })();
+
 }
 
 export function logout() {

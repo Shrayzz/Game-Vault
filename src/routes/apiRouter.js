@@ -4,6 +4,7 @@ const bnetID = process.env.BNET_CLIENT_ID;
 
 import auth from "../middleware/auth";
 import register from "../middleware/register";
+import profile from "../middleware/profile"
 import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
 
@@ -19,6 +20,8 @@ async function apiRouter(req, url, con, headers) {
     return await auth.auth(req, con, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
     return await register(req, con);
+  if (req.method === "POST" && url.pathname === "/api/updateUsername")
+    return await profile.updateUsername(req, con);
 
   return null;
 }

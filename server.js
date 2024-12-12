@@ -10,7 +10,7 @@ import apiRouter from "./src/routes/apiRouter";
 await db.dbConnectServer(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS);
 await db.dbInit();
 
-const con = await db.dbConnect(
+const pool = await db.dbConnect(
   process.env.DB_HOST,
   process.env.DB_USER,
   process.env.DB_PASS,
@@ -42,10 +42,10 @@ const server = serve({
       return new Response(file);
     }
 
-    const indexReq = await indexRouter(req, url, con, headers);
+    const indexReq = await indexRouter(req, url, pool, headers);
     if (indexReq) return indexReq;
 
-    const apiReq = await apiRouter.apiRouter(req, url, con, headers);
+    const apiReq = await apiRouter.apiRouter(req, url, pool, headers);
     if (apiReq) return apiReq;
 
     const blizzardReq = await apiRouter.blizzardRouter(req, url, headers);
