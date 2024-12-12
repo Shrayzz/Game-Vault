@@ -1,15 +1,18 @@
 import db from "../js/db";
 
-async function updateUsername(req, con) {
+/**
+ * Update the username of an account in the database
+ * @param {Request} req the request with credentials
+ * @param {object} pool The pool connection
+ * @returns {Response} the response if the user has logged in or not
+ */
+async function updateUsername(req, pool) {
     const { oldUsername, newUsername } = await req.json();
-    console.log("values:")
-    console.log(oldUsername);
-    console.log(newUsername);
 
-    const existUser = await db.existUser(con, oldUsername);
+    const existUser = await db.existUser(pool, oldUsername);
 
     if (existUser) {
-        db.updateUser(con, oldUsername, ['username'], [newUsername]);
+        db.updateUser(pool, oldUsername, ['username'], [newUsername]);
     } else {
         return new Response("User does not exist", { status: 502 });
     }

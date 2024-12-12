@@ -4,17 +4,18 @@ import { SignJWT, decodeJwt, jwtVerify } from "jose";
 /**
  * create an access token if credentials are correct
  * @param {Request} req the request with credentials
+ * @param {object} pool The pool connection
  * @returns {Response} the response if the user has logged in or not
  */
-async function auth(req, con, headers) {
+async function auth(req, pool, headers) {
   try {
     const { username, password } = await req.json();
 
     // check for credentials if they exists or not
-    const usernameExist = await db.existUser(con, username);
+    const usernameExist = await db.existUser(pool, username);
     const passwordExist = await Bun.password.verify(
       password,
-      await db.getUserPassword(con, username),
+      await db.getUserPassword(pool, username),
     );
 
     // return error if credentials are invalid
@@ -32,7 +33,7 @@ async function auth(req, con, headers) {
     };
 
     const secret = new TextEncoder().encode(
-      await db.getUserToken(con, username),
+      await db.getUserToken(pool, username),
     ); // needed UTF-8
 
     // create the token
@@ -63,7 +64,7 @@ async function auth(req, con, headers) {
  * @param {Request} req the request
  * @returns {Response} the response if the token is valid or not
  */
-async function checkToken(req, con, headers) {
+async function checkToken(req, pool, headers) {
   try {
     const authHeader = req.headers.get("Authorization");
     const token = authHeader && authHeader.split(" ")[1]; // extract the token from auth header
@@ -93,7 +94,7 @@ async function checkToken(req, con, headers) {
     }
 
     const userKey = new TextEncoder().encode(
-      await db.getUserToken(con, decoded.username),
+      await db.getUserToken(pool, decoded.username),
     ); // needed UTF-8
 
     const verified = await jwtVerify(token, userKey);
