@@ -452,7 +452,8 @@ footer a:hover {
 
 #registerBtn,
 #loginBtn,
-#fpBtn {
+#fpBtn,
+#npBtn {
     font-family: "eb";
     font-size: 15px;
     width: 10vw;
@@ -463,7 +464,8 @@ footer a:hover {
 
 #registerBtn:hover,
 #loginBtn:hover,
-#fpBtn:hover {
+#fpBtn:hover,
+#npBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
