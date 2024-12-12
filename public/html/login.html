@@ -49,7 +49,15 @@
                         <input id="loginBtn" type="button" value="Login" />
                     </form>
                     <script src="/js/displayPopups.js" type="module"></script>
-                    <script src="/js/accountEvents.js"></script>
+                    <script>
+                        const login = document.getElementById("loginBtn");
+
+                        window.addEventListener("keydown", (e) => {
+                            if (e.key === "Enter") {
+                                loginBtn.click();
+                            }
+                        });
+                    </script>
                     <p>
                         Don't have an account ? <a href="/register">Register</a>
                     </p>
