@@ -12,16 +12,16 @@ import steam from "../js/api/steamapi";
  * Router function for SimpleGameLibrary api endpoint
  *
  */
-async function apiRouter(req, url, pool, headers) {
+async function apiRouter(req, url, con, headers) {
   // POST
   if (req.method === "POST" && url.pathname === "/api/checkAuth")
-    return await auth.checkToken(req, pool, headers);
+    return await auth.checkToken(req, con, headers);
   if (req.method === "POST" && url.pathname === "/api/auth")
-    return await auth.auth(req, pool, headers);
+    return await auth.auth(req, con, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
-    return await register(req, pool);
+    return await register(req, con);
   if (req.method === "POST" && url.pathname === "/api/updateUsername")
-    return await profile.updateUsername(req, pool);
+    return await profile.updateUsername(req, con);
 
   return null;
 }
