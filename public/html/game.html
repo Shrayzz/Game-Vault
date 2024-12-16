@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/flavicon.ico" />
+    <link rel="stylesheet" href="/styles/dark-mode.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="/js/spaceGames.js" defer></script>
+    <title>Game - Game Vault</title>
+  </head>
+  <body>
+    <button class="return-btn">
+        <img src="../resources/images/return2.png" alt="return-btn">
+    </button>
+    <div class="AAA">
+        <button class="icon-btn">
+            <img src="../resources/images/favoris.png" alt="Favoris">
+        </button>
+        <button class="icon-btn">
+            <img src="../resources/images/game_list.png" alt="Jeux">
+        </button>
+    </div>
+
+    <div class="container-game">
+       
+      <div class="Header">
+        
+
+        <img src="/resources/images/jeux.png" alt="Game Cover" class="game-cover" />
+        
+        <div class="game-info">
+          <h1 class="game-title">Games Title</h1>
+          <h2 class="game-subtitle">Under title</h2>
+          <p class="release-date">Date</p>
+          <p class="game-genre">Genre</p>
+          <p class="publisher">By ...</p>
+        </div>
+
+        
+      </div>
+
+      <div class="description">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis rhoncus libero. Donec vel viverra neque, vitae luctus tortor. Morbi consequat in magna vitae vehicula. Fusce iaculis suscipit euismod. Etiam sit amet aliquam purus. Suspendisse luctus id lacus et hendrerit. Morbi consequat imperdiet convallis. Aliquam nisl ante, malesuada sed luctus nec, blandit nec felis. Nam bibendum condimentum nisi. Nulla dapibus efficitur neque, vitae congue dolor cursus non.
+
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis rhoncus libero. Donec vel viverra neque, vitae luctus tortor. Morbi consequat in magna vitae vehicula. Fusce iaculis suscipit euismod. Etiam sit amet aliquam purus. Suspendisse luctus id lacus et hendrerit. Morbi consequat imperdiet convallis. Aliquam nisl ante, malesuada sed luctus nec, blandit nec felis. Nam bibendum condimentum nisi. Nulla dapibus efficitur neque, vitae congue dolor cursus non.
+        </p>
+      </div>
+
+      
+      <div class="comments-section">
+        <h2 class="comments-title">Comments</h2>
+
+        <div class="write-comment">
+          <textarea placeholder="Write a comment..." id="comment-input"></textarea>
+          <img
+            src="../resources/images/comment.png"
+            alt="Send Button"
+            class="send-button"
+            id="send-button"
+          />
+        </div>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("send-button")
+        .addEventListener("click", () => {
+          document.getElementById("comment-input").value = "";
+        });
+    </script>
+  </body>
+</html>
