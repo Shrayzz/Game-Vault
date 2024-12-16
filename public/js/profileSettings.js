@@ -41,7 +41,7 @@ function editUsername() {
   uInput.focus();
 }
 
-function saveUsername() {
+async function saveUsername() {
   const u = document.getElementById("username");
   const uInput = document.getElementById("usernameInput");
   const pen = document.getElementById("pencil");
@@ -53,48 +53,46 @@ function saveUsername() {
     triggerPopup("error", "❌ㆍMax characters reached! (Max: 20)", 5000);
   }
 
-  (async () => {
-    try {
-      const oldUsername = localStorage.getItem("username")
-      const newUsername = uInput.value
+  try {
+    const oldUsername = localStorage.getItem("username");
+    const newUsername = uInput.value;
 
-      const response = await fetch(
-        "http://localhost:3000/api/updateUsername",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            oldUsername: oldUsername,
-            newUsername: newUsername,
-          }),
-        }
-      );
-
-      if (response.status === 502) {
-        triggerPopup('error', '❌ㆍUser does not exist!', 5000);
-        return;
+    const response = await fetch(
+      "http://localhost:3000/api/updateUsername",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          oldUsername: oldUsername,
+          newUsername: newUsername,
+        }),
       }
-      if (response.status === 500 || response.status === 404) {
-        triggerPopup('error', '❌ㆍAn error occurred', 5000);
-        return;
-      }
+    );
 
-      localStorage.setItem("username", newUsername);
-      u.textContent = uInput.value;
-      pen.style.display = "inline";
-      uInput.style.display = "none";
-      u.style.display = "inline";
-    } catch (error) {
-      triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);
+    if (response.status === 502) {
+      triggerPopup('error', '❌ㆍUser does not exist!', 5000);
       return;
     }
-  })();
+    if (response.status === 500 || response.status === 404) {
+      triggerPopup('error', '❌ㆍAn error occurred', 5000);
+      return;
+    }
+
+    localStorage.setItem("username", newUsername);
+    u.textContent = uInput.value;
+    pen.style.display = "inline";
+    uInput.style.display = "none";
+    u.style.display = "inline";
+  } catch (error) {
+    triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);
+    return;
+  }
 
 }
 
-export function logOut() {
+function logOut() {
   try {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
@@ -111,11 +109,47 @@ function saveToken() {
     : undefined;
 }
 
+async function deleteAccount() {
+  try {
+    const username = localStorage.getItem("username");
+
+    const response = await fetch(
+      "http://localhost:3000/api/deleteAccount",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+        }),
+      }
+    );
+
+    if (response.status === 502) {
+      triggerPopup('error', '❌ㆍUser does not exist!', 5000);
+      return;
+    }
+    if (response.status === 500 || response.status === 404) {
+      triggerPopup('error', '❌ㆍAn error occurred', 5000);
+      return;
+    }
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    window.location.href = "/";
+  } catch (error) {
+    triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);
+    return;
+  }
+}
+
 window.showImgDialog = showImgDialog;
 window.updateProfileImage = updateProfileImage;
 window.editUsername = editUsername;
 window.saveUsername = saveUsername;
 window.LogOut = logOut;
+window.deleteAccount = deleteAccount;
 
 const usernameTitle = document.getElementById('username')
 

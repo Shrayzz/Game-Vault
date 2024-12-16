@@ -22,6 +22,8 @@ async function apiRouter(req, url, pool, headers) {
     return await register(req, pool);
   if (req.method === "POST" && url.pathname === "/api/updateUsername")
     return await profile.updateUsername(req, pool);
+  if (req.method === "POST" && url.pathname === "/api/deleteAccount")
+    return await profile.deleteAccount(req, pool);
 
   return null;
 }
