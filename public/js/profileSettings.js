@@ -94,10 +94,11 @@ function saveUsername() {
 
 }
 
-export function logout() {
+export function logOut() {
   try {
-    localStorage.removeItem(token);
-    window.Location.href = "/";
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    window.location.href = "/";
   } finally {
     return;
   }
@@ -114,6 +115,7 @@ window.showImgDialog = showImgDialog;
 window.updateProfileImage = updateProfileImage;
 window.editUsername = editUsername;
 window.saveUsername = saveUsername;
+window.LogOut = logOut;
 
 const usernameTitle = document.getElementById('username')
 
