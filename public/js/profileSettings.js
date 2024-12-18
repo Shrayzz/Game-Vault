@@ -8,24 +8,68 @@ function showImgDialog() {
   imgInput.click();
 }
 
-function updateProfileImage(event) {
-  const file = event.target.files[0];
+async function updateProfileImage(event) {
+  try {
+    const username = localStorage.getItem("username");
+    const file = await event.target.files[0];
 
-  if (file && file.type.startsWith("image/")) {
-    const reader = new FileReader();
+    // TODO set in DB
 
-    reader.onload = function (e) {
-      pp.src = e.target.result;
-      triggerPopup(
-        "success",
-        "✔️ㆍProfile picture updated successfully!",
-        5000,
-      );
-    };
+    if (file && file.type.startsWith("image/")) {
+      const readerDB = new FileReader();
 
-    reader.readAsDataURL(file);
-  } else {
-    triggerPopup("error", "❌ㆍPlease select a valid image file.", 5000);
+      readerDB.onload = async function (e) {
+        const fileURL = e.target.result;
+        console.log(fileURL)
+        const response = await fetch(
+          "http://localhost:3000/api/updateUserImage",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              file: fileURL,
+            }),
+          }
+        );
+
+        if (response.status === 500) {
+          triggerPopup('error', '❌ㆍAn error occurred while updating your image', 5000);
+          return;
+        }
+        if (response.status === 500 || response.status === 404) {
+          triggerPopup('error', '❌ㆍAn error occurred', 5000);
+          return;
+        }
+      };
+
+      readerDB.readAsDataURL(file);
+    } else {
+      triggerPopup("error", "❌ㆍPlease select a valid image file.", 5000);
+    }
+
+    // TODO simplifier quand update fini
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        pp.src = e.target.result;
+        triggerPopup(
+          "success",
+          "✔️ㆍProfile picture updated successfully!",
+          5000,
+        );
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      triggerPopup("error", "❌ㆍPlease select a valid image file.", 5000);
+    }
+  } catch (error) {
+    triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);
+    return;
   }
 }
 
@@ -157,5 +201,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   const username = localStorage.getItem("username");
   usernameTitle.innerHTML = username;
 });
+
+//TODO get image of account on first load and if not null afficher
 
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB
