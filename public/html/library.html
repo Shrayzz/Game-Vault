@@ -6,8 +6,11 @@
     <link rel="icon" href="/flavicon.ico" />
     <link rel="stylesheet" href="/styles/dark-mode.css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="/js/checkLogin.js"></script>
+    <script src="/js/spaceGames.js" defer></script>
+    
     <title>Library - Game Vault</title>
+
+   
   </head>
 
   <body class="normalBG">
@@ -17,16 +20,19 @@
         <h1 class="headerTitle">Game Vault</h1>
       </div>
       <div class="h_right">
-        <div class="A">
-          <button class="header_btn1" onclick="window.location.href='/login';">
-            My Space
-          </button>
-          <button
-            class="header_btn2"
-            onclick="window.open('https://github.com/Shrayzz/Simple-Game-Library', '_blank');"
-          >
-            GitHub
-          </button>
+        <div class="AA">
+            <button class="icon-button" onclick="window.location.href='/';">
+                <img src="../resources/images/home.png" alt="Home">
+            </button>
+            <button class="icon-button">
+                <img src="../resources/images/favoris.png" alt="Favoris">
+            </button>
+            <button class="icon-button">
+                <img src="../resources/images/game_list.png" alt="Jeux">
+            </button>
+            <button class="icon-button">
+                <img src="../resources/images/friends.png" alt="Amis">
+            </button>
         </div>
         <div class="B">
           <button class="loginPage" onclick="window.location.href='/profile';">
@@ -37,28 +43,70 @@
       </div>
     </header>
     <main>
-      <hr />
+
+      <h1 id="hh">Games</h1>
+      
+
+
+      <nav>
+        <div class="nav-center">
+            <ul class="nav-links">
+                <li><a href="#">Novelty</a></li>
+                <li><a href="#">Filters</a></li>
+            </ul>
+            <div class="search-bar">
+                <input type="text" placeholder="Search" class="SearchBar" />
+                <button>🔍</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="recommendation">
+      <h2>Recommandation</h2>
+      <div class="carousel">
+          <div class="carousel-container">
+              <div class="carousel-slide">
+                  <img src="/resources/images/jeux.png" alt="Jeu 1">
+                  <img src="/resources/images/jeux.png" alt="Jeu 2">
+                  <img src="/resources/images/jeux.png" alt="Jeu 3">
+              </div>
+              <div class="carousel-slide">
+                <img src="/resources/images/jeux.png" alt="Jeu 4">
+                <img src="/resources/images/jeux.png" alt="Jeu 5">
+                <img src="/resources/images/jeux.png" alt="Jeu 6">
+            </div>
+            <div class="carousel-slide">
+                <img src="/resources/images/jeux.png" alt="Jeu 7">
+                <img src="/resources/images/jeux.png" alt="Jeu 8">
+                <img src="/resources/images/jeux.png" alt="Jeu 9">
+            </div>
+          </div>
+          
+          <button class="prev" onclick="moveCarousel(-1)">
+            <img src="/resources/images/prev.png" alt="Prev" />
+          </button>
+          <button class="next" onclick="moveCarousel(1)">
+            <img src="/resources/images/next.png" alt="Next" />
+          </button>
+
+      </div>
+  </section>
+
+  <section class="all-games">
+    <h2>All Games</h2>
+
       <div class="sContainer" id="sContainer">
-        <input type="text" placeholder="Search" class="searchBar" />
-        <h1 id="h">Games :</h1>
+        
         <div id="name-list">
           <!-- TODO: afficher avec l'API steam -->
         </div>
         <button id="addButton">Add +100 More games</button>
       </div>
+  </section>
+  
+  
     </main>
-    <footer>
-      <p class="license">
-        This project is under
-        <a
-          href="https://github.com/Shrayzz/Simple-Game-Library/blob/main/LICENSE"
-          >MIT License</a
-        >
-      </p>
-      <p class="authors">
-        Created by MAS Axel, DOURU Eden, TISSIER Elouan, SAFI Cherifa
-      </p>
-    </footer>
+  
     <script src="../js/listAllGames.js"></script>
   </body>
 </html>
