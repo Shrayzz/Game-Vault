@@ -14,18 +14,12 @@ async function indexRouter(req, url, pool, headers) {
         path.join(__dirname, "..", "..", "public", "html", "library.html"),
       ),
     );
-    if (req.method === "GET" && url.pathname === "/library2")
-      return new Response(
-        Bun.file(
-          path.join(__dirname, "..", "..", "public", "html", "library2.html"),
-        ),
-      );
   if (req.method === "GET" && url.pathname === "/game")
-      return new Response(
-        Bun.file(
-          path.join(__dirname, "..", "..", "public", "html", "game.html"),
-        ),
-      );
+    return new Response(
+      Bun.file(
+        path.join(__dirname, "..", "..", "public", "html", "game.html"),
+      ),
+    );
   if (req.method === "GET" && url.pathname === "/login")
     return new Response(
       Bun.file(

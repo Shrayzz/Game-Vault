@@ -22,11 +22,11 @@
         // list 100 more games
         for (window.numGame; window.numGame < arret; window.numGame++) {
             // add a new line
-            const newLine = document.createElement("li");
+            const newLine = document.createElement("div");
             // get the game ID
             const gameId = window.allGames[window.numGame]?.appid
             const gameName = window.allGames[window.numGame]?.name
-            newLine.textContent = `Jeux n°${gameId} : ${gameName}`;
+            newLine.textContent = gameName;
             nameList.appendChild(newLine);
         }
     }
