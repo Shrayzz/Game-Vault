@@ -1489,6 +1489,26 @@ textarea::placeholder {
     width: 80%;
 }
 
+.return-Btn {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 2vw;
+    top: 3vw;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 80px;
+}
+
+.return-Btn img {
+    width: 5vw;
+    height: vw;
+}
+
+.return-Btn:hover {
+    transform: scale(1.1);
+}
+
 /*------------------*/
 
 /*---- Responsive Part ----*/
