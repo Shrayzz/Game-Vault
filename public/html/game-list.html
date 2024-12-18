@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/flavicon.ico" />
+    <link rel="stylesheet" href="/styles/dark-mode.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="/js/spaceGames.js" defer></script>
+    <title>Vos Listes - Game Vault</title>
+  </head>
+
+  <body class="normalBG">
+    <header id="header">
+      <div class="h_left">
+        <img src="/resources/images/logo.png" alt="" class="logo" />
+        <h1 class="headerTitle">Game Vault</h1>
+      </div>
+      <div class="h_right">
+        <div class="AA">
+          <button class="icon-button" onclick="window.location.href='/';">
+            <img src="../resources/images/home.png" alt="Home" />
+          </button>
+          <button class="icon-button">
+            <img src="../resources/images/favoris.png" alt="Favoris" />
+          </button>
+          <button class="icon-button" onclick="window.location.href='/game-list';">
+            <img src="../resources/images/game_list.png" alt="Jeux" />
+          </button>
+          <button class="icon-button">
+            <img src="../resources/images/friends.png" alt="Amis" />
+          </button>
+        </div>
+        <div class="B">
+          <button class="loginPage" onclick="window.location.href='/profile';">
+            <img src="/resources/images/user.png" alt="User" class="loginImg" />
+            <label class="login">Profile</label>
+          </button>
+        </div>
+      </div>
+    </header>
+
+   
+    <main>
+      <h1 id="hh">Lists </h1>
+
+    
+      <section class="list-section">
+        <div class="list-container" id="list-container">
+
+          <button class="add-list-btn" id="add-list-btn">
+            <img src="/resources/images/plus.png" alt="Ajouter" />
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/listGame.js"></script>
+  </body>
+</html>
