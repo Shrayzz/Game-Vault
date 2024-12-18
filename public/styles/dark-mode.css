@@ -58,6 +58,7 @@
     font-family: "arcade";
     font-size: 250px;
 }
+
 .forbiddenError p,
 .notFoundError p {
     font-family: "m";
@@ -72,6 +73,7 @@
     font-size: 20px;
     font-family: "m";
 }
+
 .forbiddenError a:hover,
 .notFoundError a:hover {
     text-decoration: underline;
@@ -85,12 +87,10 @@
 }
 
 .blackBG {
-    background-image: linear-gradient(
-        135deg,
-        rgb(1, 12, 26),
-        #04060a,
-        rgb(0, 0, 0)
-    );
+    background-image: linear-gradient(135deg,
+            rgb(1, 12, 26),
+            #04060a,
+            rgb(0, 0, 0));
     background-attachment: fixed;
 }
 
@@ -196,8 +196,7 @@ footer a:hover {
     transform: scale(1.2);
     cursor: pointer;
     transition: all 0.3s;
-    filter: invert(52%) sepia(96%) saturate(750%) hue-rotate(185deg)
-        brightness(90%) contrast(90%);
+    filter: invert(52%) sepia(96%) saturate(750%) hue-rotate(185deg) brightness(90%) contrast(90%);
 }
 
 .B label {
@@ -269,18 +268,22 @@ footer a:hover {
         color: aliceblue;
         text-shadow: 2px 2px 30px #afafaf;
     }
+
     25% {
         /* color: rgb(132, 181, 223); */
         text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.6);
     }
+
     50% {
         /* color: rgb(63, 122, 173); */
         text-shadow: 2px 2px 30px rgba(63, 122, 173, 0.6);
     }
+
     75% {
         /* color: rgb(132, 181, 223); */
         text-shadow: 2px 2px 30px rgba(132, 181, 223, 0.6);
     }
+
     100% {
         color: aliceblue;
         text-shadow: 2px 2px 30px #afafaf;
@@ -350,8 +353,8 @@ footer a:hover {
     color: aliceblue;
 }
 
-.lContainer > hr,
-.rContainer > hr {
+.lContainer>hr,
+.rContainer>hr {
     opacity: 0.2;
 }
 
@@ -367,7 +370,7 @@ footer a:hover {
 
 #lParts h1,
 #pParts h1,
-.rParts > h1 {
+.rParts>h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -404,6 +407,7 @@ footer a:hover {
 .show-hide-cpassword {
     position: relative;
 }
+
 .show-hide-password input[type="password"],
 .show-hide-cpassword input[type="password"] {
     position: relative;
@@ -455,14 +459,17 @@ footer a:hover {
         opacity: 0;
         transform: scale(0.9) translateY(-10px);
     }
+
     10% {
         opacity: 1;
         transform: scale(1) translateY(0px);
     }
+
     89% {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
+
     99% {
         display: none;
         opacity: 0;
@@ -550,12 +557,12 @@ footer a:hover {
     /* border: red 1px solid; */
 }
 
-.rTitle > img {
+.rTitle>img {
     width: 260px;
     height: 260px;
 }
 
-.rTitle > h1 {
+.rTitle>h1 {
     font-family: "arcade";
     font-size: 100px;
     letter-spacing: 5px;
@@ -665,6 +672,7 @@ footer a:hover {
     border-radius: 10px;
     transition: all 0.3s;
 }
+
 #pp:hover {
     opacity: 0.7;
     cursor: pointer;
@@ -806,6 +814,7 @@ footer a:hover {
     color: aliceblue;
     background-color: black;
 }
+
 #deleteAccBtn:hover {
     border: rgb(188, 0, 0) solid 3px;
     color: aliceblue;
@@ -817,24 +826,26 @@ footer a:hover {
 
 
 .themeContainer {
-    text-align: center; 
+    text-align: center;
 }
+
 .themeContainer h2 {
     font-family: 'arcade';
     font-size: 5vw;
     color: aliceblue;
-    text-align: left; 
-    margin-left: 1vw; 
+    text-align: left;
+    margin-left: 1vw;
 }
 
 .modeSelection {
     display: flex;
     gap: 3vw;
-    justify-content: center; 
+    justify-content: center;
     margin-top: 3vw;
-    margin-left: auto; 
+    margin-left: auto;
     margin-right: auto;
 }
+
 .modeOption {
     display: flex;
     flex-direction: column;
@@ -846,6 +857,7 @@ footer a:hover {
     cursor: pointer;
     transition: all 0.3s;
 }
+
 .modeOption.selected {
     border: 8px white solid;
     background-color: black;
@@ -886,8 +898,8 @@ footer a:hover {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5vw;
     margin-top: 3vw;
-    justify-items: center; 
-    justify-content: center; 
+    justify-items: center;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
 }
@@ -906,15 +918,15 @@ footer a:hover {
 }
 
 .themeOption.selected {
-    border: 7px solid rgb(95, 98, 124) ;
-    background-color:  black;
+    border: 7px solid rgb(95, 98, 124);
+    background-color: black;
     color: black;
-    
+
 }
 
 .themeOption:hover {
     transform: scale(1.05);
-    border: 10px solid rgb(255, 255, 255) ;
+    border: 10px solid rgb(255, 255, 255);
     color: black;
     background-color: black;
 }
@@ -943,6 +955,7 @@ footer a:hover {
     padding: 20px;
     gap: 20px;
     border: rgb(88, 114, 228) 1px solid;
+    text-align: center;
 }
 
 .searchBar {
@@ -970,6 +983,7 @@ footer a:hover {
     text-decoration: underline;
     font-size: 40px;
 }
+
 #name-list {
     font-family: "eb";
     color: aliceblue;
@@ -978,7 +992,7 @@ footer a:hover {
 
 /*---- Library 2 ----*/
 
-.AA { 
+.AA {
     display: flex;
     gap: 45px;
 }
@@ -988,7 +1002,7 @@ footer a:hover {
     border: none;
     cursor: pointer;
 }
-  
+
 .icon-button img {
     height: 7vh;
     width: auto;
@@ -1029,7 +1043,7 @@ footer a:hover {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
-    
+
 }
 
 nav {
@@ -1042,7 +1056,7 @@ nav {
 .nav-center {
     display: flex;
     align-items: center;
-    gap: 50px; 
+    gap: 50px;
 }
 
 .nav-links {
@@ -1059,7 +1073,7 @@ nav {
 }
 
 .search-bar {
-    
+
 
     display: flex;
     align-items: center;
@@ -1084,7 +1098,7 @@ nav {
     border: solid aliceblue 2px;
     border-radius: 15px;
     transition: all 0.3s;
-    
+
 }
 
 
@@ -1095,14 +1109,14 @@ nav {
     font-size: 1.5rem;
     cursor: pointer;
     margin-left: 7px;
-    
+
 }
 
 
 .recommendation {
     text-align: left;
     margin: 30px 0;
-    
+
 }
 
 .recommendation h2 {
@@ -1111,7 +1125,7 @@ nav {
     margin-bottom: 60px;
     margin-left: 30px;
     font-size: 1.8rem;
-    
+
 }
 
 .carousel {
@@ -1131,24 +1145,25 @@ nav {
     min-width: 100%;
     justify-content: space-around;
     align-items: center;
-    
+
 }
 
 .carousel-slide img {
     width: 435px;
     height: 235px;
     border-radius: 10px;
-    
+
 }
 
-button.prev, button.next {
+button.prev,
+button.next {
     position: absolute;
     top: 37%;
-   
-    
-    
+
+
+
     background: none;
-    
+
     border: none;
     padding: 10px;
     cursor: pointer;
@@ -1160,6 +1175,7 @@ button.prev, button.next {
     width: auto;
     transition: all 0.3s;
 }
+
 .next img {
     height: 8vh;
     width: auto;
@@ -1194,7 +1210,7 @@ button:hover {
     border: none;
     cursor: pointer;
 }
-  
+
 
 .all-games {
     text-align: left;
@@ -1208,8 +1224,9 @@ button:hover {
     margin-bottom: 60px;
     margin-left: 30px;
     font-size: 1.8rem;
-    
+
 }
+
 /*------------------*/
 
 /*---- Game ----*/
@@ -1219,15 +1236,15 @@ body {
     font-family: Arial, sans-serif;
     background-color: #0d1117;
     color: #c9d1d9;
-  }
+}
 
 .container-game {
-  max-width: 100%;
-  padding: 20px;
-  margin-top: 55px;
-  border-radius: 8px;
-  margin-left: 10px;
-  margin-right: 10px;
+    max-width: 100%;
+    padding: 20px;
+    margin-top: 55px;
+    border-radius: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
 
 }
 
@@ -1236,9 +1253,9 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
-    
+
     border-radius: 8px;
-  }
+}
 
 
 .return-btn {
@@ -1278,7 +1295,7 @@ body {
     border: none;
     cursor: pointer;
 }
-  
+
 .icon-btn img {
     height: 8vh;
     width: auto;
@@ -1294,19 +1311,19 @@ body {
 
 }
 
-  
-  .game-cover {
+
+.game-cover {
     width: 450px;
     height: auto;
     border-radius: 8px;
     margin-top: 15px;
-  }
-  
-  .game-info {
+}
+
+.game-info {
     flex: 1;
-  }
-  
-  .game-title {
+}
+
+.game-title {
     top: 2vw;
     font-family: "eb";
     font-size: 4vw;
@@ -1314,40 +1331,40 @@ body {
     text-shadow: 2px 2px 30px #afafafaa;
     text-align: left;
     padding-bottom: 10px;
-    
 
-  }
-  
-  .game-subtitle {
+
+}
+
+.game-subtitle {
     font-size: 1rem;
-    color:  aliceblue;
-    
-  }
-  
-  .release-date{
+    color: aliceblue;
+
+}
+
+.release-date {
     margin-top: 3px;
     font-size: 1.2rem;
     color: aliceblue;
-  }
+}
 
-  .game-genre{
+.game-genre {
     margin-top: 7px;
     font-size: 1.2rem;
     color: aliceblue;
     margin-top: 7px;
     font-size: 1.2rem;
     color: aliceblue;
-  }
+}
 
-  .publisher {
+.publisher {
     margin-top: 7px;
     font-size: 1.2rem;
     color: aliceblue;
     margin-top: 10px;
-  }
-  
+}
 
-  .description {
+
+.description {
     background-color: #21262d;
     margin-top: 20px;
     padding: 15px;
@@ -1357,31 +1374,32 @@ body {
     line-height: 1.6;
     margin-left: 10px;
     margin-right: 30px;
-  }
-  .comments-section {
+}
+
+.comments-section {
     margin-top: 20px;
-    
+
     padding: 15px;
     border-radius: 8px;
-  }
+}
 
 .comments-title {
-font-family: "eb";
-  font-size: 1.2rem;
-  color: #fff;
-  margin-bottom: 10px;
+    font-family: "eb";
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 10px;
 }
-  
 
-  
-  .write-comment {
+
+
+.write-comment {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 10px;
-  }
-  
-  textarea {
+}
+
+textarea {
     flex: 1;
     height: 60px;
     padding: 10px;
@@ -1392,22 +1410,22 @@ font-family: "eb";
     border-radius: 8px;
     outline: none;
     resize: none;
-  }
-  
-  textarea::placeholder {
+}
+
+textarea::placeholder {
     color: #8b949e;
-  }
-  
-  .send-button {
+}
+
+.send-button {
     width: 40px;
     height: 40px;
     cursor: pointer;
     transition: transform 0.2s;
-  }
-  
-  .send-button:hover {
+}
+
+.send-button:hover {
     transform: scale(1.1);
-  }
+}
 
 
 /*------------------*/
@@ -1417,16 +1435,16 @@ font-family: "eb";
     display: flex;
     justify-content: center;
     margin-top: 100px;
-  }
-  
-  .list-container {
+}
+
+.list-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-  }
-  
- 
-  .add-list-btn {
+}
+
+
+.add-list-btn {
     width: 300px;
     height: 220px;
     background-color: #d9d9d9;
@@ -1436,21 +1454,21 @@ font-family: "eb";
     justify-content: center;
     align-items: center;
     cursor: pointer;
-   
-  }
-  
-  .add-list-btn:hover {
+
+}
+
+.add-list-btn:hover {
     transform: scale(1.05);
-  }
-  
-  .add-list-btn img {
-   
+}
+
+.add-list-btn img {
+
     width: 300px;
     height: 220px;
-  }
-  
+}
 
-  .list-item {
+
+.list-item {
     width: 300px;
     height: 220px;
     background-color: #d9d9d9;
@@ -1460,17 +1478,17 @@ font-family: "eb";
     align-items: center;
     position: relative;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  }
-  
-  .list-item input {
+}
+
+.list-item input {
     border: none;
     background: none;
     text-align: center;
     outline: none;
     font-size: 1.5rem;
     width: 80%;
-  }
-  
+}
+
 /*------------------*/
 
 /*---- Responsive Part ----*/
@@ -1481,6 +1499,7 @@ font-family: "eb";
     .A button {
         width: 90px;
     }
+
     .headerTitle {
         /* border: red 1px solid; */
         text-align: center;
