@@ -39,13 +39,20 @@ async function deleteAccount(req, pool) {
     return new Response("Success, account deleted", { status: 200 });
 }
 
+/**
+ * Update th euser Image of profile
+ * @param {Request} req the request with credentials
+ * @param {object} pool The pool connection
+ * @returns {Response} the response if the user has logged in or not
+ */
 async function updateImage(req, pool) {
     const { username, file } = await req.json()
     const existUser = await db.existUser(pool, username);
     // TODO add compresseur d'image because insert fail when file too big
 
     if (existUser) {
-        db.updateUser(pool, username, ['image'], [file]);
+        const fileJSON = JSON.stringify(file);
+        db.updateUser(pool, username, ['image'], [fileJSON]);
     } else {
         return new Response("User does not exist", { status: 502 });
     }

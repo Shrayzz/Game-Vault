@@ -18,6 +18,7 @@ async function updateProfileImage(event) {
     if (file && file.type.startsWith("image/")) {
       const readerDB = new FileReader();
 
+      // TODO changer insert en JSON
       readerDB.onload = async function (e) {
         const fileURL = e.target.result;
         console.log(fileURL)
