@@ -1,7 +1,8 @@
-(async () => {
+const nameList = document.getElementById('name-list');
+const addButton = document.getElementById('addButton');
+
+window.addEventListener("DOMContentLoaded", async () => {
     // get the page elements
-    const nameList = document.getElementById('name-list');
-    const addButton = document.getElementById('addButton');
 
     // get all steam games
     const steamGames = await fetch("http://localhost:3000/api/steam/apps", {
@@ -30,23 +31,22 @@
             nameList.appendChild(newLine);
         }
     }
+});
 
-    // When button click list 100 more games
-    addButton.addEventListener('click', async function () {
-        // get game list element
-        const nameList = document.getElementById('name-list');
-        // we stop in 100 games
-        let arret = window.numGame + 100
-        // list 100 more games
-        for (window.numGame; window.numGame < arret; window.numGame++) {
-            // add a new line
-            const newLine = document.createElement("div");
-            // get the game ID
-            const gameId = window.allGames[window.numGame]?.appid
-            const gameName = window.allGames[window.numGame]?.name
-            newLine.textContent = gameName;
-            nameList.appendChild(newLine);
-        }
-    })
-
-})()
+// When button click list 100 more games
+addButton.addEventListener('click', async function () {
+    // get game list element
+    const nameList = document.getElementById('name-list');
+    // we stop in 100 games
+    let arret = window.numGame + 100
+    // list 100 more games
+    for (window.numGame; window.numGame < arret; window.numGame++) {
+        // add a new line
+        const newLine = document.createElement("div");
+        // get the game ID
+        const gameId = window.allGames[window.numGame]?.appid
+        const gameName = window.allGames[window.numGame]?.name
+        newLine.textContent = gameName;
+        nameList.appendChild(newLine);
+    }
+})

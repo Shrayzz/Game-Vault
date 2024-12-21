@@ -207,6 +207,7 @@ footer a:hover {
     height: 50px;
     width: auto;
     transition: all 0.3s;
+    border-radius: 100%;
 }
 
 .headerTitle {

@@ -60,7 +60,7 @@ async function updateImage(req, pool) {
 }
 
 /**
- * Get the user profile image 
+ * Get the user profile image
  * @param {object} pool The pool connection
  * @returns {Response} the response if the user has logged in or not
  */
@@ -71,7 +71,6 @@ async function getUserImage(pool) {
 
         if (existUser) {
             const image = await db.getFromUser(pool, username, ['image']);
-            console.log(image)
             const response = new Response(JSON.stringify(image), { status: 200 });
             return response;
         } else {
