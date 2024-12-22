@@ -33,12 +33,12 @@ async function updateProfileImage(event) {
           }
         );
 
-        if (response.status === 500) {
-          triggerPopup('error', '❌ㆍAn error occurred while updating your image', 5000);
+        if (response.status === 502) {
+          triggerPopup('error', '❌ㆍUser does not exist', 5000);
           return;
         }
         if (response.status === 500 || response.status === 404) {
-          triggerPopup('error', '❌ㆍAn error occurred', 5000);
+          triggerPopup('error', '❌ㆍAn error occurred while updating your image', 5000);
           return;
         }
       };

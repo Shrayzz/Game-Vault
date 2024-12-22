@@ -64,9 +64,15 @@ async function updateImage(req, pool) {
  * @param {object} pool The pool connection
  * @returns {Response} the response if the user has logged in or not
  */
-async function getUserImage(pool) {
+async function getUserImage(pool, url) {
     try {
-        const username = "Eloups";
+        const urlsearchParams = url.searchParams;
+        const params = {};
+        for (const [key, value] of urlsearchParams) {
+            params[key] = value;
+        }
+
+        const username = params.username;
         const existUser = await db.existUser(pool, username);
 
         if (existUser) {

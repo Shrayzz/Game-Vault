@@ -5,6 +5,7 @@ const bnetID = process.env.BNET_CLIENT_ID;
 import auth from "../middleware/auth";
 import register from "../middleware/register";
 import profile from "../middleware/profile"
+import lists from "../middleware/lists"
 import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
 
@@ -15,7 +16,7 @@ import steam from "../js/api/steamapi";
 async function apiRouter(req, url, pool, headers) {
   // GET
   if (req.method === "GET" && url.pathname === "/api/getUserImage")
-    return await profile.getUserImage(pool);
+    return await profile.getUserImage(pool, url);
   // POST
   if (req.method === "POST" && url.pathname === "/api/checkAuth")
     return await auth.checkToken(req, pool, headers);
@@ -29,7 +30,8 @@ async function apiRouter(req, url, pool, headers) {
     return await profile.deleteAccount(req, pool);
   if (req.method === "POST" && url.pathname === "/api/updateUserImage")
     return await profile.updateImage(req, pool);
-
+  if (req.method === "POST" && url.pathname === "/api/addList")
+    return await lists.addList(req, pool);
   return null;
 }
 
