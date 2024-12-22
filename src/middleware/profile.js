@@ -80,10 +80,10 @@ async function getUserImage(pool, url) {
             const response = new Response(JSON.stringify(image), { status: 200 });
             return response;
         } else {
-            return new Response("User does not exist", { status: 502 });
+            return new Response(JSON.stringify("User does not exist"), { status: 502 });
         }
     } catch (error) {
-        return new Response(`An error occured : ${error}`, { status: 500 });
+        return new Response(JSON.stringify(`An error occured : ${error}`), { status: 500 });
     }
 
 }

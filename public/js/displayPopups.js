@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     data = await response.json();
                     localStorage.setItem("token", data.token);
+                    localStorage.setItem("username", username);
                     window.location.href = "/library"; //TODO: changer redirection
                     // TODO: popup sur library (à l'aide d'une sauvegarde)
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);
