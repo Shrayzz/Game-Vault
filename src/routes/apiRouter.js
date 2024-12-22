@@ -2,22 +2,22 @@ import "dotenv/config";
 
 const bnetID = process.env.BNET_CLIENT_ID;
 
-import auth from "../middleware/auth";
-import register from "../middleware/register";
-import profile from "../middleware/profile"
+import auth from "../js/auth/auth";
+import register from "../js/auth/register";
+import profile from "../js/utils/profile"
 import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
 
 /**
  * Router function for SimpleGameLibrary api endpoint
- *
+ * @param {Request} req the request
+ * @param {string} url the requested url
+ * @param {Object} pool the database pool connectecion
+ * @param {Headers} headers the headers    
  */
 async function apiRouter(req, url, pool, headers) {
-  // POST
-  if (req.method === "POST" && url.pathname === "/api/checkAuth")
-    return await auth.checkToken(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/auth")
-    return await auth.auth(req, pool, headers);
+    return await auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
     return await register(req, pool);
   if (req.method === "POST" && url.pathname === "/api/updateUsername")

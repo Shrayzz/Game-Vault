@@ -1,4 +1,4 @@
-import db from "../js/db";
+import db from "../db";
 
 /**
  * Update the username of an account in the database

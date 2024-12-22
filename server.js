@@ -1,11 +1,13 @@
 import { serve } from "bun";
 import path from "path";
 import db from "./src/js/db";
+import dotenv from "dotenv";
 
-import "dotenv/config";
+dotenv.config();
 
 import indexRouter from "./src/routes/indexRouter";
 import apiRouter from "./src/routes/apiRouter";
+import _middleware from "./src/middleware/middleware";
 
 await db.dbConnectServer(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS);
 await db.dbInit();
@@ -31,6 +33,9 @@ const server = serve({
     if (req.method === "OPTIONS") {
       return new Response(null, { status: 204, headers });
     }
+
+    const middleware = await _middleware(req, url, headers)
+    if (middleware) return middleware;
 
     // get files in public directory
     const fpath = path.join(__dirname, "public", url.pathname.substring(1));

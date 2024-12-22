@@ -70,10 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 );
 
-
                 if (response.ok) {
                     window.location.href = "/login?success=true";
-
                 } else if (response.status === 502) {
                     triggerPopup('error', '❌ㆍUser already exists!', 5000);
                     return;
@@ -108,10 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }),
                 });
 
-                let data;
                 if (response.ok) {
-                    data = await response.json();
-                    localStorage.setItem("token", data.token);
                     window.location.href = "/library"; //TODO: changer redirection
                     // TODO: popup sur library (à l'aide d'une sauvegarde)
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);
