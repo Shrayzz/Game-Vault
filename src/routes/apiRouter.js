@@ -5,6 +5,7 @@ const bnetID = process.env.BNET_CLIENT_ID;
 import auth from "../js/auth/auth";
 import register from "../js/auth/register";
 import profile from "../js/utils/profile"
+import lists from "../js/utils/lists"
 import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
 

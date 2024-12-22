@@ -1,4 +1,4 @@
-import db from "../js/db";
+import db from "../db";
 
 async function addList(req, pool) {
     try {
