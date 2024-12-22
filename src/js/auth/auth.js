@@ -47,6 +47,7 @@ async function auth(req, pool, headers) {
     if (token !== null) {
       headers.append("Content-Type", "application/json");
       headers.append("Set-Cookie", `token=${token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Strict`);
+      headers.append("Set-Cookie", `username=${username}; Path=/; Max-Age=3600; SameSite=Strict`);
       return new Response(JSON.stringify({ token: token }), {
         status: 200,
         headers: headers,

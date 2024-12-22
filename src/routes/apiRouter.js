@@ -16,6 +16,8 @@ import steam from "../js/api/steamapi";
  * @param {Headers} headers the headers    
  */
 async function apiRouter(req, url, pool, headers) {
+  if (req.method === "GET" && url.pathname === "/api/getUserImage")
+    return await profile.getUserImage(pool, url);
   if (req.method === "POST" && url.pathname === "/api/auth")
     return await auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
