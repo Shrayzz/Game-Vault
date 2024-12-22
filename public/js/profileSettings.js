@@ -13,8 +13,6 @@ async function updateProfileImage(event) {
     const username = localStorage.getItem("username");
     const file = await event.target.files[0];
 
-    // TODO set in DB
-
     if (file && file.type.startsWith("image/")) {
       const readerDB = new FileReader();
 
@@ -35,12 +33,12 @@ async function updateProfileImage(event) {
           }
         );
 
-        if (response.status === 500) {
-          triggerPopup('error', '❌ㆍAn error occurred while updating your image', 5000);
+        if (response.status === 502) {
+          triggerPopup('error', '❌ㆍUser does not exist', 5000);
           return;
         }
         if (response.status === 500 || response.status === 404) {
-          triggerPopup('error', '❌ㆍAn error occurred', 5000);
+          triggerPopup('error', '❌ㆍAn error occurred while updating your image', 5000);
           return;
         }
       };
@@ -200,8 +198,23 @@ const usernameTitle = document.getElementById('username')
 window.addEventListener("DOMContentLoaded", async () => {
   const username = localStorage.getItem("username");
   usernameTitle.innerHTML = username;
+
+  // Load the user profile image
+  const response = await fetch(
+    `http://localhost:3000/api/getUserImage?username=${username}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const image = await response.json()
+  if (image !== null) {
+    pp.src = image
+  }
 });
 
-//TODO get image of account on first load and if not null afficher
 
 // TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB

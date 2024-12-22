@@ -10,7 +10,7 @@ function toggleTheme() {
 
     if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('theme', 'dark')
-    } 
+    }
     else {
         localStorage.setItem('theme', 'light')
     }

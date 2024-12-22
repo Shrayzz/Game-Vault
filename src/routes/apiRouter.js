@@ -26,7 +26,8 @@ async function apiRouter(req, url, pool, headers) {
     return await profile.deleteAccount(req, pool);
   if (req.method === "POST" && url.pathname === "/api/updateUserImage")
     return await profile.updateImage(req, pool);
-
+  if (req.method === "POST" && url.pathname === "/api/addList")
+    return await lists.addList(req, pool);
   return null;
 }
 

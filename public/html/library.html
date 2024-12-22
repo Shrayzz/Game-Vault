@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/styles/dark-mode.css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="/js/spaceGames.js" defer></script>
-
+    <script src="/js/loadHeaderButton.js"></script>
+    
     <title>Library - Game Vault</title>
   </head>
 
@@ -35,11 +36,8 @@
             <img src="../resources/images/friends.png" alt="Amis" />
           </button>
         </div>
-        <div class="B">
-          <button class="loginPage" onclick="window.location.href='/profile';">
-            <img src="/resources/images/user.png" alt="User" class="loginImg" />
-            <label class="login">Profile</label>
-          </button>
+        <div class="B" id="accountButton">
+
         </div>
       </div>
     </header>
