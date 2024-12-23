@@ -134,6 +134,7 @@ async function saveUsername() {
 
 }
 
+// TODO fix with cookies
 function logOut() {
   try {
     localStorage.removeItem('token');
@@ -196,10 +197,23 @@ window.deleteAccount = deleteAccount;
 const usernameTitle = document.getElementById('username')
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const username = localStorage.getItem("username");
+  const cookieString = document.cookie;
+  const cookieParts = cookieString.split('; ');
+  let cookies = [];
+  for (const part of cookieParts) {
+    cookies.push(part.split('='));
+  }
+
+  cookies.forEach((cookie) => {
+    if (cookie[0] === "username") {
+      window.username = cookie[1]
+    }
+  })
+  const username = window.username
+
   usernameTitle.innerHTML = username;
 
-  // Load the user profile image
+  // Load the user profile image 
   const response = await fetch(
     `http://localhost:3000/api/getUserImage?username=${username}`,
     {
