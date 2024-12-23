@@ -44,12 +44,7 @@ async function updateProfileImage(event) {
       };
 
       readerDB.readAsDataURL(file);
-    } else {
-      triggerPopup("error", "❌ㆍPlease select a valid image file.", 5000);
-    }
 
-    // TODO simplifier quand update fini
-    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
 
       reader.onload = function (e) {

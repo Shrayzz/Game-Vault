@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", async () => {
   const accountButton = document.getElementById('accountButton');
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   const cookieString = document.cookie;
   const cookieParts = cookieString.split('; ');
@@ -53,7 +53,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     accountButton.appendChild(button);
     return;
   }
-  // }
 
   const button = document.createElement('button');
   button.className = 'loginPage';
