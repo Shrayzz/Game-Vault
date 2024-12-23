@@ -2,16 +2,21 @@ window.addEventListener("DOMContentLoaded", async () => {
   const accountButton = document.getElementById('accountButton');
   const token = localStorage.getItem("token");
 
-  if (token) {
-    const check = await fetch("http://localhost:3000/api/checkAuth", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const cookieString = document.cookie;
+  const cookieParts = cookieString.split('; ');
+  let cookies = [];
+  for (const part of cookieParts) {
+    cookies.push(part.split('='));
+  }
 
-    const username = localStorage.getItem("username");
+  cookies.forEach((cookie) => {
+    if (cookie[0] === "username") {
+      window.username = cookie[1]
+    }
+  })
+  const username = window.username
 
+  if (username) {
     const response = await fetch(
       `http://localhost:3000/api/getUserImage?username=${username}`,
       {
@@ -24,32 +29,31 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     const image = await response.json()
 
-    if (check.ok && username) {
-      const button = document.createElement('button');
-      button.className = 'loginPage';
-      button.addEventListener('click', () => {
-        window.location.href = '/profile';
-      })
+    const button = document.createElement('button');
+    button.className = 'loginPage';
+    button.addEventListener('click', () => {
+      window.location.href = '/profile';
+    })
 
-      const img = document.createElement('img');
-      img.alt = 'User';
-      img.className = 'loginImg';
-      if (image !== null) {
-        img.src = image
-      } else {
-        img.src = '/resources/images/user.png';
-      }
-
-      const label = document.createElement('label');
-      label.className = 'login';
-      label.innerHTML = username;
-
-      button.appendChild(img);
-      button.appendChild(label);
-      accountButton.appendChild(button);
-      return;
+    const img = document.createElement('img');
+    img.alt = 'User';
+    img.className = 'loginImg';
+    if (image !== null) {
+      img.src = image
+    } else {
+      img.src = '/resources/images/user.png';
     }
+
+    const label = document.createElement('label');
+    label.className = 'login';
+    label.innerHTML = username;
+
+    button.appendChild(img);
+    button.appendChild(label);
+    accountButton.appendChild(button);
+    return;
   }
+  // }
 
   const button = document.createElement('button');
   button.className = 'loginPage';
