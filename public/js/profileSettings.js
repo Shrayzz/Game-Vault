@@ -91,7 +91,19 @@ async function saveUsername() {
   }
 
   try {
-    const oldUsername = localStorage.getItem("username");
+    const cookieString = document.cookie;
+    const cookieParts = cookieString.split('; ');
+    let cookies = [];
+    for (const part of cookieParts) {
+      cookies.push(part.split('='));
+    }
+
+    cookies.forEach((cookie) => {
+      if (cookie[0] === "username") {
+        window.username = cookie[1]
+      }
+    })
+    const oldUsername = window.username
     const newUsername = uInput.value;
 
     const response = await fetch(
@@ -117,7 +129,7 @@ async function saveUsername() {
       return;
     }
 
-    localStorage.setItem("username", newUsername);
+    document.cookie = `username=${newUsername}`;
     u.textContent = uInput.value;
     pen.style.display = "inline";
     uInput.style.display = "none";
@@ -132,8 +144,7 @@ async function saveUsername() {
 // TODO fix with cookies
 function logOut() {
   try {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    document.cookie = "username=";
     window.location.href = "/";
   } finally {
     return;
