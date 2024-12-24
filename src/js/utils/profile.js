@@ -33,16 +33,10 @@ async function deleteAccount(req, pool) {
 
     if (existUser) {
         const lists = await db.getUserLists(pool, username);
-        // await lists.forEach(async (list) => {
-        //     await db.deleteList(pool, list?.id);
-        // })
-        // console.log(lists)
-
         while (lists.length !== 0) {
             await db.deleteList(pool, lists[0]?.id);
             lists.shift();
         }
-        // while(lists.lenght)
         await db.deleteUser(pool, username);
     } else {
         return new Response("User does not exist", { status: 502 });
