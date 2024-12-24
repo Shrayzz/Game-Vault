@@ -488,6 +488,37 @@ async function getGameCategories(pool, gameId) {
   }
 }
 
+/**
+ * get user lists
+ * @param {object} pool your pool connection
+ * @param {string} username the username
+ * @param {boolean | null} favorite true if favorite else false | null to get all
+ * @returns the lists of the user
+ */
+async function getUserLists(pool, username, favorite = null) {
+  try {
+    const con = await pool.getConnection();
+    let sql = "SELECT list.id, list.name, list.favorite, list.accountId FROM list INNER JOIN accounts ON list.accountId = accounts.id WHERE accounts.username = ?";
+    let values = [username];
+
+    if (favorite !== null) {
+      if (favorite) {
+        values.push(1);
+      } else {
+        values.push(0);
+      }
+      sql += " AND favorite = ?";
+    }
+    sql += ";";
+
+    const [rows] = await con.query(sql, values);
+
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------INSERT----------------------------------\\
 
 /**
@@ -917,6 +948,7 @@ export default {
   getCategory,
   getGamesFromCategory,
   getGameCategories,
+  getUserLists,
   createUser,
   createList,
   createGame,

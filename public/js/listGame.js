@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const addListBtn = document.getElementById("add-list-btn");
   const listContainer = document.getElementById("list-container");
 
@@ -64,4 +64,42 @@ document.addEventListener("DOMContentLoaded", () => {
     newListItem.appendChild(input);
     listContainer.appendChild(newListItem);
   });
+
+  // TODO load lists
+  const cookieString = document.cookie;
+  const cookieParts = cookieString.split('; ');
+  let cookies = [];
+  for (const part of cookieParts) {
+    cookies.push(part.split('='));
+  }
+
+  cookies.forEach((cookie) => {
+    if (cookie[0] === "username") {
+      window.username = cookie[1]
+    }
+  })
+  const username = window.username
+
+  const listsJSON = await fetch(
+    `http://localhost:3000/api/getUserList?username=${username}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const lists = await listsJSON.json();
+
+  lists.forEach((list) => {
+    let listdiv = document.createElement("div");
+    listdiv.classList.add("list-item");
+    listdiv.textContent = list?.name;
+    listdiv.style.fontWeight = "bold";
+    listdiv.style.color = "#000";
+
+    listContainer.appendChild(listdiv)
+  })
+
 });
