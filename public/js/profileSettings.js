@@ -1,5 +1,4 @@
 import triggerPopup from "./popupBuilder.js";
-// import db from "../../src/js/db.js";
 
 const pp = document.getElementById("pp");
 const imgInput = document.getElementById("imgInput");
@@ -10,7 +9,19 @@ function showImgDialog() {
 
 async function updateProfileImage(event) {
   try {
-    const username = localStorage.getItem("username");
+    const cookieString = document.cookie;
+    const cookieParts = cookieString.split('; ');
+    let cookies = [];
+    for (const part of cookieParts) {
+      cookies.push(part.split('='));
+    }
+
+    cookies.forEach((cookie) => {
+      if (cookie[0] === "username") {
+        window.username = cookie[1]
+      }
+    })
+    const username = window.username;
     const file = await event.target.files[0];
 
     if (file && file.type.startsWith("image/")) {
@@ -18,7 +29,6 @@ async function updateProfileImage(event) {
 
       readerDB.onload = async function (e) {
         const fileURL = e.target.result;
-        console.log(fileURL)
         const response = await fetch(
           "http://localhost:3000/api/updateUserImage",
           {
@@ -103,7 +113,7 @@ async function saveUsername() {
         window.username = cookie[1]
       }
     })
-    const oldUsername = window.username
+    const oldUsername = window.username;
     const newUsername = uInput.value;
 
     const response = await fetch(
@@ -141,7 +151,6 @@ async function saveUsername() {
 
 }
 
-// TODO fix with cookies
 function logOut() {
   try {
     document.cookie = "username=";
@@ -160,7 +169,19 @@ function saveToken() {
 
 async function deleteAccount() {
   try {
-    const username = localStorage.getItem("username");
+    const cookieString = document.cookie;
+    const cookieParts = cookieString.split('; ');
+    let cookies = [];
+    for (const part of cookieParts) {
+      cookies.push(part.split('='));
+    }
+
+    cookies.forEach((cookie) => {
+      if (cookie[0] === "username") {
+        window.username = cookie[1]
+      }
+    })
+    const username = window.username;
 
     const response = await fetch(
       "http://localhost:3000/api/deleteAccount",
@@ -184,8 +205,7 @@ async function deleteAccount() {
       return;
     }
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    document.cookie = "username=";
     window.location.href = "/";
   } catch (error) {
     triggerPopup('error', `⛔ㆍAn error occurred: ${error.message}`, 5000);

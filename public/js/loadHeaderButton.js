@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", async () => {
   const accountButton = document.getElementById('accountButton');
-  // const token = localStorage.getItem("token");
 
   const cookieString = document.cookie;
   const cookieParts = cookieString.split('; ');
