@@ -92,7 +92,7 @@ test('test existUser', async (t) => {
     t.true(await db.existUser(pool, "jesuisuntest@email.com"));
     t.false(await db.existUser(pool, "badNameOrEmail"));
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test existEmail', async (t) => {
@@ -106,7 +106,7 @@ test('test existEmail', async (t) => {
     t.true(await db.existEmail(pool, "LeTest@email.fr"));
     t.false(await db.existEmail(pool, "BadEmail"));
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getFromAllUsers', async (t) => {
@@ -126,7 +126,7 @@ test('test getFromAllUsers', async (t) => {
     t.is(data[2]?.username, 'test3');
     t.is(data[2]?.password, 'AZERTY');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getFromUser', async (t) => {
@@ -148,7 +148,7 @@ test('test getFromUser', async (t) => {
     t.is(await db.getFromUser(pool, 'test2', ['email']), 'LeTest@email.fr');
     t.is(await db.getFromUser(pool, 'test1', ['image']), null)
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getUserPassword', async (t) => {
@@ -162,7 +162,7 @@ test('test getUserPassword', async (t) => {
     t.is(await db.getUserPassword(pool, "test2"), "ABCDE");
     t.is(await db.getUserPassword(pool, "badNameOrEmail"), undefined);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test createUser', async (t) => {
@@ -176,7 +176,7 @@ test('test createUser', async (t) => {
     t.true(await db.createUser(pool, "insertTestUser", "insert@test.testing", "insertTestPWD"));
     t.true(await db.existUser(pool, "insertTestUser"));
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test updateUser', async (t) => {
@@ -194,7 +194,7 @@ test('test updateUser', async (t) => {
     t.is(data?.password, 'aNewPwd');
     t.is(data?.email, 'updated@mail.fr');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test deleteUser', async (t) => {
@@ -208,7 +208,7 @@ test('test deleteUser', async (t) => {
     t.true(await db.deleteUser(pool, 'testDelete'));
     t.false(await db.existUser(pool, 'testDelete'));
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getUserToken', async (t) => {
@@ -221,7 +221,7 @@ test('test getUserToken', async (t) => {
 
     t.is(await db.getUserToken(pool, 'test1'), 'token1')
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test addToken', async (t) => {
@@ -235,7 +235,7 @@ test('test addToken', async (t) => {
     t.true(await db.addToken(pool, 'test2', 'tokenUpdate'));
     t.is(await db.getUserToken(pool, 'test2'), 'tokenUpdate')
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getFromAllLists', async (t) => {
@@ -255,7 +255,7 @@ test('test getFromAllLists', async (t) => {
     t.is(data[1]?.name, 'testList2');
     t.is(data[1]?.accountId, 1);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getFromList', async (t) => {
@@ -277,7 +277,7 @@ test('test getFromList', async (t) => {
     t.is(await db.getFromList(pool, 2, ['favorite']), 1);
     t.is(await db.getFromList(pool, 2, ['accountId']), 1);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test createList', async (t) => {
@@ -291,7 +291,7 @@ test('test createList', async (t) => {
     await db.createList(pool, 'insertListTest', true, 2);
     t.is(await db.getFromList(pool, 5, ['name']), 'insertListTest');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test updateList', async (t) => {
@@ -308,7 +308,7 @@ test('test updateList', async (t) => {
     t.is(data?.name, 'updatedList');
     t.is(data?.favorite, 1);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test deleteList', async (t) => {
@@ -322,7 +322,7 @@ test('test deleteList', async (t) => {
     t.true(await db.deleteList(pool, 4));
     t.is(await db.getFromList(pool, 4, ['name']), undefined);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getAllGames', async (t) => {
@@ -342,7 +342,7 @@ test('test getAllGames', async (t) => {
     t.is(data[2]?.id, 3);
     t.is(data[2]?.source, 'source3')
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getGame', async (t) => {
@@ -358,7 +358,7 @@ test('test getGame', async (t) => {
     t.is(data?.id, 1);
     t.is(data?.source, 'source1');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test createGame', async (t) => {
@@ -375,7 +375,7 @@ test('test createGame', async (t) => {
 
     t.is(data?.source, 'createdSource');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test updateGame', async (t) => {
@@ -392,7 +392,7 @@ test('test updateGame', async (t) => {
 
     t.is(data?.source, 'updatedSource');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test deleteGame', async (t) => {
@@ -409,7 +409,7 @@ test('test deleteGame', async (t) => {
 
     t.is(data, undefined);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getGamesFromList', async (t) => {
@@ -427,7 +427,7 @@ test('test getGamesFromList', async (t) => {
     t.is(data[1]?.idGame, 2);
     t.is(data[1]?.source, 'source2');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test getGameList', async (t) => {
@@ -449,7 +449,7 @@ test('test getGameList', async (t) => {
     t.is(data[1]?.favorite, 1);
     t.is(data[1]?.accountId, 1);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test addGameToList', async (t) => {
@@ -466,7 +466,7 @@ test('test addGameToList', async (t) => {
 
     t.is(data[0]?.idGame, 1);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 });
 
 test('test deleteGameFromList', async (t) => {
@@ -484,7 +484,7 @@ test('test deleteGameFromList', async (t) => {
     t.not(data[2]?.idGame, 3);
     t.not(data[2]?.source, 'source3');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test getAllCategory', async (t) => {
@@ -504,7 +504,7 @@ test('test getAllCategory', async (t) => {
     t.is(data[2].id, 3);
     t.is(data[2].name, 'testCategory3');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test getCategory', async (t) => {
@@ -520,7 +520,7 @@ test('test getCategory', async (t) => {
     t.is(data?.id, 2);
     t.is(data?.name, 'testCategory2');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test createCategory', async (t) => {
@@ -537,7 +537,7 @@ test('test createCategory', async (t) => {
 
     t.is(data.name, 'createdCategory');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test updateCategory', async (t) => {
@@ -554,7 +554,7 @@ test('test updateCategory', async (t) => {
 
     t.is(data.name, 'updatedCategory');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test deleteCategory', async (t) => {
@@ -571,7 +571,7 @@ test('test deleteCategory', async (t) => {
 
     t.is(data, undefined);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test getGamesFromCategory', async (t) => {
@@ -589,7 +589,7 @@ test('test getGamesFromCategory', async (t) => {
     t.is(data[1].idGame, 2);
     t.is(data[1].source, 'source2');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test getGameCategories', async (t) => {
@@ -607,7 +607,7 @@ test('test getGameCategories', async (t) => {
     t.is(data[1].idCategory, 2);
     t.is(data[1].name, 'testCategory2');
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test addGameToCategory', async (t) => {
@@ -624,7 +624,7 @@ test('test addGameToCategory', async (t) => {
 
     t.is(data[1].name, 'testCategory2')
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test deleteGameCategory', async (t) => {
@@ -641,7 +641,7 @@ test('test deleteGameCategory', async (t) => {
 
     t.is(data[0], undefined)
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
 
 test('test deleteUserToken', async (t) => {
@@ -656,5 +656,29 @@ test('test deleteUserToken', async (t) => {
 
     t.is(await db.getFromUser(pool, 'test3', ['token']), null);
 
-    db.dbDisconnect(pool);
+    await db.dbDisconnect(pool);
 })
+
+test('test getUserLists', async (t) => {
+    const pool = await db.dbConnect(
+        process.env.DB_HOST,
+        process.env.DB_USER,
+        process.env.DB_PASS,
+        process.env.DB_NAME + 'test',
+    );
+
+    const data = await db.getUserLists(pool, 'test1')
+    const dataFav = await db.getUserLists(pool, 'test1', true)
+    const dataNotFav = await db.getUserLists(pool, 'test1', false)
+
+    t.is(data[0]?.name, 'testList1')
+    t.is(data[1]?.name, 'testList2')
+
+    t.is(dataFav[0]?.name, 'testList2')
+    t.is(dataFav[1]?.name, undefined)
+
+    t.is(dataNotFav[0]?.name, 'testList1')
+    t.is(dataNotFav[1]?.name, undefined)
+
+    await db.dbDisconnect(pool);
+});
