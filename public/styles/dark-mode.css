@@ -989,6 +989,13 @@ footer a:hover {
     font-family: "eb";
     color: aliceblue;
     font-size: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+#name-list a {
+    text-decoration: none;
+    color: aliceblue;
 }
 
 /*---- Library 2 ----*/

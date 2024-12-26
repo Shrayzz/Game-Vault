@@ -23,11 +23,13 @@ window.addEventListener("DOMContentLoaded", async () => {
         // list 100 more games
         for (window.numGame; window.numGame < arret; window.numGame++) {
             // add a new line
-            const newLine = document.createElement("div");
+            const newLine = document.createElement("a");
             // get the game ID
             const gameId = window.allGames[window.numGame]?.appid
             const gameName = window.allGames[window.numGame]?.name
             newLine.textContent = gameName;
+            newLine.id = gameId;
+            newLine.href = '/game';
             nameList.appendChild(newLine);
         }
     }
@@ -42,11 +44,13 @@ addButton.addEventListener('click', async function () {
     // list 100 more games
     for (window.numGame; window.numGame < arret; window.numGame++) {
         // add a new line
-        const newLine = document.createElement("div");
+        const newLine = document.createElement("a");
         // get the game ID
         const gameId = window.allGames[window.numGame]?.appid
         const gameName = window.allGames[window.numGame]?.name
+        newLine.id = gameId;
         newLine.textContent = gameName;
+        newLine.href = '/game';
         nameList.appendChild(newLine);
     }
 })
