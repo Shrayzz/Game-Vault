@@ -12,10 +12,6 @@ async function GetApps(headers) {
       `https://api.steampowered.com/IStoreService/GetAppList/v1/?key=${process.env.STEAM_TOKEN}&include_games=true`,
     );
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
     const data = await response.json();
 
     // remove all apps that have an empty name
@@ -37,10 +33,6 @@ async function GetAppDetails(appid, headers) {
     const response = await fetch(
       `https://store.steampowered.com/api/appdetails?appids=${appid}&l=english&format=json`,
     );
-
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
 
     const data = await response.json();
 
@@ -87,10 +79,6 @@ async function GetOwnedGames(steamid, headers) {
       `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_TOKEN}&steamid=${steamid}&format=json&l=english&format=json`,
     );
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
     const data = await response.json();
     return new Response(JSON.stringify(data.response.games), { status: 200, headers: headers });
   } catch (err) {
@@ -110,12 +98,8 @@ async function GetFriends(steamid, headers) {
       `http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=${process.env.STEAM_TOKEN}&steamid=${steamid}&relationship=friend&l=english&format=json`,
     );
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
     const data = await response.json();
-    return new Response(JSON.stringify(data), { status: 200, headers: headers });
+    return new Response(JSON.stringify(data.friendslist.friends), { status: 200, headers: headers });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
@@ -133,13 +117,9 @@ async function GetPlayerSummary(steamid, headers) {
       `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_TOKEN}&steamids=${steamid}&l=english&format=json`,
     );
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
     const data = await response.json();
     // TODO: select what to return
-    return new Response(data, { status: 200, headers: headers });
+    return new Response(JSON.stringify(data.response.players), { status: 200, headers: headers });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
@@ -158,44 +138,17 @@ async function GetPlayerAchievements(steamid, appid, headers) {
       `http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${appid}&key=${process.env.STEAM_TOKEN}&steamid=${steamid}&l=english&format=json`,
     );
 
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
     const data = await response.json();
-    return new Response(JSON.stringify(data), { status: 200, headers: headers });
+    return new Response(JSON.stringify({ steamid: data.playerstats.steamID, game: data.playerstats.gameName, achievements: data.playerstats.achievements }), { status: 200, headers: headers });
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
-
-/**
- * Function to get achievements data from an app id
- * @param {string} appid appid of the to get the achievements data
- * @param {headers} headers response headers
- */
-async function GetAchievementsData(appid, headers) {
-  try {
-    const response = await fetch(
-      `http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v0002/?key=${process.env.STEAM_TOKEN}&appid=${appid}&l=english&format=json`,
-    );
-
-    if (!response.ok) {
-      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
-    }
-
-    const data = await response.json();
-    return new Response(JSON.stringify(data), { status: 200, headers: headers });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
-  }
-}
-
 
 // (async () => {
-//   const c = await GetOwnedGames("76561198441781682");
+//   const c = await GetApps();
 //   const r = await c.json()
-//   console.log(r.response.games)
+//   console.log(r)
 
 // })();
 

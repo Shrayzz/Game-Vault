@@ -10,7 +10,7 @@ import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
 
 /**
- * Router function for SimpleGameLibrary api endpoint
+ * Router function for SimpleGameLibrary api endpoints
  * @param {Request} req the request
  * @param {string} url the requested url
  * @param {Object} pool the database pool connectecion
