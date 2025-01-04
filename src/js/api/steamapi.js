@@ -9,20 +9,20 @@ import "dotenv/config";
 async function GetApps(headers) {
   try {
     const response = await fetch(
-      "https://api.steampowered.com/ISteamApps/GetAppList/v2/",
+      `https://api.steampowered.com/IStoreService/GetAppList/v1/?key=${process.env.STEAM_TOKEN}&include_games=true`,
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
 
     // remove all apps that have an empty name
-    const result = data.applist.apps.filter((elt) => elt.name != "");
-    return new Response(JSON.stringify(result), { status: response.status, headers: headers })
+    // const result = data.applist.apps.filter((elt) => elt.name != "");
+    return new Response(JSON.stringify(data.response.apps), { status: 200, headers: headers })
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ "error": err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -39,7 +39,7 @@ async function GetAppDetails(appid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
@@ -71,7 +71,7 @@ async function GetAppDetails(appid, headers) {
       ))
     }
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ "error": err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -88,13 +88,13 @@ async function GetOwnedGames(steamid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
-    return new Response(JSON.stringify(data), { status: 200, headers: headers });
+    return new Response(JSON.stringify(data.response.games), { status: 200, headers: headers });
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -111,13 +111,13 @@ async function GetFriends(steamid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
     return new Response(JSON.stringify(data), { status: 200, headers: headers });
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -134,14 +134,14 @@ async function GetPlayerSummary(steamid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
     // TODO: select what to return
     return new Response(data, { status: 200, headers: headers });
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -159,13 +159,13 @@ async function GetPlayerAchievements(steamid, appid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
     return new Response(JSON.stringify(data), { status: 200, headers: headers });
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
 
@@ -181,23 +181,21 @@ async function GetAchievementsData(appid, headers) {
     );
 
     if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+      return new Response(JSON.stringify({ message: "steam api call didn't returned ok code", code: response.status }), { status: 500, headers: headers });
     }
 
     const data = await response.json();
     return new Response(JSON.stringify(data), { status: 200, headers: headers });
   } catch (err) {
-    console.error(err.message);
+    return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: headers });
   }
 }
 
+
 // (async () => {
-//   const a = await GetAchievementsData("322170", true);
-//   console.log(a);
-//   const b = await GetAppDetails("1222140", true);
-//   console.log(b);
-//   const c = await GetApps();
-//   console.log(c)
+//   const c = await GetOwnedGames("76561198441781682");
+//   const r = await c.json()
+//   console.log(r.response.games)
 
 // })();
 
