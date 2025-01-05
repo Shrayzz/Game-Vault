@@ -159,5 +159,4 @@ export default {
   GetFriends,
   GetPlayerSummary,
   GetPlayerAchievements,
-  GetAchievementsData,
 };
