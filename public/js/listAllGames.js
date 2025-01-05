@@ -1,5 +1,6 @@
 const nameList = document.getElementById('name-list');
 const addButton = document.getElementById('addButton');
+const goTopButton = document.getElementById('goTopButton');
 
 window.addEventListener("DOMContentLoaded", async () => {
     // get the page elements
@@ -36,7 +37,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 // When button click list 100 more games
-addButton.addEventListener('click', async function () {
+addButton.addEventListener('click', async () => {
     // get game list element
     const nameList = document.getElementById('name-list');
     // we stop in 100 games
@@ -53,4 +54,8 @@ addButton.addEventListener('click', async function () {
         newLine.href = `/game?appid=${gameId}`;
         nameList.appendChild(newLine);
     }
+})
+
+goTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 })
