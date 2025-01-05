@@ -26,29 +26,36 @@
        
       <div class="Header">
         
-
+        <!-- TODO load image -->
         <img src="/resources/images/jeux.png" alt="Game Cover" class="game-cover" />
         
         <div class="game-info">
-          <h1 class="game-title">Games Title</h1>
-          <h2 class="game-subtitle">Under title</h2>
-          <p class="release-date">Date</p>
-          <p class="game-genre">Genre</p>
-          <p class="publisher">By ...</p>
+          <h1 class="game-title" id="gameTitle">Games Title</h1>
+          <h2 class="game-subtitle" id="gameSubtitle">Under title</h2>
+          <p class="game-infos game-info-space" id="releaseDate">Date</p>
+          <p class="game-infos game-info-space" id="publisher">Publisher</p>
+          <p class="game-infos" id="developers">Developers</p>
+          <p class="game-infos game-info-space" id="price">Price</p>
+          <p class="game-infos" id="metacritic">Metacritic</p>
+          <p class="game-infos game-info-space" id="gameGenre">Genres</p>
+          <p class="game-infos" id="categories">Categories</p>
         </div>
-
-        
       </div>
 
+      <!-- TODO fix name of class -->
       <div class="description">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis rhoncus libero. Donec vel viverra neque, vitae luctus tortor. Morbi consequat in magna vitae vehicula. Fusce iaculis suscipit euismod. Etiam sit amet aliquam purus. Suspendisse luctus id lacus et hendrerit. Morbi consequat imperdiet convallis. Aliquam nisl ante, malesuada sed luctus nec, blandit nec felis. Nam bibendum condimentum nisi. Nulla dapibus efficitur neque, vitae congue dolor cursus non.
-
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis rhoncus libero. Donec vel viverra neque, vitae luctus tortor. Morbi consequat in magna vitae vehicula. Fusce iaculis suscipit euismod. Etiam sit amet aliquam purus. Suspendisse luctus id lacus et hendrerit. Morbi consequat imperdiet convallis. Aliquam nisl ante, malesuada sed luctus nec, blandit nec felis. Nam bibendum condimentum nisi. Nulla dapibus efficitur neque, vitae congue dolor cursus non.
+        <p id="description">
+          Description
         </p>
       </div>
 
-      
+      <!-- TODO fix name of class -->
+      <div class="description">
+        <p id="requirements">
+          Requirements
+        </p>
+      </div>
+
       <div class="comments-section">
         <h2 class="comments-title">Comments</h2>
 
@@ -70,5 +77,6 @@
           document.getElementById("comment-input").value = "";
         });
     </script>
+    <script src="../js/loadGame.js"></script>
   </body>
 </html>

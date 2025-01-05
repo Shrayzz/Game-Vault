@@ -29,7 +29,7 @@ window.addEventListener("DOMContentLoaded", async () => {
             const gameName = window.allGames[window.numGame]?.name
             newLine.textContent = gameName;
             newLine.id = gameId;
-            newLine.href = '/game';
+            newLine.href = `/game?appid=${gameId}`;
             nameList.appendChild(newLine);
         }
     }
@@ -50,7 +50,7 @@ addButton.addEventListener('click', async function () {
         const gameName = window.allGames[window.numGame]?.name
         newLine.id = gameId;
         newLine.textContent = gameName;
-        newLine.href = '/game';
+        newLine.href = `/game?appid=${gameId}`;
         nameList.appendChild(newLine);
     }
 })

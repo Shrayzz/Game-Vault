@@ -1349,28 +1349,14 @@ body {
 
 }
 
-.release-date {
+.game-infos {
+    font-size: 1.2rem;
+    color: aliceblue;
+}
+
+.game-info-space {
     margin-top: 3px;
-    font-size: 1.2rem;
-    color: aliceblue;
 }
-
-.game-genre {
-    margin-top: 7px;
-    font-size: 1.2rem;
-    color: aliceblue;
-    margin-top: 7px;
-    font-size: 1.2rem;
-    color: aliceblue;
-}
-
-.publisher {
-    margin-top: 7px;
-    font-size: 1.2rem;
-    color: aliceblue;
-    margin-top: 10px;
-}
-
 
 .description {
     background-color: #21262d;
