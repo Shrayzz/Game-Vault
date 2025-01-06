@@ -369,11 +369,12 @@ test('test createGame', async (t) => {
         process.env.DB_NAME + 'test',
     );
 
-    t.true(await db.createGame(pool, 'createdSource'));
+    t.true(await db.createGame(pool, 55, 'createdSource'));
 
-    const data = await db.getGame(pool, 6);
+    const data = await db.getGame(pool, 55);
 
     t.is(data?.source, 'createdSource');
+    t.is(data?.id, 55);
 
     await db.dbDisconnect(pool);
 });

@@ -568,15 +568,16 @@ async function createList(pool, name, isFavorite, account) {
 
 /**
  * Create a new game
- * @param {object} pool your pool connection 
+ * @param {object} pool your pool connection
+ * @param {int} id the game ID 
  * @param {string} source the source of the new game 
  * @returns  {boolean} true if the game creation succeed
  */
-async function createGame(pool, source) {
+async function createGame(pool, id, source) {
   try {
     const con = await pool.getConnection();
-    const sql = "INSERT INTO game(source) VALUES(?)";
-    const values = [source];
+    const sql = "INSERT INTO game(id, source) VALUES(?, ?)";
+    const values = [id, source];
 
     await con.query(sql, values);
     return true;
