@@ -1555,6 +1555,74 @@ textarea::placeholder {
 
 /*------------------*/
 
+/*---- Favoris ----*/
+
+
+  .list-favori {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+  }
+  
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+
+  
+  .list-item {
+    width: 300px;
+    height: 220px;
+    background-color: #d9d9d9;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .heart-icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    cursor: pointer;
+  }
+  
+ 
+  .validate-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+  }
+  
+  .validate-btn {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s;
+    background: none;
+    position: absolute;
+  }
+  
+
+  .validate-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  .validate-btn img {
+    width: 140px;
+    height: 55px;
+  }
+  
+
+
+  
+/*------------------*/
+
 /*---- Responsive Part ----*/
 
 /* TODO: Media screen a 650px width */

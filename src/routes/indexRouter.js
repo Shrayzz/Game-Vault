@@ -44,6 +44,12 @@ async function indexRouter(req, url, pool, headers) {
         path.join(__dirname, "..", "..", "public", "html", "profile.html"),
       ),
     );
+    if (req.method === "GET" && url.pathname === "/favoris")
+      return new Response(
+        Bun.file(
+          path.join(__dirname, "..", "..", "public", "html", "favoris.html"),
+        ),
+      );
   if (req.method === "GET" && url.pathname === "/forgot-password")
     return new Response(
       Bun.file(
