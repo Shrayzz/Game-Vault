@@ -2,21 +2,25 @@
 
 // Get the client
 import mysql from "mysql2/promise";
+// Get .env datas
+import "dotenv/config";
 
 /**
  * Create the connection to database
- * @param {string} host the host
- * @param {string} user the user
- * @param {string} password the password
- * @param {string} database the database
+ * @param {boolean} test true connect to test DB or false to connect to main DB
  * @returns {object} the database connection
  */
-async function dbConnect(host, user, password, database) {
+async function dbConnect(test = false) {
+  let database = 'SimpleGameLibrary';
+  if (test) {
+    database += 'test';
+  }
   const pool = await mysql.createPool({
-    host: host,
-    user: user,
-    password: password,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: database,
+    port: process.env.DB_PORT,
     connectionLimit: Infinity,
   });
 
@@ -30,11 +34,12 @@ async function dbConnect(host, user, password, database) {
  * @param {string} password the password
  * @returns {object} the server connection
  */
-async function dbConnectServer(host, user, password) {
+async function dbConnectServer() {
   const servPool = await mysql.createPool({
-    host: host,
-    user: user,
-    password: password,
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
   });
 
   return await servPool;
@@ -45,7 +50,7 @@ async function dbConnectServer(host, user, password) {
  */
 async function dbInit() {
   //Create DataBase
-  const servPool = await dbConnectServer("localhost", "root", "root");
+  const servPool = await dbConnectServer();
   const serv = await servPool.getConnection();
 
   const SimpleGameLibraryDatabase =
@@ -55,7 +60,7 @@ async function dbInit() {
 
   await dbDisconnect(servPool);
   //Create Tables
-  const pool = await dbConnect("localhost", "root", "root", "SimpleGameLibrary");
+  const pool = await dbConnect();
   const con = await pool.getConnection();
 
   const accountsTable =

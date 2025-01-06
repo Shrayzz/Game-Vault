@@ -9,15 +9,10 @@ import indexRouter from "./src/routes/indexRouter";
 import apiRouter from "./src/routes/apiRouter";
 import _middleware from "./src/middleware/middleware";
 
-await db.dbConnectServer(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS);
+await db.dbConnectServer();
 await db.dbInit();
 
-const pool = await db.dbConnect(
-  process.env.DB_HOST,
-  process.env.DB_USER,
-  process.env.DB_PASS,
-  process.env.DB_NAME,
-);
+const pool = await db.dbConnect(false);
 
 const server = serve({
   async fetch(req) {
