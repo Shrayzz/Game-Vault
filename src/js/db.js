@@ -151,6 +151,31 @@ async function existEmail(pool, id) {
   }
 }
 
+/**
+ * Check if a game is in a list
+ * @param {object} pool your pool connection 
+ * @param {int} gameId the game ID
+ * @param {int} listId the list ID
+ * @returns {boolean} true if exist else false
+ */
+async function existGameInList(pool, gameId, listId) {
+  try {
+    const con = await pool.getConnection();
+    const sql = "SELECT COUNT(*) AS existGameInList FROM listhasgames WHERE idList = ? AND idGame = ?;"
+    const values = [listId, gameId];
+
+    const [rows] = await con.query(sql, values);
+
+    if (rows[0]?.existGameInList >= 1) {
+      return true;
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 //----------------------------------SELECT----------------------------------\\
 
 /**
@@ -940,6 +965,7 @@ export default {
   dbDisconnect,
   existUser,
   existEmail,
+  existGameInList,
   getUserPassword,
   getUserToken,
   getFromAllUsers,

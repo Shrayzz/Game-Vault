@@ -33,6 +33,8 @@ async function apiRouter(req, url, pool, headers) {
     return await profile.updateImage(req, pool);
   if (req.method === "POST" && url.pathname === "/api/addList")
     return await lists.addList(req, pool);
+  if (req.method === "POST" && url.pathname === "/api/addGameToFavorite")
+    return await lists.addGameToFavorite(pool, req);
   return null;
 }
 

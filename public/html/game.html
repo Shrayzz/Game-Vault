@@ -14,7 +14,7 @@
         <img src="../resources/images/return2.png" alt="return-btn">
     </button>
     <div class="AAA">
-        <button class="icon-btn" >
+        <button class="icon-btn" id="addFavoriteButton">
             <img src="../resources/images/favoris.png" alt="Favoris">
         </button>
         <button class="icon-btn">
@@ -22,11 +22,19 @@
         </button>
     </div>
 
+    <div class="pPopups">
+      <div id="success" class="proSuccess" style="display: none">
+          <p id="success-text"></p>
+      </div>
+      <div id="error" class="proError" style="display: none">
+          <p id="error-text"></p>
+      </div>
+  </div>
+
     <div class="container-game">
        
       <div class="Header">
         
-        <!-- TODO load image -->
         <img src="/resources/images/jeux.png" alt="Game Cover" class="game-cover" id="gameImage" />
         
         <div class="game-info">
@@ -79,5 +87,6 @@
         });
     </script>
     <script src="../js/loadGame.js"></script>
+    <script src="../js/sendLists.js" type="module"></script>
   </body>
 </html>

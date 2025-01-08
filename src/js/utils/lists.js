@@ -64,9 +64,9 @@ async function addGameToFavorite(pool, req) {
         const existUser = await db.existUser(pool, username);
 
         if (existUser) {
-            const existGame = await db.getGame(pool, gameId);
+            const game = await db.getGame(pool, gameId);
 
-            if (existGame.length >= 0) {
+            if (game?.length <= 0 || game === undefined) {
                 try {
                     await db.createGame(pool, gameId, 'steam');
                 } catch (error) {
@@ -74,8 +74,24 @@ async function addGameToFavorite(pool, req) {
                 }
             }
 
-            const favoriteList = await db.getUserLists(pool, username, true);
-            await db.addGameToList(pool, favoriteList.id, gameId);
+            let favoriteList = await db.getUserLists(pool, username, true);
+
+            if (favoriteList?.length <= 0 || favoriteList === undefined) {
+                try {
+                    const userId = await db.getFromUser(pool, username, ['id']);
+                    await db.createList(pool, 'favorite', true, userId);
+                    favoriteList = await db.getUserLists(pool, username, true);
+                } catch (error) {
+                    return new Response(`An error occured while creating a favorite list : ${error}`, { status: 500 });
+                }
+            }
+
+            const isGameInFavorite = await db.existGameInList(pool, gameId, favoriteList[0].id);
+            if (isGameInFavorite) {
+                return new Response(`Game is already in favorite list`, { status: 302 });
+            }
+
+            await db.addGameToList(pool, favoriteList[0].id, gameId);
             return new Response("List successfuly created", { status: 200 });
         } else {
             return new Response("User does not exist", { status: 502 });

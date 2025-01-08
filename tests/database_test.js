@@ -503,3 +503,12 @@ test('test getUserLists', async (t) => {
 
     await db.dbDisconnect(pool);
 });
+
+test('test existGameInList', async (t) => {
+    const pool = await db.dbConnect(test);
+
+    t.is(await db.existGameInList(pool, 1, 1), true);
+    t.is(await db.existGameInList(pool, 1, 3), false);
+
+    await db.dbDisconnect(pool);
+})
