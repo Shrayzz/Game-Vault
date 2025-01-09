@@ -1,24 +1,49 @@
-// Carousel des recommendation 
-let currentSlide = 0;
 
-function moveCarousel(direction) {
-    const carouselContainer = document.querySelector('.carousel-container');
-    const slides = document.querySelectorAll('.carousel-slide');
-    
-    const totalSlides = slides.length;
+const games = [
+    { id: 40, name: "Game 1" },
+    { id: 10, name: "Game 2" },
+    { id: 20, name: "Game 3" },
+    { id: 30, name: "Game 4" },
+    { id: 50, name: "Game 5" },
+    { id: 60, name: "Game 6" },
+    { id: 70, name: "Game 7" },
+    { id: 80, name: "Game 8" },
+    { id: 130, name: "Game 9" },
+  ];
+  
 
-   currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+  let currentStartIndex = 0;  
+  
 
-   carouselContainer.style.transform = `translateX(-${currentSlide * 100}%)`;
+  function getGameImageUrl(gameId) {
+    return `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/header.jpg`;
+  }
+  
+ 
+  function updateVisibleGames() {
+    for (let i = 0; i < 3; i++) {
+      const gameImg = document.getElementById(`game-${i + 1}`);
+      const gameIndex = (currentStartIndex + i) % games.length;  
+      const game = games[gameIndex];  
+  
 
-    document.querySelector('.prev').classList.toggle('hidden', currentSlide === 0);
-   
-}
+      gameImg.src = getGameImageUrl(game.id);
+      gameImg.alt = game.name;
+    }
+  }
+  
 
+  function moveCarousel(direction) {
 
-document.querySelector('.prev').classList.add('hidden');
+    currentStartIndex = (currentStartIndex + direction + games.length) % games.length;
+  
 
+    updateVisibleGames();
+  }
 
+  updateVisibleGames();
+  
+  
 
 // // Test scroll 
 // document.addEventListener("DOMContentLoaded", () => {

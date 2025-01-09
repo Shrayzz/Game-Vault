@@ -60,32 +60,22 @@
       <section class="recommendation">
         <h2>Recommandation</h2>
         <div class="carousel">
-          <div class="carousel-container">
-            <div class="carousel-slide">
-              <img src="/resources/images/jeux.png" alt="Jeu 1" />
-              <img src="/resources/images/jeux.png" alt="Jeu 2" />
-              <img src="/resources/images/jeux.png" alt="Jeu 3" />
-            </div>
-            <div class="carousel-slide">
-              <img src="/resources/images/jeux.png" alt="Jeu 4" />
-              <img src="/resources/images/jeux.png" alt="Jeu 5" />
-              <img src="/resources/images/jeux.png" alt="Jeu 6" />
-            </div>
-            <div class="carousel-slide">
-              <img src="/resources/images/jeux.png" alt="Jeu 7" />
-              <img src="/resources/images/jeux.png" alt="Jeu 8" />
-              <img src="/resources/images/jeux.png" alt="Jeu 9" />
-            </div>
-          </div>
-
           <button class="prev" onclick="moveCarousel(-1)">
-            <img src="/resources/images/prev.png" alt="Prev" />
+            <img src="/resources/images/prev.png" alt="Précédent">
           </button>
+          <div class="carousel-display">
+            <img id="game-1" src="/resources/images/jeux.png" alt="Jeu 1">
+            <img id="game-2" src="/resources/images/jeux.png" alt="Jeu 2">
+            <img id="game-3" src="/resources/images/jeux.png" alt="Jeu 3">
+          </div>
           <button class="next" onclick="moveCarousel(1)">
-            <img src="/resources/images/next.png" alt="Next" />
+            <img src="/resources/images/next.png" alt="Suivant">
           </button>
         </div>
       </section>
+      
+      
+      
 
       <section class="all-games">
         <h2>All Games</h2>

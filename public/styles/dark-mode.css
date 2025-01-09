@@ -1182,7 +1182,7 @@ nav {
   }
 .carousel-container {
     display: flex;
-    overflow: hidden; /* Empêche les images de déborder */
+    overflow: hidden; 
 }
 
 .carousel-display {
