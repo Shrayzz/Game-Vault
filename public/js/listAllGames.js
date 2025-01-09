@@ -28,7 +28,15 @@ window.addEventListener("DOMContentLoaded", async () => {
             // get the game ID
             const gameId = window.allGames[window.numGame]?.appid
             const gameName = window.allGames[window.numGame]?.name
-            newLine.textContent = gameName;
+            // Add game name to new line
+            const gameNameBox = document.createElement("p");
+            gameNameBox.innerHTML = gameName;
+            newLine.appendChild(gameNameBox);
+            // Add game Image to new line
+            const gameImageBox = document.createElement("img");
+            gameImageBox.src = `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/header.jpg`
+            newLine.appendChild(gameImageBox);
+            // Add new line
             newLine.id = gameId;
             newLine.href = `/game?appid=${gameId}`;
             nameList.appendChild(newLine);
@@ -49,8 +57,16 @@ addButton.addEventListener('click', async () => {
         // get the game ID
         const gameId = window.allGames[window.numGame]?.appid
         const gameName = window.allGames[window.numGame]?.name
+        // Add game name to new line
+        const gameNameBox = document.createElement("p");
+        gameNameBox.innerHTML = gameName;
+        newLine.appendChild(gameNameBox);
+        // Add game Image to new line
+        const gameImageBox = document.createElement("img");
+        gameImageBox.src = `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/header.jpg`
+        newLine.appendChild(gameImageBox);
+        // Add new line
         newLine.id = gameId;
-        newLine.textContent = gameName;
         newLine.href = `/game?appid=${gameId}`;
         nameList.appendChild(newLine);
     }
