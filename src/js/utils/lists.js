@@ -92,10 +92,70 @@ async function addGameToFavorite(pool, req) {
             }
 
             await db.addGameToList(pool, favoriteList[0].id, gameId);
-            return new Response("List successfuly created", { status: 200 });
+            return new Response("Game successfuly added", { status: 200 });
         } else {
             return new Response("User does not exist", { status: 502 });
         }
+    } catch (error) {
+        return new Response(`An error occured : ${error}`, { status: 500 });
+    }
+}
+
+/**
+ * Get all games in the user favorite list
+ * @param {object} pool the pool connection
+ * @param {Request} req the request with credentials
+ * @returns {Response} the response
+ */
+async function getUserFavoriteGames(pool, url) {
+    try {
+        const urlsearchParams = url.searchParams;
+        const params = {};
+        for (const [key, value] of urlsearchParams) {
+            params[key] = value;
+        }
+
+        const username = params.username;
+        const existUser = await db.existUser(pool, username);
+
+        if (!existUser) {
+            return new Response("User does not exist", { status: 502 });
+        }
+
+        let favoriteList = await db.getUserLists(pool, username, true);
+
+        if (favoriteList?.length <= 0 || favoriteList === undefined) {
+            try {
+                const userId = await db.getFromUser(pool, username, ['id']);
+                await db.createList(pool, 'favorite', true, userId);
+                favoriteList = await db.getUserLists(pool, username, true);
+            } catch (error) {
+                return new Response(`An error occured while creating a favorite list : ${error}`, { status: 500 });
+            }
+        }
+        favoriteList = favoriteList[0];
+
+        const favoriteGames = await db.getGamesFromList(pool, favoriteList.id);
+
+        let favoriteGamesTab = [];
+        for (let i = 0; i < favoriteGames.length; i++) {
+            let dbGame = await db.getGame(pool, favoriteGames[i].idGame);
+            if (dbGame.source === "steam") {
+                const fullGameJSON = await fetch(`http://localhost:3000/api/steam/appdetail?appid=${dbGame.id}`, {
+                    method: "GET",
+                });
+                const fullGame = await fullGameJSON.json();
+                favoriteGamesTab.push({ id: favoriteGames[i].idGame, gameInfo: fullGame });
+            } else {
+                return new Response(`An error occured while getting games : Can't find source`, { status: 500 });
+            }
+        }
+
+        console.log("fav tab :")
+        console.log(favoriteGamesTab)
+
+        return new Response(JSON.stringify(favoriteGamesTab), { status: 200 });
+
     } catch (error) {
         return new Response(`An error occured : ${error}`, { status: 500 });
     }
@@ -105,4 +165,5 @@ export default {
     getUserLists,
     addList,
     addGameToFavorite,
+    getUserFavoriteGames,
 }

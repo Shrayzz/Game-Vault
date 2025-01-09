@@ -19,8 +19,10 @@ import steam from "../js/api/steamapi";
 async function apiRouter(req, url, pool, headers) {
   if (req.method === "GET" && url.pathname === "/api/getUserImage")
     return await profile.getUserImage(pool, url);
-  if (req.method === "GET" && url.pathname === "/api/getUserList")
+  if (req.method === "GET" && url.pathname === "/api/getUserLists")
     return await lists.getUserLists(pool, url);
+  if (req.method === "GET" && url.pathname === "/api/getUserFavoriteGames")
+    return await lists.getUserFavoriteGames(pool, url);
   if (req.method === "POST" && url.pathname === "/api/auth")
     return await auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")

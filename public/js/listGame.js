@@ -78,10 +78,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.username = cookie[1]
     }
   })
-  const username = window.username
+  const username = window.username;
 
   const listsJSON = await fetch(
-    `http://localhost:3000/api/getUserList?username=${username}`,
+    `http://localhost:3000/api/getUserLists?username=${username}`,
     {
       method: "GET",
       headers: {
