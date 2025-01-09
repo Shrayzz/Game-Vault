@@ -1,6 +1,8 @@
 import triggerPopup from "./popupBuilder.js";
 
 const addFavoriteButton = document.getElementById('addFavoriteButton');
+const favoriteImage = addFavoriteButton.querySelector('img');
+let isFavorite = false; 
 
 addFavoriteButton.addEventListener('click', async () => {
     try {
@@ -56,7 +58,9 @@ addFavoriteButton.addEventListener('click', async () => {
             }
 
             if (response.status === 200) {
-                triggerPopup('success', '✔️ㆍThe game is added to favorite', 5000);
+                isFavorite = true;
+                favoriteImage.src = "../resources/images/favoris_is_add.png";
+                triggerPopup('success', '✔️ㆍThe game is added to favorites', 5000);
                 return;
             }
         }

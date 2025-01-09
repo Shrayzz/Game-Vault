@@ -1176,78 +1176,55 @@ nav {
 .carousel {
     position: relative;
     max-width: 100%;
-    overflow: hidden;
     margin: auto;
-}
-
+    display: flex;
+    align-items: center;
+  }
 .carousel-container {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    overflow: hidden; /* Empêche les images de déborder */
 }
 
-.carousel-slide {
+.carousel-display {
     display: flex;
-    min-width: 100%;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    overflow: hidden;
+  }
 
-}
-
-.carousel-slide img {
+  .carousel-display img {
     width: 435px;
     height: 235px;
     border-radius: 10px;
-
-}
-
-button.prev,
-button.next {
-    position: absolute;
-    top: 37%;
+    margin: 0 10px;
+  }
 
 
 
+  button.prev,
+  button.next {
     background: none;
-
     border: none;
     padding: 10px;
     cursor: pointer;
     z-index: 1;
-}
-
-.prev img {
-    height: 8vh;
-    width: auto;
-    transition: all 0.3s;
-}
-
-.next img {
-    height: 8vh;
-    width: auto;
-    transition: all 0.3s;
-}
-
-button.prev {
-    left: 0;
-}
-
-button.next {
-    right: 0;
-}
-
-button.prev.hidden {
+  }
+  
+  button.prev.hidden,
+  button.next.hidden {
     display: none;
-}
-
-
-
-button:hover {
-    transform: scale(1.3);
-    cursor: pointer;
+  }
+  
+  button img {
+    height: 8vh;
+    width: auto;
     transition: all 0.3s;
-    background-color: transparent;
-}
-
+  }
+  
+  button:hover img {
+    transform: scale(1.3);
+    transition: all 0.3s;
+  }
 
 
 .icon-button {
