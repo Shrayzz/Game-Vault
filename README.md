@@ -8,9 +8,9 @@ Vous pouvez donc créer un compte, rechercher vos jeux préférées et ainsi pou
 
 ## Installation
 
-Pour installer l'application vous devez vous rendre dans le répertoire du projet *(dossier du nom 'Simple-Game-Library')*.
+Pour installer l'application vous devez vous rendre dans le répertoire du projet *(dossier du nom `Simple-Game-Library`)*.
 
-Ensuite vous pouvez ouvir un terminal et entrer la commande suivante :
+Ensuite vous pouvez ouvrir un terminal et entrer la commande suivante :
 ```    
 npm install
 ```
@@ -19,9 +19,9 @@ npm install
 
 <!-- TODO expliquer comment lancer avec docker -->
 
-## test de l'application
+## Test de l'application
 
-pour lancer les tests de l'application vous pouvez lancer la commande suivante :
+Pour lancer les tests de l'application vous pouvez lancer la commande suivante :
 ```    
 npm test
 ```
@@ -30,7 +30,6 @@ npm test
 
 Voici quelques liens qui peuvent vous intéresser :
 
-- [Notre notion de notes de projets](https://www.notion.so/SAE-1-0091ab23f59d4f25b810fbe6411220f3)
-- [Notre rapport de projet](https://docs.google.com/document/d/1qDP2YHU26Ve78AwiqhcrBJ9E5G0NG6M8E1QmqGWBqpA/edit?usp=sharing)
+- [Notion de notes du projet](https://www.notion.so/SAE-1-0091ab23f59d4f25b810fbe6411220f3)
+- [Rapport de projet](https://docs.google.com/document/d/1qDP2YHU26Ve78AwiqhcrBJ9E5G0NG6M8E1QmqGWBqpA/edit?usp=sharing)
 - [Notre présentation](https://docs.google.com/presentation/d/11UMgiHuPRvpgh8Q_msfCI5zzWt5rzjRhEtyjuNQ3VOg/edit?usp=sharing)
-- [Notre répository GitHub](https://github.com/Shrayzz/Simple-Game-Library)
