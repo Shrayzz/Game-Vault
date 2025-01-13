@@ -1096,6 +1096,7 @@ nav {
     justify-content: center;
     align-items: center;
     padding: 10px 20px;
+    position: relative;
 }
 
 .nav-center {
@@ -1117,12 +1118,17 @@ nav {
     font-size: 1.2rem;
 }
 
+
+
+
+
 .search-bar {
 
 
     display: flex;
     align-items: center;
     gap: 7px;
+    position: relative; 
 }
 
 .SearchBar:hover {
@@ -1157,6 +1163,111 @@ nav {
 
 }
 
+.search-results {
+    position: absolute;
+    top: calc(100% + 5px); 
+    left: 0;
+    right: 0;
+    background: #202020; 
+    border: 1px solid #444; 
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 10;
+    display: none;
+    border-radius: 17px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+.search-results::-webkit-scrollbar {
+    width: 13px; 
+    height: 13px; 
+}
+.search-results::-webkit-scrollbar-track {
+    background: #202020; 
+    border-radius: 17px; 
+}
+.search-results::-webkit-scrollbar-thumb {
+    background: #444; 
+    border-radius: 17px; 
+    border: 2px solid #202020; 
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+.result-item span {
+    font-size: 14px;
+    color: #f0f0f0; 
+    font-family: "sb";
+}
+
+.result-item img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.result-item:hover {
+    background-color: #575477; 
+}
+
+
+
+
+
+.hidden {
+    display: none !important;
+  }
+  
+  
+  .search-results-grid {
+    margin-top: 30px;
+  }
+  
+  .search-results-grid .sContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .search-results-grid .sContainer a {
+    display: block;
+    text-align: center;
+    background-color: #141820;
+    border-radius: 7px;
+    padding: 10px;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .search-results-grid .sContainer a:hover {
+    transform: scale(1.05);
+  }
+  
+  .search-results-grid .sContainer img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .search-results-grid .sContainer p {
+    margin: 0;
+    font-size: 14px;
+    font-family: 'sb';
+    color: #f0f0f0;
+  }
+
+
+
+
+  
 
 .recommendation {
     text-align: left;
@@ -1172,6 +1283,10 @@ nav {
     font-size: 1.8rem;
 
 }
+
+
+
+
 
 .carousel {
     position: relative;

@@ -52,8 +52,10 @@
           </ul>
           <div class="search-bar">
             <input type="text" placeholder="Search" class="SearchBar" />
-            <button>🔍</button>
+            <button id="searchButton">🔍</button>
+            <div class="search-results"></div> 
           </div>
+          
         </div>
       </nav>
 
@@ -94,8 +96,18 @@
           </div>
         </div>
       </section>
+
+      <section class="search-results-grid" id="searchResultsGrid" style="display: none;">
+        <h2>Search Results</h2>
+        <div id="searchGrid" class="sContainer"></div>
+        <div class="button">
+          <button id="backButton">Back</button>
+        </div>
+      </section>
     </main>
 
+
     <script src="../js/listAllGames.js"></script>
+    <script src="../js/SearchBar.js" defer></script>
   </body>
 </html>
