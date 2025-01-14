@@ -1289,11 +1289,12 @@ nav {
 
 
 .carousel {
-    position: relative;
-    max-width: 100%;
-    margin: auto;
     display: flex;
     align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+    max-width: 100%; 
   }
 .carousel-container {
     display: flex;
@@ -1302,18 +1303,32 @@ nav {
 
 .carousel-display {
     display: flex;
-    justify-content: space-between;
-    width: 80%;
     overflow: hidden;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: nowrap; 
+
   }
 
   .carousel-display img {
+
     width: 435px;
     height: 235px;
     border-radius: 10px;
-    margin: 0 10px;
   }
 
+  /* Responsive */
+@media (max-width: 890px) {
+    .carousel-display img {
+      width: 890px; /* 2 image */
+    }
+  }
+  
+  @media (max-width: 840px) {
+    .carousel-display img {
+      width: 438px; /* 1 image */
+    }
+  }
 
 
   button.prev,
@@ -1594,20 +1609,15 @@ textarea::placeholder {
     box-sizing: border-box;
 }
 
-/* Responsiveness */
-@media (max-width: 1024px) {
-    #name-list {
-        grid-template-columns: repeat(3, 1fr); 
-    }
-}
+/* Responsive */
 
-@media (max-width: 768px) {
+@media (max-width: 1035px) {
     #name-list {
         grid-template-columns: repeat(2, 1fr); 
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 800px) {
     #name-list {
         grid-template-columns: 1fr; 
     }
@@ -1627,6 +1637,7 @@ textarea::placeholder {
     width: 360px; 
     height: 230px; 
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 #name-list p {

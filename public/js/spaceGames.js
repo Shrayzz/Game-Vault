@@ -1,48 +1,65 @@
 
 const games = [
-    { id: 40, name: "Game 1" },
-    { id: 10, name: "Game 2" },
-    { id: 20, name: "Game 3" },
-    { id: 30, name: "Game 4" },
-    { id: 50, name: "Game 5" },
-    { id: 60, name: "Game 6" },
-    { id: 70, name: "Game 7" },
-    { id: 80, name: "Game 8" },
-    { id: 130, name: "Game 9" },
-  ];
-  
+  { id: 40, name: "Game 1" },
+  { id: 10, name: "Game 2" },
+  { id: 20, name: "Game 3" },
+  { id: 30, name: "Game 4" },
+  { id: 50, name: "Game 5" },
+  { id: 60, name: "Game 6" },
+  { id: 70, name: "Game 7" },
+  { id: 80, name: "Game 8" },
+  { id: 130, name: "Game 9" },
+];
 
-  let currentStartIndex = 0;  
-  
+let currentStartIndex = 0;
 
-  function getGameImageUrl(gameId) {
-    return `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/header.jpg`;
-  }
-  
- 
-  function updateVisibleGames() {
-    for (let i = 0; i < 3; i++) {
-      const gameImg = document.getElementById(`game-${i + 1}`);
-      const gameIndex = (currentStartIndex + i) % games.length;  
-      const game = games[gameIndex];  
-  
 
+function getVisibleGamesCount() {
+  const width = window.innerWidth;
+  if (width <= 830) return 1; //  1 game
+  if (width <= 1300) return 2; // 2 games
+  return 3; // 3 games showing
+}
+
+
+function updateVisibleGames() {
+  const visibleGames = getVisibleGamesCount(); // number visible games
+  for (let i = 0; i < 3; i++) {
+    const gameImg = document.getElementById(`game-${i + 1}`);
+    if (i < visibleGames) {
+      const gameIndex = (currentStartIndex + i) % games.length;
+      const game = games[gameIndex];
       gameImg.src = getGameImageUrl(game.id);
       gameImg.alt = game.name;
+      gameImg.style.display = "block"; 
+    } else {
+      gameImg.style.display = "none"; 
     }
   }
-  
+}
 
-  function moveCarousel(direction) {
 
-    currentStartIndex = (currentStartIndex + direction + games.length) % games.length;
-  
-
-    updateVisibleGames();
-  }
-
+function moveCarousel(direction) {
+  const visibleGames = getVisibleGamesCount(); 
+  currentStartIndex = (currentStartIndex + direction * visibleGames + games.length) % games.length;
   updateVisibleGames();
-  
+}
+
+
+function getGameImageUrl(gameId) {
+  return `https://steamcdn-a.akamaihd.net/steam/apps/${gameId}/header.jpg`;
+}
+
+
+updateVisibleGames();
+
+// responsive
+window.addEventListener("resize", updateVisibleGames);
+
+
+document.querySelector('.prev').addEventListener('click', () => moveCarousel(-1));
+document.querySelector('.next').addEventListener('click', () => moveCarousel(1));
+
   
 
 // // Test scroll 
