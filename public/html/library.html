@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="/js/spaceGames.js" defer></script>
     <script src="/js/loadHeaderButton.js"></script>
+    <script src="/js/filters.js"></script>
     
     <title>Library - Game Vault</title>
   </head>
@@ -42,22 +43,54 @@
       </div>
     </header>
     <main>
-      <h1 id="hh">Games</h1>
-
-      <nav>
-        <div class="nav-center">
-          <ul class="nav-links">
-
-            <li><a href="#">Filters</a></li>
-          </ul>
-          <div class="search-bar">
-            <input type="text" placeholder="Search" class="SearchBar" />
-            <button id="searchButton">🔍</button>
-            <div class="search-results"></div> 
+      <div id="header-content">
+        <h1 id="hh">Games</h1>
+        <nav>
+          <div class="nav-center">
+            <ul class="nav-links">
+              <li><a href="#" id="open-filter">Filters</a></li>
+            </ul>
+            <div class="search-bar">
+              <input type="text" placeholder="Search" class="SearchBar" />
+              <button id="searchButton">🔍</button>
+              <div class="search-results"></div>
+            </div>
           </div>
-          
+        </nav>
+      </div>
+      
+
+      <div id="filter-container" style="display: none;">
+        <div id="filter">
+          <h1 class="filter-title">Filters</h1>
+      
+     
+          <div class="filter-section date-section">
+            <img src="../resources/images/date.png" alt="Date" class="filter-image" />
+            <p class="filter-label">Between</p>
+            <select id="date-min" class="filter-select"></select>
+            <p class="filter-label">and</p>
+            <select id="date-max" class="filter-select"></select>
+          </div>
+      
+          <div class="filter-section category-section">
+            <img src="../resources/images/category.png" alt="Category" class="filter-image" />
+            <div class="filter-checkboxes" id="genre-checkboxes">
+            
+            </div>
+          </div>
+      
+    
+          <button id="validate-filter" class="validate-button">
+            <img src="../resources/images/validate2.png" alt="Validate" />
+          </button>
         </div>
-      </nav>
+      </div>
+      
+      
+      
+      
+      
 
       <section class="recommendation">
         <h2>Recommandation</h2>
