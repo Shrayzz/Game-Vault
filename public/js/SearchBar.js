@@ -55,14 +55,6 @@ function handleSearch(e) {
   searchResults.style.display = 'block';  
 }
 
-
-
-
-
-
-
-
-
 // display results in a grid when click in the button 
 function handleGridSearch() {
   const searchTerm = searchBar.value.toLowerCase();
