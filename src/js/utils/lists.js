@@ -151,9 +151,6 @@ async function getUserFavoriteGames(pool, url) {
             }
         }
 
-        console.log("fav tab :")
-        console.log(favoriteGamesTab)
-
         return new Response(JSON.stringify(favoriteGamesTab), { status: 200 });
 
     } catch (error) {

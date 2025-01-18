@@ -24,8 +24,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   const favoriteGames = await favoriteGamesJSON.json();
-  console.log(favoriteGames);
-
   let games = []
   for (let i = 0; i < favoriteGames.length; i++) {
     games.push({
@@ -74,6 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // validate button
   validateBtn.addEventListener("click", () => {
+    //TODO suppr liLiked=False game of Fav
     const likedGames = games.filter((game) => game.isLiked);
     games.length = 0;
     games.push(...likedGames);

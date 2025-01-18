@@ -41,7 +41,7 @@ async function auth(req, pool, headers) {
     // create the token
     const token = await new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime("1m")
+      .setExpirationTime("1d")
       .sign(secret);
 
     if (token !== null) {

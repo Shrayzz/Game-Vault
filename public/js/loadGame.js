@@ -1,4 +1,6 @@
 window.addEventListener('DOMContentLoaded', async () => {
+    //TODO if in fav put fav button in red
+
     // Get the game
     const gameId = window.location.search.substring(7);
     const gameResponse = await fetch(`http://localhost:3000/api/steam/appdetail?appid=${gameId}`, {

@@ -255,6 +255,3 @@ window.addEventListener("DOMContentLoaded", async () => {
     pp.src = image
   }
 });
-
-
-// TODO : Intégrer la sauvegarde des élements dans le localStorage ou dans la DB

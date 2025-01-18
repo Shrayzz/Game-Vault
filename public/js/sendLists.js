@@ -2,7 +2,7 @@ import triggerPopup from "./popupBuilder.js";
 
 const addFavoriteButton = document.getElementById('addFavoriteButton');
 const favoriteImage = addFavoriteButton.querySelector('img');
-let isFavorite = false; 
+let isFavorite = false;
 
 addFavoriteButton.addEventListener('click', async () => {
     try {
@@ -24,8 +24,8 @@ addFavoriteButton.addEventListener('click', async () => {
         // Get the game
         const gameId = window.location.search.substring(7);
 
-        console.log(username)
-        console.log(gameId)
+        // console.log(username)
+        // console.log(gameId)
 
         if (username && gameId) {
             const response = await fetch(
