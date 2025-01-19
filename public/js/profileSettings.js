@@ -151,13 +151,9 @@ async function saveUsername() {
 
 }
 
-function logOut() {
-  try {
-    document.cookie = "username=";
-    window.location.href = "/";
-  } finally {
-    return;
-  }
+async function logOut() {
+  await fetch('http://localhost:3000/api/logout', { method: "GET" })
+  window.location.href = "/login"
 }
 
 function saveToken() {

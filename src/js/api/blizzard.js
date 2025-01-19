@@ -12,7 +12,7 @@ const bnetSECRET = process.env.BNET_SECRET;
  * @param {Array} scopes the scopes to get the data
  * @returns {Response} the redirection to the page to allow connection
  */
-function linkAccount(clientID, redirectURI, scopes) {
+async function linkAccount(clientID, redirectURI, scopes) {
   const linkURL = `https://oauth.battle.net/authorize?client_id=${clientID}&redirect_uri=${redirectURI}&response_type=code&state=AbCdEfG&scope=${scopes.join(" ")}`;
 
   return new Response(null, { status: 302, headers: { Location: linkURL } });

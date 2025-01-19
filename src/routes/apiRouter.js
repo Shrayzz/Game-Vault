@@ -18,25 +18,27 @@ import steam from "../js/api/steamapi";
  */
 async function apiRouter(req, url, pool, headers) {
   if (req.method === "GET" && url.pathname === "/api/getUserImage")
-    return await profile.getUserImage(pool, url);
+    return await profile.getUserImage(pool, url, headers);
   if (req.method === "GET" && url.pathname === "/api/getUserLists")
-    return await lists.getUserLists(pool, url);
+    return await lists.getUserLists(pool, url, headers);
   if (req.method === "GET" && url.pathname === "/api/getUserFavoriteGames")
-    return await lists.getUserFavoriteGames(pool, url);
+    return await lists.getUserFavoriteGames(pool, url, headers);
   if (req.method === "POST" && url.pathname === "/api/auth")
-    return await auth(req, pool, headers);
+    return await auth.auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
-    return await register(req, pool);
+    return await register(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/updateUsername")
-    return await profile.updateUsername(req, pool);
+    return await profile.updateUsername(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/deleteAccount")
-    return await profile.deleteAccount(req, pool);
+    return await profile.deleteAccount(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/updateUserImage")
-    return await profile.updateImage(req, pool);
+    return await profile.updateImage(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/addList")
-    return await lists.addList(req, pool);
+    return await lists.addList(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/addGameToFavorite")
-    return await lists.addGameToFavorite(pool, req);
+    return await lists.addGameToFavorite(pool, req, headers);
+  if (req.method === "GET" && url.pathname === "/api/logout")
+    return await auth.logout(req, headers);
   return null;
 }
 
@@ -118,6 +120,5 @@ async function steamRouter(req, url, headers) {
 
   return null;
 }
-
 
 export default { apiRouter, blizzardRouter, steamRouter };

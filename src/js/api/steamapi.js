@@ -14,8 +14,6 @@ async function GetApps(headers) {
 
     const data = await response.json();
 
-    // remove all apps that have an empty name
-    // const result = data.applist.apps.filter((elt) => elt.name != "");
     return new Response(JSON.stringify(data.response.apps), { status: 200, headers: headers })
   } catch (err) {
     return new Response(JSON.stringify({ "error": err.message }), { status: 500, headers: headers });

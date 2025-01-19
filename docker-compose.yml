@@ -1,12 +1,15 @@
 services:
   app:
     container_name: simple-game-library
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - '3000:3000'
     depends_on:
       db:
         condition: service_healthy
+
   db:
     container_name: database
     image: mariadb

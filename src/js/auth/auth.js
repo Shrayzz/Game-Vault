@@ -63,4 +63,27 @@ async function auth(req, pool, headers) {
   }
 }
 
-export default auth;
+/**
+ * logout the user by deleting the token and username cookies
+ * @param {Request} req the request
+ * @param {object} headers the headers to be sent in the response
+ * @returns {Response} the response indicating the user has logged out
+ */
+async function logout(req, headers) {
+  try {
+    headers.append("Set-Cookie", "token=; HttpOnly; Path=/; Max-Age=0; SameSite=Strict");
+    headers.append("Set-Cookie", "username=; Path=/; Max-Age=0; SameSite=Strict");
+    return new Response("Logged out successfully", {
+      status: 200,
+      headers: headers,
+    });
+  } catch (err) {
+    console.log(err);
+    return new Response("Error while logging out", {
+      status: 500,
+      headers: headers,
+    });
+  }
+}
+
+export default { auth, logout   };
