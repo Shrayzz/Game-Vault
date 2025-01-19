@@ -8,22 +8,55 @@ Vous pouvez donc créer un compte, rechercher vos jeux préférées et ainsi pou
 
 ## Installation
 
-Pour installer l'application vous devez vous rendre dans le répertoire du projet *(dossier du nom `Simple-Game-Library`)*.
+Il est nécessaire d'avoir [Bun](https://bun.sh) d'installé pour pouvoir lancer l'application.
+
+Pour installer l'application vous devez vous rendre dans le répertoire du projet _(dossier du nom `Simple-Game-Library`)_.
 
 Ensuite vous pouvez ouvrir un terminal et entrer la commande suivante :
-```    
-npm install
+
+```
+bun install
+```
+
+copier le fichier `.env.example` et le renommer en `.env` puis remplir les informations suivantes :
+
+```
+BNET_CLIENT_ID=<bnet_client_id>
+BNET_SECRET=<bnet_secret>
+GMAIL_ACCOUNT=<gmail_email>
+GMAIL_PASSWORD=<gmail_app_password>
+STEAM_TOKEN=<steam_api_key>
+DB_HOST=<db_host>
+DB_USER=<db_user>
+DB_PASS=<db_password>
+DB_NAME=<db_name>
+JWT_TOKEN=<jwt_token>
 ```
 
 ## Lancement de l'application
 
-<!-- TODO expliquer comment lancer avec docker -->
+### En Local
+
+Pour lancer l'application en local, vous pouvez utiliser la commande suivante _(il est nécessaire d'avoir une base de données lancée, comme MySQL ou MariaDB)_ :
+
+```
+bun start
+```
+
+### Avec Docker
+
+Pour lancer l'application avec Docker, vous pouvez utiliser la commande suivante :
+
+```
+docker compose up -d
+```
 
 ## Test de l'application
 
 Pour lancer les tests de l'application vous pouvez lancer la commande suivante :
-```    
-npm test
+
+```
+bun test
 ```
 
 ## Annexe

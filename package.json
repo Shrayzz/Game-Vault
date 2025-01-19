@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "ava",
-    "dev": "bun --watch server.js"
+    "dev": "bun --watch server.js",
+    "start": "bun server.js"
   },
   "keywords": [],
   "author": "",
