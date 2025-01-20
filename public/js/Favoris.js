@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       gameImage.alt = game.title;
       gameImage.classList.add('game-image');
 
+      const gameTitle = document.createElement("a");
+      gameTitle.classList.add("game-title");
+      gameTitle.href = `/game?appid=${game.id}`;  
+      gameTitle.textContent = game.title;
+
       const heartIcon = document.createElement("img");
       heartIcon.src = game.isLiked
         ? "/resources/images/like.png"
@@ -57,6 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       heartIcon.dataset.id = game.id;
 
       gameCard.appendChild(gameImage);
+      gameCard.appendChild(gameTitle);
       gameCard.appendChild(heartIcon);
       container.appendChild(gameCard);
     });
