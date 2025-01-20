@@ -10,9 +10,19 @@ Vous pouvez donc créer un compte, rechercher vos jeux préférées et ainsi pou
 
 Il est nécessaire d'avoir [Bun](https://bun.sh) d'installé pour pouvoir lancer l'application.
 
-Pour installer l'application vous devez vous rendre dans le répertoire du projet _(dossier du nom `Simple-Game-Library`)_.
+Cloner le dépôt git
 
-Ensuite vous pouvez ouvrir un terminal et entrer la commande suivante :
+```
+git clone https://github.com/Shrayzz/Simple-Game-Library.git
+```
+
+Naviguer dans le dossier
+
+```
+cd Simple-Game-Library/
+```
+
+Installer les dépendances du projet
 
 ```
 bun install
@@ -73,4 +83,3 @@ Voici quelques liens qui peuvent vous intéresser :
 
 - [Notion de notes du projet](https://www.notion.so/SAE-1-0091ab23f59d4f25b810fbe6411220f3)
 - [Rapport de projet](https://docs.google.com/document/d/1qDP2YHU26Ve78AwiqhcrBJ9E5G0NG6M8E1QmqGWBqpA/edit?usp=sharing)
-- [Notre présentation](https://docs.google.com/presentation/d/11UMgiHuPRvpgh8Q_msfCI5zzWt5rzjRhEtyjuNQ3VOg/edit?usp=sharing)
