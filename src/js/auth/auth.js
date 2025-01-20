@@ -86,4 +86,4 @@ async function logout(req, headers) {
   }
 }
 
-export default { auth, logout   };
+export default { auth, logout };
