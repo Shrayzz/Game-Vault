@@ -213,6 +213,7 @@ footer a:hover {
     background-color: transparent;
     border: none;
     border-radius: 30px;
+    
 
     width: 100px;
     height: 80px;
@@ -259,6 +260,13 @@ footer a:hover {
     height: 110px;
     top: 10px;
     margin-right: 15px;
+    width: auto;
+}
+
+.logo-link {
+    text-decoration: none; /* Enlève le soulignement */
+    display: flex;
+    align-items: center;
 }
 
 .h_left {
@@ -1020,7 +1028,7 @@ footer a:hover {
 
 .searchBar:hover {
     transform: scale(1.05);
-    border: solid rgb(0, 102, 255) 2px;
+    border: solid rgb(255, 255, 255) 2px;
     border-radius: 15px;
 }
 
@@ -1034,13 +1042,14 @@ footer a:hover {
 
 .AA {
     display: flex;
-    gap: 45px;
+    gap: 43px;
 }
 
 .icon-button {
     background: none;
     border: none;
     cursor: pointer;
+    padding-right: 32px;
 }
 
 .icon-button img {
@@ -1050,7 +1059,7 @@ footer a:hover {
 }
 
 .AA button:hover {
-    transform: scale(1.1);
+    transform: scale(1);
     cursor: pointer;
     transition: all 0.3s;
     background-color: transparent;
@@ -1238,8 +1247,8 @@ nav {
 
 .SearchBar:hover {
     transform: scale(1.04);
-    border: solid rgb(79, 137, 203) 2px;
-    border-radius: 15px;
+    border: solid rgb(94, 91, 119) 3px;
+    border-radius: 19px;
 }
 
 .search-bar input {
@@ -1247,11 +1256,11 @@ nav {
     font-size: 15px;
     color: aliceblue;
     width: 30vw;
-    height: 4vh;
+    height: 3vh;
     padding: 7px;
     background-color: black;
     border: solid aliceblue 2px;
-    border-radius: 10px;
+    border-radius: 22px;
     transition: all 0.3s;
 }
 
@@ -1839,11 +1848,12 @@ textarea::placeholder {
 
 
 .list-item {
-    width: 380px;
-    height: 220px;
+    width: 400px;
+    height: 240px;
     background-color:transparent;
     border-radius: 30px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -1856,12 +1866,22 @@ textarea::placeholder {
     border-radius: 30px;
     
 }
+.game-title {
+   
+    margin-top: 10px; 
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none; /* Retirer le souligné par défaut sur le lien */
+    font-family: 'm', sans-serif; 
+  }
 
 .heart-icon {
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
     position: absolute;
-    bottom: 15px;
+    bottom: 50px;
     right: 15px;
     cursor: pointer;
 }
