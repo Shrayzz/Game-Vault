@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = "";
     games.forEach((game) => {
       const gameCard = document.createElement("div");
-      gameCard.classList.add("list-item");
+      gameCard.classList.add("list-itemm");
       // TODO add an image
       const gameImage = new Image();
       gameImage.src = game.imageUrl;
