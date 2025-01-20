@@ -56,7 +56,7 @@ docker compose up -d
 Pour lancer les tests de l'application vous pouvez lancer la commande suivante :
 
 ```
-bun test
+npm test
 ```
 
 ## Annexe
