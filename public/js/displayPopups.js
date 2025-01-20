@@ -107,8 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    window.location.href = "/library"; //TODO: changer redirection
-                    // TODO: popup sur library (à l'aide d'une sauvegarde)
+                    window.location.href = "/library";
                     triggerPopup('success', '✔️ㆍYou\'re successfully logged to your account', 5000);
                     return;
                 } else if (response.status === 401) {
@@ -143,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ email: email }),
                 });
 
-                const data = await response.json();
-
                 if (response.ok) {
                     triggerPopup('success', '✔️ㆍAccount found! An email has been sent into your mailbox.', 2500);
                 } else {
@@ -153,6 +150,48 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 triggerPopup('error', `⛔ㆍAn error occurred: ${err.message}`, 5000);
                 console.log(err);
+            }
+        });
+    }
+    if (NPbtn) {
+        NPbtn.addEventListener("click", async () => {
+            try {
+                const password = document.getElementById("password").value.trim();
+                const c_password = document.getElementById("confirm_password").value.trim();
+
+                const token = new URLSearchParams(window.location.search).get("token");
+
+                if (!password || !c_password) {
+                    triggerPopup('error', '❌ㆍPlease fill both input !', 5000);
+                    return;
+                }
+
+                if (password !== c_password) {
+                    triggerPopup('error', '❌ㆍPasswords do not match!', 5000);
+                    return;
+                }
+
+                let finalPasswd = password;
+
+                const response = await fetch("http://localhost:3000/api/reset-password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ token: token, newPassword: finalPasswd }),
+                });
+
+                if (response.ok) {
+                    triggerPopup('success', '✔️ㆍ Passsword successfully Reset ! ', 2500);
+                    setTimeout(() => {
+                        window.location.href = "/login";
+                    }, 2500);
+                } else {
+                    triggerPopup('error', '❌ㆍ Error while reseting password !', 2500);
+                }
+            } catch (err) {
+                triggerPopup('error', `⛔ㆍAn error occurred: ${err.message}`, 5000);
+                console.log(err.message);
             }
         });
     }

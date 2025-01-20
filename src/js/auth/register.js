@@ -25,10 +25,6 @@ async function register(req, pool, headers) {
         return new Response("User already exists", { status: 502, headers });
     }
 
-    // generate and add a token to the user
-    const secret = require('crypto').randomBytes(48).toString('hex');
-    await db.addToken(pool, username, secret);
-
     // check if user creation succeeded
     if (userCreated) {
         return new Response("Success, please login now", { status: 200, headers });

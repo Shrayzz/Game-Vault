@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import db from "../db"
 import crypto from "crypto";
 
 /**
@@ -47,6 +48,11 @@ async function emailForgot(req, pool, headers) {
     const token = crypto.randomBytes(20).toString('hex');
 
     const resetLink = `http://localhost:3000/new-password?token=${token}`;
+
+    const exist = await db.existEmail(pool, email)
+
+    if (!exist)
+      return Response(JSON.stringify("Account not found !"), { status: 404, headers: { headers } })
 
     const expirationTime = new Date(Date.now() + 3600000); // 1h
     await pool.query("UPDATE accounts SET reset_token = ?, reset_token_expiration = ? WHERE email = ?", [token, expirationTime, email]);
