@@ -158,9 +158,33 @@ async function getUserFavoriteGames(pool, url) {
     }
 }
 
+async function deleteGameFromFavorite(pool, req) {
+    try {
+        const { username, gameId } = await req.json();
+        const existUser = await db.existUser(pool, username);
+
+        if (!existUser) {
+            return new Response("User does not exist", { status: 502 });
+        }
+
+        if (gameId != null && gameId != undefined) {
+            try {
+                const favoriteList = await db.getUserLists(pool, username, true);
+                await db.deleteGameFromList(pool, favoriteList[0].id, gameId);
+                return new Response("Game successfuly deleted", { status: 200 });
+            } catch (error) {
+                return new Response(`An error occured while deleting a favorite game : ${error}`, { status: 500 });
+            }
+        }
+    } catch (error) {
+        return new Response(`An error occured : ${error}`, { status: 500 });
+    }
+}
+
 export default {
     getUserLists,
     addList,
     addGameToFavorite,
     getUserFavoriteGames,
+    deleteGameFromFavorite,
 }
