@@ -213,7 +213,7 @@ footer a:hover {
     background-color: transparent;
     border: none;
     border-radius: 30px;
-    
+
 
     width: 100px;
     height: 80px;
@@ -264,7 +264,8 @@ footer a:hover {
 }
 
 .logo-link {
-    text-decoration: none; /* Enlève le soulignement */
+    text-decoration: none;
+    /* Enlève le soulignement */
     display: flex;
     align-items: center;
 }
@@ -425,6 +426,7 @@ footer a:hover {
 }
 
 #lParts form,
+#lParts div,
 #pParts form,
 .rParts form {
     display: flex;
@@ -476,7 +478,8 @@ footer a:hover {
 
 #submitBtn,
 #loginBtn,
-#fpBtn {
+#fpBtn,
+#newPBtn {
     font-family: "eb";
     font-size: 15px;
     width: 10vw;
@@ -487,7 +490,8 @@ footer a:hover {
 
 #submitBtn:hover,
 #loginBtn:hover,
-#fpBtn:hover {
+#fpBtn:hover,
+#newPBtn:hover {
     cursor: pointer;
     border: rgb(0, 102, 255) solid 2px;
     border-radius: 10px;
@@ -1093,13 +1097,13 @@ footer a:hover {
     user-select: none;
 }
 
-.filter-button{
+.filter-button {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     position: absolute;
-    right: 20px; 
+    right: 20px;
 }
 
 nav {
@@ -1140,6 +1144,7 @@ nav {
     width: 8vw;
     transition: transform 0.2s, border 0.2s, border-radius 0.2s;
 }
+
 .nav-links button:hover {
     cursor: pointer;
     transform: scale(1.1);
@@ -1153,7 +1158,7 @@ nav {
     display: flex;
     justify-content: flex-end;
     width: 30%;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .filter-title {
@@ -1712,7 +1717,7 @@ textarea::placeholder {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-  }
+}
 
 
 
@@ -1741,10 +1746,10 @@ textarea::placeholder {
 
 
 .list-item {
-    width: 270px; 
+    width: 270px;
     height: 180px;
-    background-image: url('/resources/images/list.png'); 
-    background-size: cover; 
+    background-image: url('/resources/images/list.png');
+    background-size: cover;
     background-position: center;
     border-radius: 30px;
     display: flex;
@@ -1864,7 +1869,7 @@ textarea::placeholder {
 .list-itemm {
     width: 400px;
     height: 240px;
-    background-color:transparent;
+    background-color: transparent;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
@@ -1873,23 +1878,26 @@ textarea::placeholder {
     position: relative;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
+
 .game-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 30px;
-    
+
 }
+
 .game-title {
-   
-    margin-top: 10px; 
+
+    margin-top: 10px;
     font-size: 16px;
     text-align: center;
     font-weight: bold;
     color: #fff;
-    text-decoration: none; /* Retirer le souligné par défaut sur le lien */
-    font-family: 'm', sans-serif; 
-  }
+    text-decoration: none;
+    /* Retirer le souligné par défaut sur le lien */
+    font-family: 'm', sans-serif;
+}
 
 .heart-icon {
     width: 32px;
