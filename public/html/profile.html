@@ -1,76 +1,82 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/flavicon.ico" />
-        <link rel="stylesheet" href="/styles/dark-mode.css" />
-        <script src="https://unpkg.com/@phosphor-icons/web"></script>
-        <title>Profile - Game Vault</title>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/flavicon.ico" />
+    <link rel="stylesheet" href="/styles/dark-mode.css" />
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Profile - Game Vault</title>
+  </head>
 
-<body class="blackBG">
+  <body class="blackBG">
     <div class="mainProfileContainer">
-        <div class="profileHeader">
-            <h1>Profile</h1>
-            <button class="returnBtn" onclick="window.history.go(-1)">
-                <img src="/resources/images/return.png" alt="" class="returnIcon">
-            </button>
-            <div class="pPopups">
-                <div id="success" class="proSuccess" style="display: none">
-                    <p id="success-text"></p>
-                </div>
-                <div id="error" class="proError" style="display: none">
-                    <p id="error-text"></p>
-                </div>
-            </div>
+      <div class="profileHeader">
+        <h1>Profile</h1>
+        <button class="returnBtn" onclick="window.location.href = '/library'">
+          <img src="/resources/images/return.png" alt="" class="returnIcon" />
+        </button>
+        <div class="pPopups">
+          <div id="success" class="proSuccess" style="display: none">
+            <p id="success-text"></p>
+          </div>
+          <div id="error" class="proError" style="display: none">
+            <p id="error-text"></p>
+          </div>
         </div>
-        <div class="profileContainer">
-            <img src="/resources/images/default-pp.png" alt="" id="pp" onclick="showImgDialog()" />
-            <input type="file" id="imgInput" accept="image/*" style="display: none"
-                onchange="updateProfileImage(event)" />
+      </div>
+      <div class="profileContainer">
+        <img
+          src="/resources/images/default-pp.png"
+          alt=""
+          id="pp"
+          onclick="showImgDialog()"
+        />
+        <input
+          type="file"
+          id="imgInput"
+          accept="image/*"
+          style="display: none"
+          onchange="updateProfileImage(event)"
+        />
 
-                <div class="usernameTab">
-                    <h2 id="username"></h2>
-                    <input
-                        type="text"
-                        id="usernameInput"
-                        placeholder="Username"
-                        style="display: none"
-                        onblur="saveUsername()"
-                    />
-                    <button class="editUsername" onclick="editUsername()">
-                        <img
-                            id="pencil"
-                            src="/resources/images/edit.png"
-                            alt="Edit Username"
-                        />
-                    </button>
-                    <script>
-                        const enterEdit =
-                            document.getElementById("usernameInput");
+        <div class="usernameTab">
+          <h2 id="username"></h2>
+          <input
+            type="text"
+            id="usernameInput"
+            placeholder="Username"
+            style="display: none"
+            onblur="saveUsername()"
+          />
+          <button class="editUsername" onclick="editUsername()">
+            <img
+              id="pencil"
+              src="/resources/images/edit.png"
+              alt="Edit Username"
+            />
+          </button>
+          <script>
+            const enterEdit = document.getElementById("usernameInput");
 
-                        function confirmEdit() {
-                            saveUsername();
-                        }
+            function confirmEdit() {
+              saveUsername();
+            }
 
-                        window.addEventListener("keydown", (e) => {
-                            if (
-                                e.key === "Enter" &&
-                                document.activeElement === enterEdit
-                            ) {
-                                confirmEdit();
-                            }
-                        });
-                    </script>
-                </div>
-            </div>
-            <hr />
-            <h2 class="profileTabs" id="accountTab">Account :</h2>
-            <div class="accountContainer">
-                <!-- <div class="profileLinkings"> -->
-                    <!-- TODO: Donner un indicateur pour pouvoir changer l'état du bouton en fonction d'une connexion/déconnexion -->
-                    <!-- <button class="linkBtns">
+            window.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" && document.activeElement === enterEdit) {
+                confirmEdit();
+              }
+            });
+          </script>
+        </div>
+      </div>
+      <hr />
+      <h2 class="profileTabs" id="accountTab">Account :</h2>
+      <div class="accountContainer">
+        <!-- <div class="profileLinkings"> -->
+        <!-- TODO: Donner un indicateur pour pouvoir changer l'état du bouton en fonction d'une connexion/déconnexion -->
+        <!-- <button class="linkBtns">
                         <img
                             src="/resources/images/battle-net.png"
                             alt=""
@@ -105,57 +111,82 @@
                             class="blizzardIcon"
                         />
                     </button>
-                </div> --> 
-                <div class="profileImportant">
-                    <button id="logoutBtn" onclick="LogOut()">
-                        <i class="ph ph-sign-out"></i>
-                        <p class="logout">Log out</p>
-                    </button>
-                    <button id="changeEPBtn">
-                        <i class="ph ph-user-gear"></i>
-                        <p class="chengeEP">Account Infos</p>
-                    </button>
-                    <!-- TODO faire popup de confirmation -->
-                    <button id="deleteAccBtn" onclick="deleteAccount()">
-                        <i class="ph ph-trash"></i>
-                        <p class="deleteAcc">Delete Account</p>
-                    </button>
-                </div>
-            </div>
-            <div class="themeContainer">
-                <h2>THEME</h2>
-        
-                <div class="modeSelection">
-                    <button class="modeOption darkMode">
-                        <img src="/resources/images/darkMode.png" alt="Dark Mode" class="modeIcon">
-                        <span class="textMode">Dark Mode</span>
-                    </button>
-                    <button class="modeOption lightMode">
-                        <img src="/resources/images/lightMode.png" alt="Light Mode" class="modeIcon">
-                        <span class="textMode">Light Mode</span>
-                    </button>
-                </div>
-                <hr class="separator">
+                </div> -->
+        <div class="profileImportant">
+          <button id="logoutBtn" onclick="LogOut()">
+            <i class="ph ph-sign-out"></i>
+            <p class="logout">Log out</p>
+          </button>
+          <button id="changeEPBtn">
+            <i class="ph ph-user-gear"></i>
+            <p class="chengeEP">Account Infos</p>
+          </button>
+          <!-- TODO faire popup de confirmation -->
+          <button id="deleteAccBtn" onclick="deleteAccount()">
+            <i class="ph ph-trash"></i>
+            <p class="deleteAcc">Delete Account</p>
+          </button>
+        </div>
+      </div>
+      <div class="themeContainer">
+        <h2>THEME</h2>
+
+        <div class="modeSelection">
+          <button class="modeOption darkMode">
+            <img
+              src="/resources/images/darkMode.png"
+              alt="Dark Mode"
+              class="modeIcon"
+            />
+            <span class="textMode">Dark Mode</span>
+          </button>
+          <button class="modeOption lightMode">
+            <img
+              src="/resources/images/lightMode.png"
+              alt="Light Mode"
+              class="modeIcon"
+            />
+            <span class="textMode">Light Mode</span>
+          </button>
+        </div>
+        <hr class="separator" />
 
         <div class="themeOptions">
-            <button class="themeOption"><img src="/resources/images/DM_white.png" alt="White Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_yellow.png" alt="Yellow Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_lightBlue.png" alt="Light Blue Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_pink.png" alt="Pink Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_orange.png" alt="Orange Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_blue.png" alt="Blue Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_purple.png" alt="Purple Theme"></button>
-            <button class="themeOption"><img src="/resources/images/DM_green.png" alt="Green Theme"></button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_white.png" alt="White Theme" />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_yellow.png" alt="Yellow Theme" />
+          </button>
+          <button class="themeOption">
+            <img
+              src="/resources/images/DM_lightBlue.png"
+              alt="Light Blue Theme"
+            />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_pink.png" alt="Pink Theme" />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_orange.png" alt="Orange Theme" />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_blue.png" alt="Blue Theme" />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_purple.png" alt="Purple Theme" />
+          </button>
+          <button class="themeOption">
+            <img src="/resources/images/DM_green.png" alt="Green Theme" />
+          </button>
         </div>
+      </div>
+
+      <div class="preferencesContainer">
+        <h2>PREFERENCES</h2>
+      </div>
     </div>
-
-
-
-            <div class="preferencesContainer">
-            <h2>PREFERENCES</h2>
-    </div>
-        </div>
-        <script src="/js/profileSettings.js" type="module"></script>
-        <script src="../js/themeSelection.js" type="module"></script>
-    </body>
+    <script src="/js/profileSettings.js" type="module"></script>
+    <script src="../js/themeSelection.js" type="module"></script>
+  </body>
 </html>

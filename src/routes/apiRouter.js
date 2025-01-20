@@ -5,9 +5,11 @@ const bnetID = process.env.BNET_CLIENT_ID;
 import auth from "../js/auth/auth";
 import register from "../js/auth/register";
 import profile from "../js/utils/profile"
+import passwd from "../js/utils/forgot-passwd"
 import lists from "../js/utils/lists"
 import blizzard from "../js/api/blizzard";
 import steam from "../js/api/steamapi";
+
 
 /**
  * Router function for SimpleGameLibrary api endpoints
@@ -29,6 +31,10 @@ async function apiRouter(req, url, pool, headers) {
     return await auth.auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
     return await register(req, pool, headers);
+  if (req.method === "POST" && url.pathname === "/api/forgot-password")
+    return await passwd.emailForgot(req, pool, headers);
+  if (req.method === "POST" && url.pathname === "/api/reset-password")
+    return await passwd.resetPassword(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/updateUsername")
     return await profile.updateUsername(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/deleteAccount")

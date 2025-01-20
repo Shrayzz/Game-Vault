@@ -64,7 +64,7 @@ async function dbInit() {
   const con = await pool.getConnection();
 
   const accountsTable =
-    "CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image json, token varchar(96) UNIQUE, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
+    "CREATE TABLE IF NOT EXISTS accounts (id int(11) NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL UNIQUE, password varchar(255) NOT NULL, email varchar(100) NOT NULL UNIQUE, image json, reset_token varchar(96) UNIQUE, reset_token_expiration TIMESTAMP, PRIMARY KEY (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const listTable =
     "CREATE TABLE IF NOT EXISTS list (id int(11) NOT NULL AUTO_INCREMENT, name varchar(50) NOT NULL, favorite boolean DEFAULT false, accountId int(11) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (accountid) REFERENCES accounts (id)) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;";
   const gameTable =
@@ -116,7 +116,7 @@ async function existUser(pool, id) {
     const con = await pool.getConnection();
     const sql =
       "SELECT id, username, email FROM accounts WHERE username = ?;";
-    const values = [ id];
+    const values = [id];
 
     const [rows] = await con.query(sql, values);
 
