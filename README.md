@@ -83,4 +83,3 @@ Voici quelques liens qui peuvent vous intéresser :
 
 - [Notion de notes du projet](https://www.notion.so/SAE-1-0091ab23f59d4f25b810fbe6411220f3)
 - [Rapport de projet](https://docs.google.com/document/d/1qDP2YHU26Ve78AwiqhcrBJ9E5G0NG6M8E1QmqGWBqpA/edit?usp=sharing)
-- [Notre présentation](https://docs.google.com/presentation/d/11UMgiHuPRvpgh8Q_msfCI5zzWt5rzjRhEtyjuNQ3VOg/edit?usp=sharing)
