@@ -2,7 +2,6 @@ import triggerPopup from "./popupBuilder.js";
 
 const addFavoriteButton = document.getElementById('addFavoriteButton');
 const favoriteImage = addFavoriteButton.querySelector('img');
-let isFavorite = false;
 
 addFavoriteButton.addEventListener('click', async () => {
     try {
@@ -23,9 +22,6 @@ addFavoriteButton.addEventListener('click', async () => {
 
         // Get the game
         const gameId = window.location.search.substring(7);
-
-        // console.log(username)
-        // console.log(gameId)
 
         if (username && gameId) {
             const response = await fetch(
@@ -58,7 +54,6 @@ addFavoriteButton.addEventListener('click', async () => {
             }
 
             if (response.status === 200) {
-                isFavorite = true;
                 favoriteImage.src = "../resources/images/favoris_is_add.png";
                 triggerPopup('success', '✔️ㆍThe game is added to favorites', 5000);
                 return;

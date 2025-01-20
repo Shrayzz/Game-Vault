@@ -1,5 +1,18 @@
 window.addEventListener('DOMContentLoaded', async () => {
-    //TODO if in fav put fav button in red
+    // Get username
+    const cookieString = document.cookie;
+    const cookieParts = cookieString.split('; ');
+    let cookies = [];
+    for (const part of cookieParts) {
+        cookies.push(part.split('='));
+    }
+
+    cookies.forEach((cookie) => {
+        if (cookie[0] === "username") {
+            window.username = cookie[1]
+        }
+    })
+    const username = window.username;
 
     // Get the game
     const gameId = window.location.search.substring(7);
@@ -110,4 +123,27 @@ window.addEventListener('DOMContentLoaded', async () => {
     } else {
         requirementsBox.innerHTML = ''
     }
+
+    // Get favorite games
+    const favoriteGamesJSON = await fetch(
+        `http://localhost:3000/api/getUserFavoriteGames?username=${username}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    );
+    const favoriteGames = await favoriteGamesJSON.json();
+
+    // Verify if game is already in favorite
+    favoriteGames.forEach((game) => {
+        if (game.id == gameId) {
+            // Get favorite button
+            const addFavoriteButton = document.getElementById('addFavoriteButton');
+            const favoriteImage = addFavoriteButton.querySelector('img');
+            // Update favorite button
+            favoriteImage.src = "../resources/images/favoris_is_add.png";
+        }
+    })
 });
