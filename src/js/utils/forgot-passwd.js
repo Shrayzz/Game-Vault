@@ -83,15 +83,19 @@ async function resetPassword(req, pool, headers) {
     if (!token || !newPassword)
       return Response(JSON.stringify("Token and/or new password missing"), { status: 404, headers: { headers } })
 
+
     const result = await pool.query("SELECT * FROM accounts WHERE reset_token = ? AND reset_token_expiration > NOW()", [token]);
-    if (result.rows.length === 0) {
+    if (result.length === 0) {
       return new Response(JSON.stringify("Invalid token"), { status: 400, headers: { headers } });
     }
 
     const hashedPassword = await Bun.password.hash(newPassword);
-    await pool.query("UPDATE users SET password = ?, reset_token = NULL WHERE reset_token = ?", [hashedPassword, token]);
+    const [reset] = await pool.query("UPDATE accounts SET password = ?, reset_token = NULL WHERE reset_token = ?", [hashedPassword, token]);
+    if (reset.affectedRows === 1) {
+      return new Response(JSON.stringify("Password successfully reset!"), { status: 200, headers: { headers } });
+    }
 
-    return new Response(JSON.stringify("Password successfully reset!"), { status: 200, headers: { headers } });
+    return new Response(JSON.stringify("Token expired"), { status: 401, headers: { headers } })
   } catch (err) {
     return new Response(JSON.stringify("Error while resetting password"), { status: 500, headers: { headers } });
   }
