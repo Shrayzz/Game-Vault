@@ -61,10 +61,10 @@ async function emailForgot(req, pool, headers) {
 
     sendEmail(mailSender, password, email, subject, content)
 
-    return new Response("Email succesfully sent !", { status: 200, headers: { headers } });
+    return new Response(JSON.stringify("Email succesfully sent !"), { status: 200, headers: { headers } });
   } catch (err) {
     console.log(err.message);
-    return Response("Error while sending reset email", { status: 500, headers: { headers } })
+    return Response(JSON.stringify("Error while sending reset email"), { status: 500, headers: { headers } })
   }
 }
 

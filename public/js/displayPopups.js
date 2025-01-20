@@ -135,17 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                const response = await fetch("http://localhost:3000/api/email", {
+                const response = await fetch("http://localhost:3000/api/forgot-password", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ email }),
+                    body: JSON.stringify({ email: email }),
                 });
 
                 const data = await response.json();
 
-                if (response.ok && data.success) {
+                if (response.ok) {
                     triggerPopup('success', '✔️ㆍAccount found! An email has been sent into your mailbox.', 2500);
                 } else {
                     triggerPopup('error', '❌ㆍThis account doesn\'t exist. Try again or create a new account.', 2500);
