@@ -72,7 +72,35 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // validate button
   validateBtn.addEventListener("click", () => {
-    //TODO suppr liLiked=False game of Fav
+    //TODO suppr Liked=False game of Fav
+    // Delete games from favorites
+    games.forEach(async (game) => {
+      if (!game.isLiked) {
+        const response = await fetch(
+          `http://localhost:3000/api/deleteFavoriteGame`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: username,
+              gameId: game.id,
+            }),
+          }
+        );
+
+        if (response.status === 502) {
+          triggerPopup('error', '❌ㆍUser does not exist!', 5000);
+          return;
+        }
+        if (response.status === 500 || response.status === 404) {
+          triggerPopup('error', '❌ㆍAn error occurred', 5000);
+          return;
+        }
+      }
+    })
+    // Filter games to display
     const likedGames = games.filter((game) => game.isLiked);
     games.length = 0;
     games.push(...likedGames);

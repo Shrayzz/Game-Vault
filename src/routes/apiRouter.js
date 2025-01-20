@@ -23,6 +23,8 @@ async function apiRouter(req, url, pool, headers) {
     return await lists.getUserLists(pool, url, headers);
   if (req.method === "GET" && url.pathname === "/api/getUserFavoriteGames")
     return await lists.getUserFavoriteGames(pool, url, headers);
+  if (req.method === "GET" && url.pathname === "/api/logout")
+    return await auth.logout(req, headers);
   if (req.method === "POST" && url.pathname === "/api/auth")
     return await auth.auth(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/register")
@@ -37,8 +39,8 @@ async function apiRouter(req, url, pool, headers) {
     return await lists.addList(req, pool, headers);
   if (req.method === "POST" && url.pathname === "/api/addGameToFavorite")
     return await lists.addGameToFavorite(pool, req, headers);
-  if (req.method === "GET" && url.pathname === "/api/logout")
-    return await auth.logout(req, headers);
+  if (req.method === "POST" && url.pathname === "/api/deleteFavoriteGame")
+    return await lists.deleteGameFromFavorite(pool, req);
   return null;
 }
 
