@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     games.push({
       id: favoriteGames[i].id,
       title: favoriteGames[i].gameInfo.name,
+      imageUrl: `https://steamcdn-a.akamaihd.net/steam/apps/${favoriteGames[i].id}/header.jpg`,
       isLiked: true,
     })
   }
@@ -40,20 +41,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = "";
     games.forEach((game) => {
       const gameCard = document.createElement("div");
-      // TODO add an image
       gameCard.classList.add("list-item");
-      gameCard.innerHTML = `
-      <span>${game.title}</span>
-      <img
-      src="${game.isLiked
-          ? "/resources/images/like.png"
-          : "/resources/images/dislike.png"
-        }"
-      alt="Heart Icon"
-      class="heart-icon"
-      data-id="${game.id}"
-      />
-      `;
+      // TODO add an image
+      const gameImage = new Image();
+      gameImage.src = game.imageUrl;
+      gameImage.alt = game.title;
+      gameImage.classList.add('game-image');
+
+      const heartIcon = document.createElement("img");
+      heartIcon.src = game.isLiked
+        ? "/resources/images/like.png"
+        : "/resources/images/dislike.png";
+      heartIcon.alt = "Heart Icon";
+      heartIcon.classList.add("heart-icon");
+      heartIcon.dataset.id = game.id;
+
+      gameCard.appendChild(gameImage);
+      gameCard.appendChild(heartIcon);
       container.appendChild(gameCard);
     });
   };
@@ -109,3 +113,5 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   Games();
 });
+
+

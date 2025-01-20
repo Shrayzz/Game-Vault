@@ -115,8 +115,8 @@ async function existUser(pool, id) {
   try {
     const con = await pool.getConnection();
     const sql =
-      "SELECT id, username, email FROM accounts WHERE username = ? OR email = ?;";
-    const values = [id, id];
+      "SELECT id, username, email FROM accounts WHERE username = ?;";
+    const values = [ id];
 
     const [rows] = await con.query(sql, values);
 
