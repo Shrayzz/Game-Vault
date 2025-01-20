@@ -21,16 +21,24 @@ bun install
 copier le fichier `.env.example` et le renommer en `.env` puis remplir les informations suivantes :
 
 ```
-BNET_CLIENT_ID=<bnet_client_id>
-BNET_SECRET=<bnet_secret>
-GMAIL_ACCOUNT=<gmail_email>
-GMAIL_PASSWORD=<gmail_app_password>
-STEAM_TOKEN=<steam_api_key>
-DB_HOST=<db_host>
-DB_USER=<db_user>
-DB_PASS=<db_password>
-DB_NAME=<db_name>
-JWT_TOKEN=<jwt_token>
+SERVER_PORT=<PORT_SERVER>
+
+#API
+XBOX_API_KEY=<YOUR_XBOX_live_API_KEY>
+BNET_CLIENT_ID=<BNET_CLIENT_ID>
+BNET_SECRET=<BNET_SECRET>
+STEAM_TOKEN=<STEAM_TOKEN>
+
+#Mail
+GMAIL_ACCOUNT=<GMAIL_ACCOUNT>
+GMAIL_PASSWORD=<GMAIL_APP_PASSWORD>
+
+#Database
+DB_HOST=<your_db_host>
+DB_USER=<your_db_user>
+DB_PASS=<your_db_password>
+DB_NAME=<your_db_name>
+DB_PORT=<your_db_port>
 ```
 
 ## Lancement de l'application

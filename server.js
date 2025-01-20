@@ -60,7 +60,7 @@ const server = serve({
     );
   },
 
-  port: 3000,
+  port: process.env.SERVER_PORT,
 });
 
 console.log(`Server Running at ${server.url.href}`);
