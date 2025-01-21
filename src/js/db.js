@@ -863,6 +863,13 @@ async function deleteUser(pool, username) {
 async function deleteList(pool, id) {
   try {
     const con = await pool.getConnection();
+
+    // Delete game in list
+    const sql1 = "DELETE FROM listhasgames WHERE idList = ?;";
+    const values1 = [id];
+    await con.query(sql1, values1);
+
+    // Delete list
     const sql = "DELETE FROM list WHERE id = ?;";
     const values = [id];
 

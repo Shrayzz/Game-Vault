@@ -30,12 +30,15 @@ async function deleteAccount(req, pool) {
     const { username } = await req.json();
 
     const existUser = await db.existUser(pool, username);
-
     if (existUser) {
         const lists = await db.getUserLists(pool, username);
-        while (lists.length !== 0) {
-            await db.deleteList(pool, lists[0]?.id);
-            lists.shift();
+        // while (lists.length !== 0) {
+        //     //TODO fix need to delete game in lists before delete lists
+        //     await db.deleteList(pool, lists[0]?.id);
+        //     lists.shift();
+        // }
+        for (let i = 0; i < lists.length; i++) {
+            await db.deleteList(pool, lists[i]?.id);
         }
         await db.deleteUser(pool, username);
     } else {

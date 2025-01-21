@@ -153,6 +153,7 @@ async function saveUsername() {
 
 async function logOut() {
   await fetch('http://localhost:3000/api/logout', { method: "GET" })
+  document.cookie = "username=";
   window.location.href = "/login"
 }
 
@@ -201,6 +202,7 @@ async function deleteAccount() {
       return;
     }
 
+    await fetch('http://localhost:3000/api/logout', { method: "GET" })
     document.cookie = "username=";
     window.location.href = "/";
   } catch (error) {
