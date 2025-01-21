@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     games.forEach((game) => {
       const gameCard = document.createElement("div");
       gameCard.classList.add("list-itemm");
-      // TODO add an image
       const gameImage = new Image();
       gameImage.src = game.imageUrl;
       gameImage.alt = game.title;
@@ -50,7 +49,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const gameTitle = document.createElement("a");
       gameTitle.classList.add("game-title");
-      gameTitle.href = `/game?appid=${game.id}`;  
+      gameTitle.classList.add("list-game-title")
+      gameTitle.href = `/game?appid=${game.id}`;
       gameTitle.textContent = game.title;
 
       const heartIcon = document.createElement("img");
@@ -82,7 +82,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // validate button
   validateBtn.addEventListener("click", () => {
-    //TODO suppr Liked=False game of Fav
     // Delete games from favorites
     games.forEach(async (game) => {
       if (!game.isLiked) {

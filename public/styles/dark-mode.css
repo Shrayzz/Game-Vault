@@ -1604,8 +1604,15 @@ body {
     font-size: 4vw;
     color: aliceblue;
     text-shadow: 2px 2px 30px #afafafaa;
-    text-align: left;
     padding-bottom: 10px;
+}
+
+.list-game-title {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .game-subtitle {
@@ -1716,6 +1723,7 @@ textarea::placeholder {
 .list-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
     gap: 20px;
 }
 
