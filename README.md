@@ -1,8 +1,8 @@
-# Simple-Game-Library
+# Game Vault
 
 ## But de l'application
 
-Simple Game Library est une bibliothèque de jeux vidéos permettant de consulter divers jeux et de les sauvegarder dans des listes personnalsées.
+Game Vault est une bibliothèque de jeux vidéos permettant de consulter divers jeux et de les sauvegarder dans des listes personnalsées.
 
 Vous pouvez donc créer un compte, rechercher vos jeux préférées et ainsi pouvoir les trier comme bon vous semble et partager vos listes à vos amis.
 
@@ -13,7 +13,7 @@ Il est nécessaire d'avoir [Bun](https://bun.sh) d'installé pour pouvoir lancer
 Cloner le dépôt git
 
 ```
-git clone https://github.com/Shrayzz/Simple-Game-Library.git
+git clone https://github.com/Shrayzz/Game-Vault.git
 ```
 
 Naviguer dans le dossier
@@ -74,6 +74,10 @@ docker compose up -d
 Pour lancer les tests de l'application vous pouvez lancer la commande suivante :
 
 ```
+#bun
+bun test
+
+#node
 npm test
 ```
 
