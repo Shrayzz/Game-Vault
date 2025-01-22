@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: simple-game-library
+    container_name: game-vault
     build:
       context: .
       dockerfile: Dockerfile
